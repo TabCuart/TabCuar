@@ -88,6 +88,17 @@
       margin-top: 0.5rem;
       filter: drop-shadow(0 2px 8px rgba(0,0,0,0.25));
     }
+    .contador-visitas {
+      margin: 0.5em 0 0 0;
+      color: #aaa;
+      font-size: 0.95em;
+      letter-spacing: 1px;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: center;
+      gap: 5px;
+    }
   </style>
 </head>
 <body>
@@ -133,7 +144,21 @@
   </main>
   <footer>
     <img src="logo.png" alt="Logo TabCuar" class="logo">
+    <div class="contador-visitas">
+      <span id="visitas" style="font-weight:bold;"></span>
+      <span style="font-size:0.98em; color:#aaa;">visitas</span>
+    </div>
     &copy; 2025 TabCuar - Portafolio de Ilustrador
+    <script>
+      fetch('https://api.countapi.xyz/hit/tabcuart/tabcuar')
+        .then(response => response.json())
+        .then(data => {
+          document.getElementById('visitas').textContent = data.value;
+        })
+        .catch(() => {
+          document.getElementById('visitas').textContent = "—";
+        });
+    </script>
   </footer>
 </body>
 </html>
