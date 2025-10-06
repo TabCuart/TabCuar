@@ -242,17 +242,18 @@
 </div>
 
 <script>
-  // Contador de visitas con CountAPI
-  fetch('https://api.countapi.xyz/hit/tabcuart.github.io/visitas')
-    .then(response => response.json())
-    .then(data => {
-      document.getElementById('visitas').textContent = data.value;
-    })
-    .catch(error => {
-      console.error('Error al obtener el contador:', error);
-      document.getElementById('visitas').textContent = '—';
-    });
-</script>
+    // Contador de visitas usando CountAPI
+    fetch('https://api.countapi.xyz/hit/tabcuart.github.io/TabCuar')
+      .then(res => res.json())
+      .then(res => {
+        document.getElementById('visitas').textContent = res.value;
+        console.log('✅ Contador actualizado:', res.value);
+      })
+      .catch(err => {
+        console.error('❌ Error al obtener contador:', err);
+        document.getElementById('visitas').textContent = '—';
+      });
+  </script>
 
 <ul>
      &copy; 2025 TabCuar - Portafolio de Ilustrador
