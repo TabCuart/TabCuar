@@ -246,19 +246,16 @@
 </div>
 
 <script>
-  // 🚀 Contador de visitas con hits.sh
-  fetch('https://hits.sh/tabcuart.github.io-TabCuar.json?style=flat-square')
-    .then(res => res.json())
+  // ✅ Contador funcional con hits.sh
+  fetch('https://hits.sh/tabcuart.github.io/TabCuar.json')
+    .then(response => response.json())
     .then(data => {
       document.getElementById('visitas').textContent = data.count;
       console.log("✅ Contador actualizado:", data.count);
     })
     .catch(err => {
       console.error("❌ Error al conectar con hits.sh:", err);
-      document.getElementById('visitas').textContent = '—';
-    });
-</script>
-
+     
 
 <ul>
      &copy; 2025 TabCuar - Portafolio de Ilustrador
