@@ -1,275 +1,243 @@
-<!DOCTYPE html>  
+<!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>Portafolio de Ilustrador</title>
+  <title>Portafolio de TabCuar</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <!-- Fuente Lobster de Google Fonts -->
+  
+  <!-- Fuente principal -->
   <link href="https://fonts.googleapis.com/css2?family=Lobster&display=swap" rel="stylesheet">
+  
+  <!-- Librería de animaciones AOS -->
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+  
   <style>
-    body { 
-      font-family: 'Segoe UI', Arial, sans-serif; 
-      margin: 0; 
-      padding: 0;
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Arial, sans-serif;
       background-color: #fcfcfc;
-      background-image: url('data:image/svg+xml;utf8,<svg width="20" height="20" viewBox="0 0 20 20" fill="gray" fill-opacity="0.07" xmlns="http://www.w3.org/2000/svg"><circle cx="2" cy="2" r="2"/><circle cx="18" cy="18" r="2"/></svg>');
+      color: #333;
       scroll-behavior: smooth;
     }
 
-    header { 
-      color: #fff; 
-      padding: 2rem 0 1rem 0; 
-      text-align: center;
+    /* ===== ENCABEZADO ===== */
+    header {
       position: relative;
-      background: url('fondo-header.jpg') center 25%/cover no-repeat;
-      min-height: 350px;
+      height: 100vh;
+      background: url('fondo-header.jpg') center/cover no-repeat;
+      color: white;
       display: flex;
       flex-direction: column;
-      align-items: center;
       justify-content: center;
+      align-items: center;
+      text-align: center;
+      overflow: hidden;
     }
+
     header::before {
       content: "";
       position: absolute;
       inset: 0;
-      background: rgba(30, 20, 40, 0.45); 
+      background: rgba(0,0,0,0.45);
       z-index: 1;
     }
-    .logo {
-      width: 160px;
-      height: auto;
-      margin-bottom: 1.2rem;
-      filter: drop-shadow(0 2px 8px rgba(0,0,0,0.15));
-      display: block;
-      margin-left: auto;
-      margin-right: auto;
-    }
-    h1 { 
-      font-family: 'Lobster', cursive; 
-      font-size: 3rem; 
-      margin-bottom: 0.5rem;
-      position: relative;
+
+    header h1 {
+      font-family: 'Lobster', cursive;
+      font-size: 4rem;
       z-index: 2;
-      -webkit-text-stroke: 1px #fff;
-      text-shadow:
-        1px 1px 0 #222,
-        -1px -1px 0 #222,
-        1px -1px 0 #222,
-        -1px 1px 0 #222,
-        0px 2px 3px #111;
-    }
-    header p, nav { position: relative; z-index: 2; }
-    nav ul { list-style: none; padding: 0; display: flex; justify-content: center; gap: 2rem; }
-    nav a { color: #fff; text-decoration: none; font-weight: bold;}
-    main { max-width: 900px; margin: 2rem auto; padding: 0 1rem;}
-    .perfil { display: flex; align-items: center; gap: 2rem; flex-wrap: wrap;}
-    .perfil img { width: 130px; border-radius: 50%; border: 3px solid #ddd; background: #fff;}
-    .galeria { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1.5rem; margin: 3rem 0;}
-    .galeria img { 
-      width: 100%; 
-      max-width: 250px; 
-      height: auto; 
-      display: block; 
-      margin: 0 auto;
-      border-radius: 8px; 
-      box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+      text-shadow: 0 4px 10px rgba(0,0,0,0.5);
     }
 
-    /* ===== Álbum numerado ===== */
-    #album { margin-top: 3rem; }
-    .album {
+    header p {
+      font-size: 1.3rem;
+      z-index: 2;
+      margin-top: 1rem;
+    }
+
+    nav {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      background: rgba(0,0,0,0.6);
+      backdrop-filter: blur(6px);
+      display: flex;
+      justify-content: center;
+      padding: 10px 0;
+      z-index: 5;
+    }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 2rem;
+      margin: 0;
+      padding: 0;
+    }
+
+    nav a {
+      color: white;
+      text-decoration: none;
+      font-weight: bold;
+      transition: color 0.3s;
+    }
+
+    nav a:hover {
+      color: #ff8800;
+    }
+
+    /* ===== SECCIONES ===== */
+    main {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 4rem 1rem;
+    }
+
+    section {
+      margin-bottom: 6rem;
+    }
+
+    section h2 {
+      font-family: 'Lobster', cursive;
+      font-size: 2.5rem;
+      text-align: center;
+      margin-bottom: 2rem;
+      color: #222;
+    }
+
+    .perfil {
+      display: flex;
+      align-items: center;
+      gap: 2rem;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .perfil img {
+      width: 150px;
+      border-radius: 50%;
+      border: 4px solid #ddd;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+
+    .galeria {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
       gap: 1.5rem;
-      margin: 2rem 0;
+      justify-items: center;
     }
-    .album .item {
-      background: #fff;
+
+    .galeria img {
+      width: 100%;
       border-radius: 10px;
-      box-shadow: 0 3px 8px rgba(0,0,0,0.1);
-      overflow: hidden;
-      padding-bottom: 1rem;
-      text-align: center;
+      box-shadow: 0 3px 10px rgba(0,0,0,0.15);
       transition: transform 0.3s;
     }
-    .album .item:hover {
-      transform: scale(1.03);
-    }
-    .album img {
-      width: 100%;
-      height: auto;
-      border-bottom: 3px solid #eee;
-    }
-    .album h3 {
-      margin: 0.8rem 0 0.4rem;
-      font-family: 'Lobster', cursive;
-    }
-    .album p {
-      font-size: 0.9rem;
-      color: #555;
-      margin: 0 1rem;
+
+    .galeria img:hover {
+      transform: scale(1.05);
     }
 
-    footer { 
-      background: #222; 
-      color: #fff; 
-      text-align: center; 
-      padding: 1rem 0 0.5rem 0;
-      margin-top: 2rem;
-      position: relative;
+    footer {
+      background: #111;
+      color: #fff;
+      text-align: center;
+      padding: 2rem 1rem;
     }
+
     footer .logo {
       width: 80px;
-      margin-bottom: 0.5rem;
-      margin-top: 0.5rem;
-      filter: drop-shadow(0 2px 8px rgba(0,0,0,0.25));
-    }
-    .contador-visitas {
-      margin: 0.5em 0 0 0;
-      color: #aaa;
-      font-size: 0.95em;
-      letter-spacing: 1px;
-      display: flex;
-      flex-direction: row;
-      align-items: center;
-      justify-content: center;
-      gap: 5px;
+      display: block;
+      margin: 0 auto 1rem;
     }
 
-    /* ===== Menú lateral fijo ===== */
-    .menu-lateral {
-      position: fixed;
-      right: 1.5rem;
-      top: 40%;
-      background: rgba(255, 255, 255, 0.9);
-      padding: 1rem 1.2rem;
-      border-radius: 12px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.15);
-      font-size: 0.95rem;
-      z-index: 10;
-    }
-    .menu-lateral h3 {
-      margin-top: 0;
-      font-family: 'Lobster', cursive;
-      font-size: 1.2rem;
-      color: #333;
-      text-align: center;
-    }
-    .menu-lateral ul {
-      list-style: none;
-      padding: 0;
-      margin: 0;
-    }
-    .menu-lateral a {
-      text-decoration: none;
-      color: #444;
+    #contador {
+      display: inline-block;
+      background: #333;
+      color: #fff;
+      padding: 10px 15px;
+      border-radius: 10px;
       font-weight: bold;
-    }
-    .menu-lateral a:hover {
-      color: #ff6600;
+      font-family: monospace;
+      margin-top: 1rem;
     }
   </style>
 </head>
-
 <body>
-  <!-- 🧭 Menú lateral -->
-  <aside class="menu-lateral">
-    <h3>Menú</h3>
+
+  <!-- 🧭 MENÚ FIJO -->
+  <nav>
     <ul>
       <li><a href="#sobre-mi">Sobre mí</a></li>
       <li><a href="#galeria">Galería</a></li>
-      <li><a href="#album">Álbum</a></li>
       <li><a href="#contacto">Contacto</a></li>
     </ul>
-  </aside>
+  </nav>
 
-  <header>
-    <h1>TabCuar</h1>
-    <p>Ilustrador digital | Artista visual</p>
+  <!-- 🏞️ PORTADA PRINCIPAL -->
+  <header data-aos="fade-in">
+    <h1 data-aos="zoom-in" data-aos-delay="300">TabCuar</h1>
+    <p data-aos="fade-up" data-aos-delay="600">Ilustrador digital | Artista visual</p>
   </header>
 
   <main>
-    <section class="perfil" id="sobre-mi">
-      <img src="logo.png" alt="Foto de perfil TabCuar">
-      <div>
-        <h2>Sobre mí</h2>
+    <!-- 👤 SOBRE MÍ -->
+    <section id="sobre-mi" data-aos="fade-up">
+      <h2>Sobre mí</h2>
+      <div class="perfil">
+        <img src="logo.png" alt="Foto de TabCuar">
         <p>
-          Soy ilustrador en formación y diseñador editorial, estudiante de la Escuela Superior de Artes Débora Arango. 
-          Me apasiona la ilustración digital y el arte experimental, explorando lo abstracto y técnicas como el puntillismo. 
-          Disfruto escribir poemas cortos, inspirarme en la naturaleza y en los animales, y dar vida a proyectos que unen creatividad y tecnología.
+          Soy ilustrador en formación y diseñador editorial.  
+          Estudio en la Escuela Superior de Artes Débora Arango.  
+          Exploro el arte digital, lo abstracto y técnicas experimentales.  
+          Mi trabajo busca conectar naturaleza, poesía y tecnología visual.
         </p>
       </div>
     </section>
 
-    <section id="galeria">
-      <section id="galeria">
-  <h2>Galería</h2>
-  <div class="galeria">
-    <a href="album.html">
-      <img src="agapornis.jpeg" alt="Ver álbum completo">
-    </a>
-  </div>
-  <p style="text-align:center;">
-    <a href="album.html">
-  <img src="miniatura_album.jpg" alt="Ver álbum" width="200">
-  <p>Ver álbum completo</p>
-</a>
+    <!-- 🖼️ GALERÍA -->
+    <section id="galeria" data-aos="fade-up">
+      <h2>Galería</h2>
+      <div class="galeria">
+        <a href="galeria.html"><img src="agapornis.jpeg" alt="Ilustración Agapornis"></a>
+        <img src="obra2.jpg" alt="Ilustración 2">
+        <img src="obra3.jpg" alt="Ilustración 3">
+      </div>
+      <p style="text-align:center; margin-top:1rem;">
+        <a href="galeria.html" style="color:#ff6600; font-weight:bold; text-decoration:none;">Ver álbum completo →</a>
+      </p>
+    </section>
 
-    <section id="contacto">
+    <!-- ✉️ CONTACTO -->
+    <section id="contacto" data-aos="fade-up">
       <h2>Contacto</h2>
-      <p>Puedes escribirme a: <a href="mailto:tabcuart.22@gmail.com">tabcuart.22@gmail.com</a></p>
-      <p>O sígueme en redes sociales:</p>
-      <ul>
-        <li><a href="https://instagram.com/">Instagram</a></li>
-        <li><a href="https://twitter.com/">Twitter/X</a></li>
+      <p style="text-align:center;">Escríbeme a: <a href="mailto:tabcuart.22@gmail.com">tabcuart.22@gmail.com</a></p>
+      <p style="text-align:center;">Sígueme en redes:</p>
+      <ul style="display:flex; justify-content:center; gap:1.5rem; list-style:none; padding:0;">
+        <li><a href="https://instagram.com/" target="_blank">Instagram</a></li>
+        <li><a href="https://twitter.com/" target="_blank">Twitter/X</a></li>
       </ul>
     </section>
   </main>
 
-  <footer>
+  <!-- ⚡ FOOTER -->
+  <footer data-aos="fade-in">
     <img src="logo.png" alt="Logo TabCuar" class="logo">
-    
-<div id="contador" style="
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  background:#222;
-  color:#fff;
-  padding:10px 15px;
-  border-radius:10px;
-  font-weight:bold;
-  font-family:monospace;
-  width:fit-content;
-  margin:20px auto;
-">
-  👁️ <span id="visitas">0</span> visitas
-</div>
-
-<script>
-  // ✅ Cargar contador desde hits.sh
-  fetch('https://hits.sh/tabcuart.github.io/TabCuar.json')
-    .then(response => response.json())
-    .then(data => {
-      document.getElementById('visitas').textContent = data.count;
-    })
-    .catch(error => {
-      console.error("Error al obtener contador:", error);
-      document.getElementById('visitas').textContent = '—';
-    });
-</script>
-     
-<ul>
-     &copy; 2025 TabCuar - Portafolio de Ilustrador
-    <script>
-      fetch('https://api.countapi.xyz/hit/tabcuart/tabcuar')
-        .then(response => response.json())
-        .then(data => {
-          document.getElementById('visitas').textContent = data.value;
-        })
-        .catch(() => {
-          document.getElementById('visitas').textContent = "—";
-        });
-    </script>
+    <div id="contador">👁️ <span id="visitas">0</span> visitas</div>
+    <p>&copy; 2025 TabCuar - Portafolio de Ilustrador</p>
   </footer>
+
+  <!-- Scripts -->
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script>
+    AOS.init({ duration: 1000, once: true });
+
+    // 👁️ Contador de visitas
+    fetch('https://hits.sh/tabcuart.github.io/TabCuar.json?force=1&increment=1')
+      .then(r => r.json())
+      .then(d => document.getElementById('visitas').textContent = d.count)
+      .catch(() => document.getElementById('visitas').textContent = '—');
+  </script>
+
 </body>
 </html>
