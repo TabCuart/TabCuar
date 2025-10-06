@@ -230,30 +230,32 @@
     <img src="logo.png" alt="Logo TabCuar" class="logo">
     
 <div id="contador" style="
-  display:inline-block;
+  display:flex;
+  justify-content:center;
+  align-items:center;
   background:#222;
   color:#fff;
   padding:10px 15px;
   border-radius:10px;
   font-weight:bold;
   font-family:monospace;
+  width:fit-content;
+  margin:20px auto;
 ">
   👁️ <span id="visitas">0</span> visitas
 </div>
 
 <script>
-    // Contador de visitas usando CountAPI
-    fetch('https://api.countapi.xyz/hit/tabcuart.github.io/TabCuar')
-      .then(res => res.json())
-      .then(res => {
-        document.getElementById('visitas').textContent = res.value;
-        console.log('✅ Contador actualizado:', res.value);
-      })
-      .catch(err => {
-        console.error('❌ Error al obtener contador:', err);
-        document.getElementById('visitas').textContent = '—';
-      });
-  </script>
+  // 🚀 Contador de visitas con hits.sh
+  fetch('https://hits.sh/tabcuart.github.io-TabCuar.json?style=flat-square')
+    .then(res => res.json())
+    .then(data => {
+      document.getElementById('visitas').textContent = data.count;
+      console.log("✅ Contador actualizado:", data.count);
+    })
+    .catch(err => {
+      console.error("❌ Error al conectar con hits.sh:", err);
+      document.getElementById('visitas').textContent = '—';
 
 <ul>
      &copy; 2025 TabCuar - Portafolio de Ilustrador
