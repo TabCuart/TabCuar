@@ -21,5 +21,16 @@
     <!-- Puedes seguir agregando tus imágenes aquí -->
   </div>
   <a href="index.html" class="volver">⬅ Volver al inicio</a>
+  <script>
+  // 🔒 Bloquear clic derecho
+  document.addEventListener('contextmenu', function(e) {
+    e.preventDefault();
+  });
+
+  // 🔒 Evitar arrastrar imágenes
+  document.querySelectorAll('img').forEach(img => {
+    img.setAttribute('draggable', 'false');
+  });
+</script>
 </body>
 </html>
