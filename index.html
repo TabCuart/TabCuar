@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!DOCTYPE html>  
 <html lang="es">
 <head>
   <meta charset="UTF-8">
@@ -13,7 +13,9 @@
       padding: 0;
       background-color: #fcfcfc;
       background-image: url('data:image/svg+xml;utf8,<svg width="20" height="20" viewBox="0 0 20 20" fill="gray" fill-opacity="0.07" xmlns="http://www.w3.org/2000/svg"><circle cx="2" cy="2" r="2"/><circle cx="18" cy="18" r="2"/></svg>');
+      scroll-behavior: smooth;
     }
+
     header { 
       color: #fff; 
       padding: 2rem 0 1rem 0; 
@@ -38,7 +40,6 @@
       height: auto;
       margin-bottom: 1.2rem;
       filter: drop-shadow(0 2px 8px rgba(0,0,0,0.15));
-      background: none;
       display: block;
       margin-left: auto;
       margin-right: auto;
@@ -73,6 +74,42 @@
       border-radius: 8px; 
       box-shadow: 0 2px 8px rgba(0,0,0,0.07);
     }
+
+    /* ===== Álbum numerado ===== */
+    #album { margin-top: 3rem; }
+    .album {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1.5rem;
+      margin: 2rem 0;
+    }
+    .album .item {
+      background: #fff;
+      border-radius: 10px;
+      box-shadow: 0 3px 8px rgba(0,0,0,0.1);
+      overflow: hidden;
+      padding-bottom: 1rem;
+      text-align: center;
+      transition: transform 0.3s;
+    }
+    .album .item:hover {
+      transform: scale(1.03);
+    }
+    .album img {
+      width: 100%;
+      height: auto;
+      border-bottom: 3px solid #eee;
+    }
+    .album h3 {
+      margin: 0.8rem 0 0.4rem;
+      font-family: 'Lobster', cursive;
+    }
+    .album p {
+      font-size: 0.9rem;
+      color: #555;
+      margin: 0 1rem;
+    }
+
     footer { 
       background: #222; 
       color: #fff; 
@@ -81,7 +118,6 @@
       margin-top: 2rem;
       position: relative;
     }
-    /* Logo más pequeño solo en el footer */
     footer .logo {
       width: 80px;
       margin-bottom: 0.5rem;
@@ -99,20 +135,59 @@
       justify-content: center;
       gap: 5px;
     }
+
+    /* ===== Menú lateral fijo ===== */
+    .menu-lateral {
+      position: fixed;
+      right: 1.5rem;
+      top: 40%;
+      background: rgba(255, 255, 255, 0.9);
+      padding: 1rem 1.2rem;
+      border-radius: 12px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+      font-size: 0.95rem;
+      z-index: 10;
+    }
+    .menu-lateral h3 {
+      margin-top: 0;
+      font-family: 'Lobster', cursive;
+      font-size: 1.2rem;
+      color: #333;
+      text-align: center;
+    }
+    .menu-lateral ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    .menu-lateral a {
+      text-decoration: none;
+      color: #444;
+      font-weight: bold;
+    }
+    .menu-lateral a:hover {
+      color: #ff6600;
+    }
   </style>
 </head>
+
 <body>
+  <!-- 🧭 Menú lateral -->
+  <aside class="menu-lateral">
+    <h3>Menú</h3>
+    <ul>
+      <li><a href="#sobre-mi">Sobre mí</a></li>
+      <li><a href="#galeria">Galería</a></li>
+      <li><a href="#album">Álbum</a></li>
+      <li><a href="#contacto">Contacto</a></li>
+    </ul>
+  </aside>
+
   <header>
     <h1>TabCuar</h1>
     <p>Ilustrador digital | Artista visual</p>
-    <nav>
-      <ul>
-        <li><a href="#sobre-mi">Sobre mí</a></li>
-        <li><a href="#galeria">Galería</a></li>
-        <li><a href="#contacto">Contacto</a></li>
-      </ul>
-    </nav>
   </header>
+
   <main>
     <section class="perfil" id="sobre-mi">
       <img src="logo.png" alt="Foto de perfil TabCuar">
@@ -125,13 +200,29 @@
         </p>
       </div>
     </section>
+
     <section id="galeria">
       <h2>Galería</h2>
       <div class="galeria">
         <img src="agapornis.jpeg" alt="Ilustración Agapornis">
-        <!-- Puedes agregar más imágenes aquí -->
       </div>
     </section>
+
+    <!-- 🎨 Álbum numerado -->
+    <section id="album">
+      <h2>Álbum de ilustraciones</h2>
+      <section id="galeria">
+  <h2>Galería</h2>
+  <div class="galeria">
+    <a href="album.html">
+      <img src="agapornis.jpeg" alt="Ver álbum completo">
+    </a>
+  </div>
+  <p style="text-align:center;">
+    <a href="album.html" style="font-weight:bold; color:#ff1100; text-decoration:none;">
+      Ver álbum completo de ilustraciones
+
+
     <section id="contacto">
       <h2>Contacto</h2>
       <p>Puedes escribirme a: <a href="mailto:tabcuart.22@gmail.com">tabcuart.22@gmail.com</a></p>
@@ -142,6 +233,7 @@
       </ul>
     </section>
   </main>
+
   <footer>
     <img src="logo.png" alt="Logo TabCuar" class="logo">
     <div class="contador-visitas">
@@ -162,3 +254,4 @@
   </footer>
 </body>
 </html>
+
