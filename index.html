@@ -229,7 +229,7 @@
   <footer>
     <img src="logo.png" alt="Logo TabCuar" class="logo">
     
-    <div id="contador" style="
+<div id="contador" style="
   display:inline-block;
   background:#222;
   color:#fff;
@@ -238,8 +238,22 @@
   font-weight:bold;
   font-family:monospace;
 ">
-  👁️ <span id="visitas"></span> visitas
+  👁️ <span id="visitas">0</span> visitas
 </div>
+
+<script>
+  // Contador de visitas con CountAPI
+  fetch('https://api.countapi.xyz/hit/tabcuart.github.io/visitas')
+    .then(response => response.json())
+    .then(data => {
+      document.getElementById('visitas').textContent = data.value;
+    })
+    .catch(error => {
+      console.error('Error al obtener el contador:', error);
+      document.getElementById('visitas').textContent = '—';
+    });
+</script>
+
 <ul>
      &copy; 2025 TabCuar - Portafolio de Ilustrador
     <script>
