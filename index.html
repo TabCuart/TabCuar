@@ -239,6 +239,18 @@
       .then(d => document.getElementById('visitas').textContent = d.count)
       .catch(() => document.getElementById('visitas').textContent = '—');
   </script>
+  
+<script>
+  // 🔒 Bloquear clic derecho
+  document.addEventListener('contextmenu', function(e) {
+    e.preventDefault();
+  });
+
+  // 🔒 Evitar arrastrar imágenes
+  document.querySelectorAll('img').forEach(img => {
+    img.setAttribute('draggable', 'false');
+  });
+</script>
 
 </body>
 </html>
