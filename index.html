@@ -228,11 +228,20 @@
 
   <footer>
     <img src="logo.png" alt="Logo TabCuar" class="logo">
-    <div class="contador-visitas">
-      <span id="visitas" style="font-weight:bold;"></span>
-      <span style="font-size:0.98em; color:#aaa;">visitas</span>
-    </div>
-    &copy; 2025 TabCuar - Portafolio de Ilustrador
+    
+    <div id="contador" style="
+  display:inline-block;
+  background:#222;
+  color:#fff;
+  padding:10px 15px;
+  border-radius:10px;
+  font-weight:bold;
+  font-family:monospace;
+">
+  👁️ <span id="visitas"></span> visitas
+</div>
+<ul>
+     &copy; 2025 TabCuar - Portafolio de Ilustrador
     <script>
       fetch('https://api.countapi.xyz/hit/tabcuart/tabcuar')
         .then(response => response.json())
@@ -246,4 +255,3 @@
   </footer>
 </body>
 </html>
-
