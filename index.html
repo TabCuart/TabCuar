@@ -246,21 +246,18 @@
 </div>
 
 <script>
-  // ✅ Contador funcional con hits.sh
+  // ✅ Cargar contador desde hits.sh
   fetch('https://hits.sh/tabcuart.github.io/TabCuar.json')
     .then(response => response.json())
     .then(data => {
       document.getElementById('visitas').textContent = data.count;
-      console.log("✅ Contador actualizado:", data.count);
     })
-    .catch(err => {
-      console.error("❌ Error al conectar con hits.sh:", err);
+    .catch(error => {
+      console.error("Error al obtener contador:", error);
       document.getElementById('visitas').textContent = '—';
     });
 </script>
-
      
-
 <ul>
      &copy; 2025 TabCuar - Portafolio de Ilustrador
     <script>
