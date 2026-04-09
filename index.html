@@ -523,27 +523,8 @@
   <img class="img-modal-content" id="imgExpanded">
 </div>
 
-<script>
-const modal = document.getElementById("imgModal");
-const modalImg = document.getElementById("imgExpanded");
-
-document.querySelectorAll(".click-img").forEach(img=>{
-  img.onclick = function(){
-    modal.style.display="flex";
-    modalImg.src=this.src;
-  }
-});
-
-document.querySelector(".img-close").onclick=function(){
-  modal.style.display="none";
-}
-
-modal.onclick=function(e){
-  if(e.target===modal){
-    modal.style.display="none";
-  }
-}
-</script>
+  </footer>
+<script src="script.js"></script>
 
 </body>
 </html>
