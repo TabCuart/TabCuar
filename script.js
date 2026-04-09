@@ -169,3 +169,25 @@ window.addEventListener('scroll',()=>{
     container.appendChild(e);
   }
 })();
+})();
+ 
+// VISOR DE IMAGEN
+const modal = document.getElementById("imgModal");
+const modalImg = document.getElementById("imgExpanded");
+
+document.querySelectorAll(".click-img").forEach(img=>{
+  img.onclick = function(){
+    modal.style.display="flex";
+    modalImg.src=this.src;
+  }
+});
+
+document.querySelector(".img-close").onclick=function(){
+  modal.style.display="none";
+}
+
+modal.onclick=function(e){
+  if(e.target===modal){
+    modal.style.display="none";
+  }
+}
