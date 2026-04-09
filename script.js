@@ -169,8 +169,7 @@ window.addEventListener('scroll',()=>{
     container.appendChild(e);
   }
 })();
-})();
- 
+
 // VISOR DE IMAGEN
 const modal = document.getElementById("imgModal");
 const modalImg = document.getElementById("imgExpanded");
