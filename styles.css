@@ -43,7 +43,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:900;display:flex;align-items:cen
 .hero-label::before{content:'';width:40px;height:1px;background:var(--accent);}
 .hero-brand{animation-delay:.5s;font-family:'Lobster',cursive;font-size:clamp(5rem,10vw,10rem);color:#fff;line-height:1;margin-bottom:1.2rem;}
 .hero-sub{animation-delay:.65s;font-family:'Space Mono',monospace;font-size:.7rem;letter-spacing:.22em;text-transform:uppercase;color:var(--text-muted);margin-bottom:2.5rem;}
-.hero-desc{animation-delay:.8s;font-style:italic;font-size:1.45rem;color:var(--text-muted);max-width:500px;margin-bottom:0;line-height:1.85;}
+.hero-desc{animation-delay:.8s;font-style:italic;font-size:1.8rem;color:var(--text-muted);max-width:500px;margin-bottom:0;line-height:1.85;}
 @keyframes fadeUp{from{opacity:0;transform:translateY(22px);}to{opacity:1;transform:translateY(0);}}
 
 /* HERO RIGHT — image upload */
