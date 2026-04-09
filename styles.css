@@ -111,7 +111,7 @@ section:nth-child(even){background:var(--bg-2);}
 .div-lab::before{background:var(--accent-lab);}
 /* Image slot on top */
 .div-img-slot{aspect-ratio:1;background:var(--surface);display:flex;align-items:center;justify-content:center;cursor:pointer;position:relative;overflow:hidden;border-bottom:1px solid var(--border);}
-.div-img-slot img.uploaded{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;}
+.div-img-slot img.uploaded{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;}
 .div-img-slot .div-up-icon{width:40px;height:40px;border:1px dashed rgba(255,255,255,.12);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.1rem;color:rgba(255,255,255,.12);transition:all .3s;}
 .div-img-slot:hover .div-up-icon{border-color:rgba(255,255,255,.3);color:rgba(255,255,255,.35);}
 .div-content{padding:2rem 2rem 2.5rem;}
