@@ -137,15 +137,27 @@
 <!-- TABCUART -->
 <section id="arte">
   <div class="bg-text">ARTE</div>
+
   <div class="section-header reveal">
     <div class="section-number">01</div>
     <div>
-      <div class="accent-line" style="margin-bottom:.5rem;"><span style="color:var(--accent-art);">TabCuart</span></div>
-      <h2 class="section-title" style="color:var(--accent-art);">Arte &amp;<em style="color:var(--text);">Ilustración</em></h2>
+      <div class="accent-line" style="margin-bottom:.5rem;">
+        <span style="color:var(--accent-art);">TabCuart</span>
+      </div>
+
+      <h2 class="section-title" style="color:var(--accent-art);">
+        Arte &amp;<em style="color:var(--text);">Ilustración</em>
+      </h2>
+
       <div class="section-divider"></div>
-      <p class="section-desc">Sube tus obras. Haz clic en cada recuadro para agregar una ilustración.</p>
+
+      <p class="section-desc">
+        Galería de obras por técnica.
+      </p>
     </div>
   </div>
+
+  <!-- FILTROS (estos sí se quedan) -->
   <div class="gallery-filter reveal">
     <button class="filter-btn active" onclick="filterGallery('all',this)">Todas</button>
     <button class="filter-btn" onclick="filterGallery('digital',this)">Ilustración Digital</button>
@@ -154,13 +166,64 @@
     <button class="filter-btn" onclick="filterGallery('escultura',this)">Escultura</button>
     <button class="filter-btn" onclick="filterGallery('exp',this)">Experimental</button>
   </div>
+
+  <!-- GALERÍA -->
   <div class="gallery-grid reveal" id="gallery">
-    <div class="gallery-item" data-cat="digital" onclick="triggerUpload(this)"><input type="file" class="file-input" accept="image/*" onchange="loadGalleryImage(this)"><div class="upload-placeholder"><div class="upload-icon">+</div><div class="upload-label">Subir imagen</div><div class="upload-sub">Ilustración Digital</div></div><div class="gallery-overlay"><h4>Ilustración Digital</h4><p>Sin título · —</p></div></div>
-    <div class="gallery-item" data-cat="lino" onclick="triggerUpload(this)"><input type="file" class="file-input" accept="image/*" onchange="loadGalleryImage(this)"><div class="upload-placeholder"><div class="upload-icon">+</div><div class="upload-label">Subir imagen</div><div class="upload-sub">Linograbado</div></div><div class="gallery-overlay"><h4>Linograbado</h4><p>Sin título · —</p></div></div>
-    <div class="gallery-item" data-cat="exp" onclick="triggerUpload(this)"><input type="file" class="file-input" accept="image/*" onchange="loadGalleryImage(this)"><div class="upload-placeholder"><div class="upload-icon">+</div><div class="upload-label">Subir imagen</div><div class="upload-sub">Experimental</div></div><div class="gallery-overlay"><h4>Experimental</h4><p>Sin título · —</p></div></div>
-    <div class="gallery-item" data-cat="tradicional" onclick="triggerUpload(this)"><input type="file" class="file-input" accept="image/*" onchange="loadGalleryImage(this)"><div class="upload-placeholder"><div class="upload-icon">+</div><div class="upload-label">Subir imagen</div><div class="upload-sub">Tradicional</div></div><div class="gallery-overlay"><h4>Tradicional</h4><p>Sin título · —</p></div></div>
-    <div class="gallery-item" data-cat="escultura" onclick="triggerUpload(this)"><input type="file" class="file-input" accept="image/*" onchange="loadGalleryImage(this)"><div class="upload-placeholder"><div class="upload-icon">+</div><div class="upload-label">Subir imagen</div><div class="upload-sub">Escultura</div></div><div class="gallery-overlay"><h4>Escultura</h4><p>Sin título · —</p></div></div>
-    <div class="gallery-item" data-cat="digital" onclick="triggerUpload(this)"><input type="file" class="file-input" accept="image/*" onchange="loadGalleryImage(this)"><div class="upload-placeholder"><div class="upload-icon">+</div><div class="upload-label">Subir imagen</div><div class="upload-sub">Concept Art</div></div><div class="gallery-overlay"><h4>Concept Art</h4><p>Sin título · —</p></div></div>
+
+    <!-- DIGITAL -->
+    <div class="gallery-item" data-cat="digital">
+      <img src="Img/digital1.jpg" class="uploaded">
+      <div class="gallery-overlay">
+        <h4>Ilustración Digital</h4>
+        <p>Obra 01 · 2025</p>
+      </div>
+    </div>
+
+    <!-- LINO -->
+    <div class="gallery-item" data-cat="lino">
+      <img src="Img/lino1.jpg" class="uploaded">
+      <div class="gallery-overlay">
+        <h4>Linograbado</h4>
+        <p>Obra 02 · 2025</p>
+      </div>
+    </div>
+
+    <!-- EXPERIMENTAL -->
+    <div class="gallery-item" data-cat="exp">
+      <img src="Img/exp1.jpg" class="uploaded">
+      <div class="gallery-overlay">
+        <h4>Experimental</h4>
+        <p>Obra 03 · 2025</p>
+      </div>
+    </div>
+
+    <!-- TRADICIONAL -->
+    <div class="gallery-item" data-cat="tradicional">
+      <img src="Img/tradicional1.jpg" class="uploaded">
+      <div class="gallery-overlay">
+        <h4>Tradicional</h4>
+        <p>Obra 04 · 2025</p>
+      </div>
+    </div>
+
+    <!-- ESCULTURA -->
+    <div class="gallery-item" data-cat="escultura">
+      <img src="Img/escultura1.jpg" class="uploaded">
+      <div class="gallery-overlay">
+        <h4>Escultura</h4>
+        <p>Obra 05 · 2025</p>
+      </div>
+    </div>
+
+    <!-- CONCEPT -->
+    <div class="gallery-item" data-cat="digital">
+      <img src="Img/concept1.jpg" class="uploaded">
+      <div class="gallery-overlay">
+        <h4>Concept Art</h4>
+        <p>Obra 06 · 2025</p>
+      </div>
+    </div>
+
   </div>
 </section>
 
