@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Arte & Ilustración — TabCuart</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+  <!-- Cursor personalizado -->
+  <div id="cursor"></div>
+
+  <!-- ============================================================
+       MODAL NARRATIVO — obra individual del portafolio destacado
+       ============================================================ -->
+  <div id="portfolio-modal" role="dialog" aria-modal="true" aria-label="Detalle de obra">
+    <button class="pm-close" id="pm-close" title="Cerrar" aria-label="Cerrar">&#x2715;</button>
+    <div class="pm-nav">
+      <button class="pm-nav-btn" id="pm-prev" aria-label="Obra anterior">
+        <svg viewBox="0 0 24 24" stroke-width="1.5"><polyline points="18 15 12 9 6 15"/></svg>
+      </button>
+      <button class="pm-nav-btn" id="pm-next" aria-label="Obra siguiente">
+        <svg viewBox="0 0 24 24" stroke-width="1.5"><polyline points="6 9 12 15 18 9"/></svg>
+      </button>
+    </div>
+    <div class="pm-inner">
+      <div class="pm-image-wrap">
+        <img id="pm-img" src="" alt="">
+      </div>
+      <div class="pm-info">
+        <div class="pm-series" id="pm-series"></div>
+        <h2 class="pm-title" id="pm-title"></h2>
+        <div class="pm-year-tech" id="pm-year-tech"></div>
+        <div class="pm-divider"></div>
+        <p class="pm-desc" id="pm-desc"></p>
+        <div class="pm-meta-row" id="pm-meta-row"></div>
+      </div>
+    </div>
+    <div class="pm-counter" id="pm-counter"></div>
+  </div>
+
+  <!-- ============================================================
+       MODAL PORTAFOLIO EXPANDIDO — "Ver portafolio completo"
+       ─────────────────────────────────────────────────────────────
+       Para agregar una nueva serie: duplicar un .em-group
+       Para agregar obras a una serie: agregar un .em-cell en .em-grid
+       ============================================================ -->
+  <div id="expand-modal" role="dialog" aria-modal="true" aria-label="Portafolio completo">
+    <button class="em-close" id="em-close" title="Cerrar" aria-label="Cerrar">&#x2715;</button>
+    <div class="em-inner">
+      <div class="em-header">
+        <div class="em-label">Portafolio completo</div>
+        <h2 class="em-title">Todas las <em>obras</em></h2>
+        <p class="em-desc">Aquí va el texto</p>
+      </div>
+
+      <div class="em-group">
+        <div class="em-group-title">Serie · Umbrales</div>
+        <div class="em-grid">
+          <div class="em-cell" data-name="Éter fracturado">
+            <img src="img/obra1.jpg" alt="Éter fracturado">
+            <div class="em-cell-overlay"><div class="em-cell-name">Éter fracturado</div></div>
+          </div>
+          <div class="em-cell" data-name="Memoria líquida">
+            <img src="img/obra2.jpg" alt="Memoria líquida">
+            <div class="em-cell-overlay"><div class="em-cell-name">Memoria líquida</div></div>
+          </div>
+          <div class="em-cell" data-name="Umbral nocturno">
+            <img src="img/obra4.jpg" alt="Umbral nocturno">
+            <div class="em-cell-overlay"><div class="em-cell-name">Umbral nocturno</div></div>
+          </div>
+          <div class="em-cell" data-name="Meridiano">
+            <img src="img/obra5.jpg" alt="Meridiano">
+            <div class="em-cell-overlay"><div class="em-cell-name">Meridiano</div></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="em-group">
+        <div class="em-group-title">Serie · Nocturnos</div>
+        <div class="em-grid">
+          <div class="em-cell" data-name="Órbita">
+            <img src="img/obra6.jpg" alt="Órbita">
+            <div class="em-cell-overlay"><div class="em-cell-name">Órbita</div></div>
+          </div>
+          <div class="em-cell" data-name="Silencio">
+            <img src="img/obra7.jpg" alt="Silencio">
+            <div class="em-cell-overlay"><div class="em-cell-name">Silencio</div></div>
+          </div>
+          <div class="em-cell" data-name="Vértice">
+            <img src="img/obra3.jpg" alt="Vértice">
+            <div class="em-cell-overlay"><div class="em-cell-name">Vértice</div></div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ============================================================
+       LIGHTBOX SIMPLE — técnicas + proceso
+       ============================================================ -->
+  <div id="lightbox">
+    <button id="lb-close" title="Cerrar">&#x2715;</button>
+    <button id="lb-prev">&#8592;</button>
+    <button id="lb-next">&#8594;</button>
+    <img id="lb-img" src="" alt="">
+    <div id="lb-title"></div>
+    <div id="lb-sub"></div>
+    <div id="lb-desc"></div>
+  </div>
+
+  <!-- ============================================================
+       NAVEGACIÓN
+       ============================================================ -->
+  <nav>
+    <div class="nav-logo">TabCuart</div>
+    <div class="nav-links">
+      <a href="#portafolio">Portafolio</a>
+      <a href="#categorias">Categorías</a>
+      <a href="#proceso">Proceso</a>
+      <a href="#contacto">Contacto</a>
+    </div>
+    <div class="nav-status">
+      <div class="status-dot"></div>
+      <span class="status-text">Commissions open</span>
+    </div>
+  </nav>
+
+  <!-- ============================================================
+       HERO + PORTAFOLIO DESTACADO
+       ─────────────────────────────────────────────────────────────
+       Para agregar obras al grid destacado:
+         1. Duplicar un .p-cell
+         2. Actualizar: src, data-name, data-cat, data-desc, data-series
+         Nota: el grid masonry asigna tamaños especiales a nth-child(1) y (4)
+       ============================================================ -->
+  <section class="hero" id="portafolio">
+    <div class="geo-circle" style="width:200px;height:200px;top:40px;right:100px;"></div>
+    <div class="geo-circle" style="width:80px;height:80px;top:90px;right:170px;"></div>
+
+    <div class="hero-top">
+      <h1 class="hero-title">Arte &amp;<br><em>Ilustración</em></h1>
+      <div class="hero-meta">
+        <p class="hero-tagline">Formas que aún<br>no tienen nombre.</p>
+        <p class="hero-year">TabCuart · Medellín</p>
+      </div>
+    </div>
+
+    <div class="portfolio-grid">
+
+      <div class="p-cell"
+           data-index="0"
+           data-name="Éter fracturado"
+           data-cat="Ilustración digital · 2024"
+           data-desc="Aquí va el texto"
+           data-series="Serie: Umbrales">
+        <img src="img/obra1.jpg" alt="Éter fracturado">
+        <div class="p-cell-overlay">
+          <div class="p-cell-name">Éter fracturado</div>
+          <div class="p-cell-cat">Ilustración digital · 2024</div>
+        </div>
+      </div>
+
+      <div class="p-cell"
+           data-index="1"
+           data-name="Memoria líquida"
+           data-cat="Lineart · 2024"
+           data-desc="Aquí va el texto"
+           data-series="Serie: Umbrales">
+        <img src="img/obra2.jpg" alt="Memoria líquida">
+        <div class="p-cell-overlay">
+          <div class="p-cell-name">Memoria líquida</div>
+          <div class="p-cell-cat">Lineart · 2024</div>
+        </div>
+      </div>
+
+      <div class="p-cell"
+           data-index="2"
+           data-name="Vértice"
+           data-cat="Escultura · 2023"
+           data-desc="Aquí va el texto"
+           data-series="">
+        <img src="img/obra3.jpg" alt="Vértice">
+        <div class="p-cell-overlay">
+          <div class="p-cell-name">Vértice</div>
+          <div class="p-cell-cat">Escultura · 2023</div>
+        </div>
+      </div>
+
+      <div class="p-cell"
+           data-index="3"
+           data-name="Umbral nocturno"
+           data-cat="Tradicional · 2024"
+           data-desc="Aquí va el texto"
+           data-series="Serie: Nocturnos">
+        <img src="img/obra4.jpg" alt="Umbral nocturno">
+        <div class="p-cell-overlay">
+          <div class="p-cell-name">Umbral nocturno</div>
+          <div class="p-cell-cat">Tradicional · 2024</div>
+        </div>
+      </div>
+
+      <div class="p-cell"
+           data-index="4"
+           data-name="Meridiano"
+           data-cat="Ilustración digital · 2024"
+           data-desc="Aquí va el texto"
+           data-series="">
+        <img src="img/obra5.jpg" alt="Meridiano">
+        <div class="p-cell-overlay">
+          <div class="p-cell-name">Meridiano</div>
+          <div class="p-cell-cat">Ilustración digital · 2024</div>
+        </div>
+      </div>
+
+      <div class="p-cell"
+           data-index="5"
+           data-name="Órbita"
+           data-cat="Lineart · 2023"
+           data-desc="Aquí va el texto"
+           data-series="Serie: Nocturnos">
+        <img src="img/obra6.jpg" alt="Órbita">
+        <div class="p-cell-overlay">
+          <div class="p-cell-name">Órbita</div>
+          <div class="p-cell-cat">Lineart · 2023</div>
+        </div>
+      </div>
+
+      <div class="p-cell"
+           data-index="6"
+           data-name="Silencio"
+           data-cat="Tradicional · 2023"
+           data-desc="Aquí va el texto"
+           data-series="">
+        <img src="img/obra7.jpg" alt="Silencio">
+        <div class="p-cell-overlay">
+          <div class="p-cell-name">Silencio</div>
+          <div class="p-cell-cat">Tradicional · 2023</div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="portfolio-cta">
+      <div class="cta-line"></div>
+      <button class="btn-cta" id="btn-ver-portafolio">
+        Ver portafolio completo
+        <svg viewBox="0 0 24 24" stroke-width="1.5">
+          <line x1="5" y1="12" x2="19" y2="12"/>
+          <polyline points="12 5 19 12 12 19"/>
+        </svg>
+      </button>
+      <div class="cta-line"></div>
+    </div>
+  </section>
+
+  <div class="sep"></div>
+
+  <!-- ============================================================
+       CATEGORÍAS
+       ─────────────────────────────────────────────────────────────
+       AGREGAR IMÁGENES a una técnica existente:
+         → Ir al .tech-panel correcto y añadir un .tech-item en .tech-grid
+         → El JS detecta automáticamente los extras y los oculta
+
+       AGREGAR UNA NUEVA CATEGORÍA:
+         1. Añadir: <button class="tab" data-cat="NOMBRE">Nombre</button>
+         2. Añadir: <div class="tech-panel" id="panel-NOMBRE"> con su grid
+         → El JS lo enlaza automáticamente, sin tocar main.js
+
+       Atributos de cada .tech-item:
+         data-name = nombre en lightbox
+         data-cat  = técnica · año
+         data-desc = descripción breve
+       ============================================================ -->
+  <section class="section reveal" id="categorias">
+
+    <div class="cat-tabs">
+      <button class="tab active" data-cat="digital">Ilustración digital</button>
+      <button class="tab" data-cat="tradicional">Tradicional</button>
+      <button class="tab" data-cat="lineart">Lineart</button>
+      <button class="tab" data-cat="escultura">Escultura</button>
+      <button class="tab" data-cat="linograbado">Linograbado</button>
+      <button class="tab" data-cat="tattoo">Tattoo</button>
+      <button class="tab" data-cat="experimental">Experimental</button>
+    </div>
+
+    <!-- DIGITAL -->
+    <div class="tech-panel active" id="panel-digital">
+      <div class="section-header">
+        <h2 class="section-title"><em>Ilustración</em> digital</h2>
+      </div>
+      <div class="tech-grid">
+        <div class="tech-item" data-name="Artefacto I"  data-cat="Digital · 2024" data-desc="Aquí va el texto"><img src="img/cat-d1.jpg" alt="Artefacto I"><div class="tech-item-overlay"><div class="tech-item-name">Artefacto I</div><div class="tech-item-cat">Digital · 2024</div></div></div>
+        <div class="tech-item" data-name="Stasis"        data-cat="Digital · 2024" data-desc="Aquí va el texto"><img src="img/cat-d2.jpg" alt="Stasis"><div class="tech-item-overlay"><div class="tech-item-name">Stasis</div><div class="tech-item-cat">Digital · 2024</div></div></div>
+        <div class="tech-item" data-name="Raíz"          data-cat="Digital · 2023" data-desc="Aquí va el texto"><img src="img/cat-d3.jpg" alt="Raíz"><div class="tech-item-overlay"><div class="tech-item-name">Raíz</div><div class="tech-item-cat">Digital · 2023</div></div></div>
+        <div class="tech-item" data-name="Umbra"         data-cat="Digital · 2023" data-desc="Aquí va el texto"><img src="img/cat-d4.jpg" alt="Umbra"><div class="tech-item-overlay"><div class="tech-item-name">Umbra</div><div class="tech-item-cat">Digital · 2023</div></div></div>
+        <div class="tech-item" data-name="Pliegue"       data-cat="Digital · 2024" data-desc="Aquí va el texto"><img src="img/cat-d5.jpg" alt="Pliegue"><div class="tech-item-overlay"><div class="tech-item-name">Pliegue</div><div class="tech-item-cat">Digital · 2024</div></div></div>
+        <div class="tech-item" data-name="Nodo"          data-cat="Digital · 2023" data-desc="Aquí va el texto"><img src="img/cat-d6.jpg" alt="Nodo"><div class="tech-item-overlay"><div class="tech-item-name">Nodo</div><div class="tech-item-cat">Digital · 2023</div></div></div>
+        <div class="tech-item" data-name="Cicatriz"      data-cat="Digital · 2024" data-desc="Aquí va el texto"><img src="img/cat-d7.jpg" alt="Cicatriz"><div class="tech-item-overlay"><div class="tech-item-name">Cicatriz</div><div class="tech-item-cat">Digital · 2024</div></div></div>
+        <div class="tech-item" data-name="Señal"         data-cat="Digital · 2023" data-desc="Aquí va el texto"><img src="img/cat-d8.jpg" alt="Señal"><div class="tech-item-overlay"><div class="tech-item-name">Señal</div><div class="tech-item-cat">Digital · 2023</div></div></div>
+      </div>
+      <div class="tech-footer">
+        <button class="btn-show-more">
+          <span class="btn-label">Mostrar más</span>
+          <svg viewBox="0 0 24 24" stroke-width="1.5"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- TRADICIONAL -->
+    <div class="tech-panel" id="panel-tradicional">
+      <div class="section-header">
+        <h2 class="section-title">Técnica <em>tradicional</em></h2>
+      </div>
+      <div class="tech-grid">
+        <div class="tech-item" data-name="Umbral nocturno" data-cat="Acrílico · 2024" data-desc="Aquí va el texto"><img src="img/obra4.jpg" alt="Umbral nocturno"><div class="tech-item-overlay"><div class="tech-item-name">Umbral nocturno</div><div class="tech-item-cat">Acrílico · 2024</div></div></div>
+        <div class="tech-item" data-name="Silencio"        data-cat="Tinta · 2023"    data-desc="Aquí va el texto"><img src="img/obra7.jpg" alt="Silencio"><div class="tech-item-overlay"><div class="tech-item-name">Silencio</div><div class="tech-item-cat">Tinta · 2023</div></div></div>
+        <div class="tech-item" data-name="Proceso I"       data-cat="Mixta · 2023"    data-desc="Aquí va el texto"><img src="img/proceso-1.jpg" alt="Proceso I"><div class="tech-item-overlay"><div class="tech-item-name">Proceso I</div><div class="tech-item-cat">Mixta · 2023</div></div></div>
+        <div class="tech-item" data-name="Proceso II"      data-cat="Mixta · 2023"    data-desc="Aquí va el texto"><img src="img/proceso-2.jpg" alt="Proceso II"><div class="tech-item-overlay"><div class="tech-item-name">Proceso II</div><div class="tech-item-cat">Mixta · 2023</div></div></div>
+        <div class="tech-item" data-name="Proceso III"     data-cat="Mixta · 2024"    data-desc="Aquí va el texto"><img src="img/proceso-3.jpg" alt="Proceso III"><div class="tech-item-overlay"><div class="tech-item-name">Proceso III</div><div class="tech-item-cat">Mixta · 2024</div></div></div>
+      </div>
+      <div class="tech-footer">
+        <button class="btn-show-more">
+          <span class="btn-label">Mostrar más</span>
+          <svg viewBox="0 0 24 24" stroke-width="1.5"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- LINEART -->
+    <div class="tech-panel" id="panel-lineart">
+      <div class="section-header">
+        <h2 class="section-title"><em>Line</em>art</h2>
+      </div>
+      <div class="tech-grid">
+        <div class="tech-item" data-name="Memoria líquida" data-cat="Lineart · 2024" data-desc="Aquí va el texto"><img src="img/obra2.jpg" alt="Memoria líquida"><div class="tech-item-overlay"><div class="tech-item-name">Memoria líquida</div><div class="tech-item-cat">Lineart · 2024</div></div></div>
+        <div class="tech-item" data-name="Órbita"          data-cat="Lineart · 2023" data-desc="Aquí va el texto"><img src="img/obra6.jpg" alt="Órbita"><div class="tech-item-overlay"><div class="tech-item-name">Órbita</div><div class="tech-item-cat">Lineart · 2023</div></div></div>
+        <div class="tech-item" data-name="Proceso final"   data-cat="Lineart · 2024" data-desc="Aquí va el texto"><img src="img/proceso-3.jpg" alt="Proceso final"><div class="tech-item-overlay"><div class="tech-item-name">Proceso final</div><div class="tech-item-cat">Lineart · 2024</div></div></div>
+      </div>
+      <div class="tech-footer">
+        <button class="btn-show-more">
+          <span class="btn-label">Mostrar más</span>
+          <svg viewBox="0 0 24 24" stroke-width="1.5"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- ESCULTURA -->
+    <div class="tech-panel" id="panel-escultura">
+      <div class="section-header">
+        <h2 class="section-title"><em>Escul</em>tura</h2>
+      </div>
+      <div class="tech-grid">
+        <div class="tech-item" data-name="Vértice" data-cat="Arcilla · 2023"          data-desc="Aquí va el texto"><img src="img/obra3.jpg" alt="Vértice"><div class="tech-item-overlay"><div class="tech-item-name">Vértice</div><div class="tech-item-cat">Arcilla · 2023</div></div></div>
+        <div class="tech-item" data-name="Materia" data-cat="Obj. encontrados · 2023" data-desc="Aquí va el texto"><img src="img/proceso-2.jpg" alt="Materia"><div class="tech-item-overlay"><div class="tech-item-name">Materia</div><div class="tech-item-cat">Obj. encontrados · 2023</div></div></div>
+        <div class="tech-item" data-name="Tensión" data-cat="Mixta · 2024"            data-desc="Aquí va el texto"><img src="img/proceso-1.jpg" alt="Tensión"><div class="tech-item-overlay"><div class="tech-item-name">Tensión</div><div class="tech-item-cat">Mixta · 2024</div></div></div>
+      </div>
+      <div class="tech-footer">
+        <button class="btn-show-more">
+          <span class="btn-label">Mostrar más</span>
+          <svg viewBox="0 0 24 24" stroke-width="1.5"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- LINOGRABADO -->
+    <div class="tech-panel" id="panel-linograbado">
+      <div class="section-header">
+        <h2 class="section-title"><em>Lino</em>grabado</h2>
+      </div>
+      <div class="tech-grid">
+        <div class="tech-item" data-name="Grabado I"   data-cat="Linograbado · 2024" data-desc="Aquí va el texto"><img src="img/proceso-1.jpg" alt="Grabado I"><div class="tech-item-overlay"><div class="tech-item-name">Grabado I</div><div class="tech-item-cat">Linograbado · 2024</div></div></div>
+        <div class="tech-item" data-name="Grabado II"  data-cat="Linograbado · 2023" data-desc="Aquí va el texto"><img src="img/proceso-2.jpg" alt="Grabado II"><div class="tech-item-overlay"><div class="tech-item-name">Grabado II</div><div class="tech-item-cat">Linograbado · 2023</div></div></div>
+        <div class="tech-item" data-name="Grabado III" data-cat="Linograbado · 2024" data-desc="Aquí va el texto"><img src="img/proceso-3.jpg" alt="Grabado III"><div class="tech-item-overlay"><div class="tech-item-name">Grabado III</div><div class="tech-item-cat">Linograbado · 2024</div></div></div>
+      </div>
+      <div class="tech-footer">
+        <button class="btn-show-more">
+          <span class="btn-label">Mostrar más</span>
+          <svg viewBox="0 0 24 24" stroke-width="1.5"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- TATTOO -->
+    <div class="tech-panel" id="panel-tattoo">
+      <div class="section-header">
+        <h2 class="section-title">Diseño <em>tattoo</em></h2>
+      </div>
+      <div class="tech-grid">
+        <div class="tech-item" data-name="Flash I"   data-cat="Tattoo · 2024" data-desc="Aquí va el texto"><img src="img/obra1.jpg" alt="Flash I"><div class="tech-item-overlay"><div class="tech-item-name">Flash I</div><div class="tech-item-cat">Tattoo · 2024</div></div></div>
+        <div class="tech-item" data-name="Flash II"  data-cat="Tattoo · 2024" data-desc="Aquí va el texto"><img src="img/obra2.jpg" alt="Flash II"><div class="tech-item-overlay"><div class="tech-item-name">Flash II</div><div class="tech-item-cat">Tattoo · 2024</div></div></div>
+        <div class="tech-item" data-name="Flash III" data-cat="Tattoo · 2023" data-desc="Aquí va el texto"><img src="img/obra3.jpg" alt="Flash III"><div class="tech-item-overlay"><div class="tech-item-name">Flash III</div><div class="tech-item-cat">Tattoo · 2023</div></div></div>
+        <div class="tech-item" data-name="Flash IV"  data-cat="Tattoo · 2024" data-desc="Aquí va el texto"><img src="img/obra5.jpg" alt="Flash IV"><div class="tech-item-overlay"><div class="tech-item-name">Flash IV</div><div class="tech-item-cat">Tattoo · 2024</div></div></div>
+      </div>
+      <div class="tech-footer">
+        <button class="btn-show-more">
+          <span class="btn-label">Mostrar más</span>
+          <svg viewBox="0 0 24 24" stroke-width="1.5"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- EXPERIMENTAL -->
+    <div class="tech-panel" id="panel-experimental">
+      <div class="section-header">
+        <h2 class="section-title">Obra <em>experimental</em></h2>
+      </div>
+      <div class="tech-grid">
+        <div class="tech-item" data-name="Experimento I"   data-cat="Experimental · 2024" data-desc="Aquí va el texto"><img src="img/cat-d1.jpg" alt="Experimento I"><div class="tech-item-overlay"><div class="tech-item-name">Experimento I</div><div class="tech-item-cat">Experimental · 2024</div></div></div>
+        <div class="tech-item" data-name="Experimento II"  data-cat="Experimental · 2023" data-desc="Aquí va el texto"><img src="img/cat-d2.jpg" alt="Experimento II"><div class="tech-item-overlay"><div class="tech-item-name">Experimento II</div><div class="tech-item-cat">Experimental · 2023</div></div></div>
+        <div class="tech-item" data-name="Experimento III" data-cat="Experimental · 2024" data-desc="Aquí va el texto"><img src="img/cat-d3.jpg" alt="Experimento III"><div class="tech-item-overlay"><div class="tech-item-name">Experimento III</div><div class="tech-item-cat">Experimental · 2024</div></div></div>
+        <div class="tech-item" data-name="Experimento IV"  data-cat="Experimental · 2024" data-desc="Aquí va el texto"><img src="img/cat-d4.jpg" alt="Experimento IV"><div class="tech-item-overlay"><div class="tech-item-name">Experimento IV</div><div class="tech-item-cat">Experimental · 2024</div></div></div>
+        <div class="tech-item" data-name="Experimento V"   data-cat="Experimental · 2023" data-desc="Aquí va el texto"><img src="img/cat-d5.jpg" alt="Experimento V"><div class="tech-item-overlay"><div class="tech-item-name">Experimento V</div><div class="tech-item-cat">Experimental · 2023</div></div></div>
+      </div>
+      <div class="tech-footer">
+        <button class="btn-show-more">
+          <span class="btn-label">Mostrar más</span>
+          <svg viewBox="0 0 24 24" stroke-width="1.5"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+      </div>
+    </div>
+
+  </section>
+
+  <div class="sep"></div>
+
+  <!-- ============================================================
+       SOBRE EL ARTISTA
+       ============================================================ -->
+  <div class="about-grid reveal">
+    <div>
+      <div class="about-label">Sobre el artista</div>
+      <h2 class="about-h2">El arte como<br><em>acto de memoria</em></h2>
+      <p class="about-p">Aquí va el texto</p>
+      <p class="about-p">Aquí va el texto</p>
+      <a href="#contacto" class="about-btn">Colaboremos en algo nuevo</a>
+    </div>
+    <div class="portrait-wrap">
+      <img src="img/retrato.jpg" alt="TabCuart — ilustradora">
+      <div class="portrait-footer">
+        <div class="portrait-name">TabCuart</div>
+        <div class="portrait-loc">Ilustradora · Medellín</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="sep"></div>
+
+  <!-- ============================================================
+       PROCESO CREATIVO
+       ─────────────────────────────────────────────────────────────
+       AGREGAR UNA ETAPA: duplicar un .proc-stage y actualizar el número
+       AGREGAR IMÁGENES: añadir .proc-img-item dentro de .proc-stage-grid
+         → El JS oculta automáticamente los que superen 3
+       ============================================================ -->
+  <section class="section reveal" id="proceso">
+    <div class="section-header">
+      <h2 class="section-title">Proceso <em>creativo</em></h2>
+      <a href="#" class="see-all">Ver diario</a>
+    </div>
+
+    <div class="process-stages">
+
+      <div class="proc-stage">
+        <div class="proc-stage-num">
+          <div class="proc-stage-circle">01</div>
+          <div class="proc-stage-line"></div>
+        </div>
+        <div class="proc-stage-body">
+          <h3 class="proc-stage-title"><em>Boceto</em></h3>
+          <p class="proc-stage-desc">Aquí va el texto</p>
+          <div class="proc-stage-grid">
+            <div class="proc-img-item" data-name="Boceto inicial"  data-desc="Aquí va el texto"><img src="img/proceso-1.jpg" alt="Boceto inicial"><div class="proc-img-overlay"><span>Boceto inicial</span></div></div>
+            <div class="proc-img-item" data-name="Variante"        data-desc="Aquí va el texto"><img src="img/proceso-2.jpg" alt="Variante"><div class="proc-img-overlay"><span>Variante</span></div></div>
+            <div class="proc-img-item" data-name="Refinado"        data-desc="Aquí va el texto"><img src="img/proceso-3.jpg" alt="Refinado"><div class="proc-img-overlay"><span>Refinado</span></div></div>
+            <div class="proc-img-item" data-name="Alternativo"     data-desc="Aquí va el texto"><img src="img/proceso-1.jpg" alt="Alternativo"><div class="proc-img-overlay"><span>Alternativo</span></div></div>
+          </div>
+          <div class="proc-expand-wrap">
+            <button class="btn-proc-expand">
+              <span class="btn-label">Ver más</span>
+              <svg viewBox="0 0 24 24" stroke-width="1.5"><polyline points="6 9 12 15 18 9"/></svg>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="proc-stage">
+        <div class="proc-stage-num">
+          <div class="proc-stage-circle">02</div>
+          <div class="proc-stage-line"></div>
+        </div>
+        <div class="proc-stage-body">
+          <h3 class="proc-stage-title">Line<em>art</em></h3>
+          <p class="proc-stage-desc">Aquí va el texto</p>
+          <div class="proc-stage-grid">
+            <div class="proc-img-item" data-name="Estructura base" data-desc="Aquí va el texto"><img src="img/proceso-2.jpg" alt="Estructura base"><div class="proc-img-overlay"><span>Estructura base</span></div></div>
+            <div class="proc-img-item" data-name="Detalle"         data-desc="Aquí va el texto"><img src="img/proceso-3.jpg" alt="Detalle"><div class="proc-img-overlay"><span>Detalle</span></div></div>
+            <div class="proc-img-item" data-name="Lineart final"   data-desc="Aquí va el texto"><img src="img/proceso-1.jpg" alt="Lineart final"><div class="proc-img-overlay"><span>Lineart final</span></div></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="proc-stage">
+        <div class="proc-stage-num">
+          <div class="proc-stage-circle">03</div>
+          <div class="proc-stage-line"></div>
+        </div>
+        <div class="proc-stage-body">
+          <h3 class="proc-stage-title">Color y <em>acabado</em></h3>
+          <p class="proc-stage-desc">Aquí va el texto</p>
+          <div class="proc-stage-grid">
+            <div class="proc-img-item" data-name="Prueba de paleta" data-desc="Aquí va el texto"><img src="img/proceso-3.jpg" alt="Prueba de paleta"><div class="proc-img-overlay"><span>Prueba de paleta</span></div></div>
+            <div class="proc-img-item" data-name="Resultado final"  data-desc="Aquí va el texto"><img src="img/obra1.jpg" alt="Resultado final"><div class="proc-img-overlay"><span>Resultado final</span></div></div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <div class="sep"></div>
+
+  <!-- ============================================================
+       CONTACTO
+       ============================================================ -->
+  <section class="contact reveal" id="contacto">
+    <h2 class="contact-h2">Hablemos de<br><em>algo nuevo</em></h2>
+    <p class="contact-sub">Colaboraciones, encargos y proyectos editoriales</p>
+    <div class="contact-form">
+      <input type="text"  placeholder="Tu nombre"              autocomplete="name">
+      <input type="email" placeholder="tu@correo.com"          autocomplete="email">
+      <textarea           placeholder="Cuéntame tu proyecto..." rows="4"></textarea>
+      <button class="contact-submit" type="button">Enviar mensaje</button>
+    </div>
+    <div class="social-links">
+      <a href="#" target="_blank" rel="noopener">Instagram</a>
+      <a href="#" target="_blank" rel="noopener">Behance</a>
+      <a href="#" target="_blank" rel="noopener">ArtStation</a>
+      <a href="#" target="_blank" rel="noopener">Pinterest</a>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       FOOTER
+       ============================================================ -->
+  <footer>
+    <div class="footer-logo">TabCuart</div>
+    <div class="footer-quote">Las imágenes que permanecen.</div>
+    <div class="footer-copy">© 2025</div>
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
+</html>
