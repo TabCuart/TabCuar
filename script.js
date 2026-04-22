@@ -172,29 +172,32 @@ window.addEventListener('scroll',()=>{
 
 // VISOR DE IMAGEN (click para ampliar)
 
-const modal = document.getElementById("imgModal");
-const modalImg = document.getElementById("imgExpanded");
-const closeBtn = document.querySelector(".img-close");
+document.addEventListener("DOMContentLoaded", function(){
 
-if(modal && modalImg){
+  const modal = document.getElementById("imgModal");
+  const modalImg = document.getElementById("imgExpanded");
+  const closeBtn = document.querySelector(".img-close");
 
   document.querySelectorAll(".click-img").forEach(img=>{
-    img.onclick = function(){
+    img.addEventListener("click", function(e){
+
+      e.stopPropagation(); // 🔥 CLAVE (evita que abra Arte.html)
+
       modal.style.display = "flex";
       modalImg.src = this.src;
-    }
+    });
   });
 
   if(closeBtn){
-    closeBtn.onclick = function(){
+    closeBtn.addEventListener("click", function(){
       modal.style.display = "none";
-    }
+    });
   }
 
-  modal.onclick = function(e){
+  modal.addEventListener("click", function(e){
     if(e.target === modal){
       modal.style.display = "none";
     }
-  }
+  });
 
-}
+});
