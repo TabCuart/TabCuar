@@ -54,8 +54,8 @@ nav{position:fixed;top:0;left:0;right:0;z-index:900;display:flex;align-items:cen
   left:50%;
   transform:translate(-50%, -50%);
   
-  max-width:60%;   /* 🔥 ajusta aquí el tamaño */
-  max-height:60%;  /* 🔥 evita que crezca demasiado */
+  max-width:50%;   /* 🔥 ajusta aquí el tamaño */
+  max-height:50%;  /* 🔥 evita que crezca demasiado */
   
   width:auto;
   height:auto;
