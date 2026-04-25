@@ -492,7 +492,7 @@
       <div class="accent-line" style="margin-bottom:.5rem;"><span>Tienda</span></div>
       <h2 class="section-title">Obras<em>Disponibles</em></h2>
       <div class="section-divider"></div>
-      <p class="section-desc">Haz clic en cada recuadro para agregar tus ilustraciones, prints y esculturas.</p>
+      <p class="section-desc">Prints, originales y esculturas disponibles. Escríbeme para consultar precios y envíos.</p>
     </div>
   </div>
   <div class="store-grid reveal">
@@ -507,23 +507,29 @@
 </section>
 
 <!-- SOBRE -->
-<section id="sobre" style="background:var(--bg-2);">
+<section id="sobre" aria-labelledby="sobre-titulo">
   <div class="about-grid reveal">
-    <div class="about-portrait" onclick="this.querySelector('input').click()">
-      <input type="file" class="file-input" accept="image/*" onchange="loadPortraitImg(this)">
-      <div class="upload-placeholder"><div class="upload-icon" style="width:60px;height:60px;font-size:1.6rem;">+</div><div class="upload-label">Subir foto o retrato</div><div class="upload-sub">Tu imagen aquí</div></div>
+    <div class="about-portrait" onclick="this.querySelector('input').click()" role="button" tabindex="0" aria-label="Subir foto o retrato">
+      <input type="file" class="file-input" accept="image/*" onchange="loadPortraitImg(this)" aria-hidden="true">
+      <div class="upload-placeholder">
+        <div class="upload-icon" style="width:60px;height:60px;font-size:1.6rem;" aria-hidden="true">+</div>
+        <span class="upload-label">Subir foto o retrato</span>
+      </div>
     </div>
     <div class="about-content">
       <div class="accent-line"><span>El Artista</span></div>
-      <h2>Tab<strong>Cuar</strong></h2>
-      <p class="about-role">Tecnólogo en Logística · Tecnólogo en Ilustración (en formación) · Ilustrador Multidisciplinario</p>
-      <p class="about-text">Creador del ecosistema TabCuar, un proyecto que integra la ilustración, el diseño de un juego de cartas coleccionables, la acuarofilia y la enseñanza bajo una misma visión: la de un artista que entiende la creatividad como territorio, no como disciplina.</p>
-      <p class="about-text">Trabaja en ilustración digital y tradicional, linograbado, escultura y experimentación gráfica. Desarrolla Gehenna, un juego de cartas sobre los 7 pecados capitales, cultiva plantas acuáticas y comparte su proceso como docente en formación.</p>
-      <p class="about-text">Su background en logística y su formación artística en curso le dan una perspectiva particular: el rigor de los sistemas junto con la apertura del arte experimental.</p>
+      <h2 id="sobre-titulo">Tab<strong>Cuar</strong></h2>
+      <p class="about-role">Felipe Taborda · Tecnólogo en Logística · Tecnólogo en Ilustración (en formación) · Ilustrador Multidisciplinario · Medellín, Colombia</p>
+      <p class="about-text">Soy el creador de TabCuar: un ecosistema que integra ilustración, un juego de cartas coleccionables, acuarofilia y enseñanza bajo una misma visión. Entiendo la creatividad como territorio, no como disciplina.</p>
+      <p class="about-text">Trabajo en ilustración digital y tradicional, linograbado, escultura y experimentación gráfica. Desarrollo Gehenna, un juego de cartas sobre los 7 pecados capitales, cultivo plantas acuáticas y comparto mi proceso como docente en formación.</p>
+      <p class="about-text">Mi background en logística y mi formación artística me dan una perspectiva particular: el rigor de los sistemas junto con la apertura del arte experimental.</p>
+      <div class="about-cta">
+        <a href="#contacto" class="btn btn-primary">Escribirme</a>
+        <a href="#arte" class="btn btn-ghost">Ver portafolio</a>
+      </div>
     </div>
   </div>
 </section>
-
 <!-- BLOG -->
 <section id="blog">
   <div class="section-header reveal">
@@ -554,7 +560,7 @@
   </div>
   <div class="contact-grid reveal">
     <div class="contact-info">
-      <h3>¿Tienes un proyecto en mente, quieres aprender, encargar una obra o explorar?</h3>
+      <h3>¿Quieres encargar una obra, tomar un taller o explorar el ecosistema TabCuar?</h3>
       <p>TabCuar está abierto a comisiones, colaboraciones, clases y proyectos creativos de toda índole.</p>
       <div class="contact-types">
         <div class="contact-type"><span class="ctdot"></span>Clases de ilustración y talleres</div>
