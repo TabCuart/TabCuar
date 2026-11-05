@@ -1,607 +1,1911 @@
 <!DOCTYPE html>
 <html lang="es">
+
+<!-- =========================================
+     1. CONFIGURACIÓN GENERAL (head)
+========================================= -->
 <head>
 <meta charset="UTF-8">
+<!-- Priorizar la imagen del Observador desde el inicio -->
+<link rel="preload" as="image" href="Img/observador.webp" fetchpriority="high">
+<!-- Estado inicial de la secuencia de entrada (ver script.js §10 y styles.css §7B).
+     Se marca ANTES de pintar para que no haya parpadeos. Si el JS no corre, CSS lo libera solo. -->
+<script>document.documentElement.classList.add('intro-pending');</script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>TabCuar — Arte · Juegos · Ecosistemas · Educación</title>
+
+<title>TabCuar — Ilustrador &amp; Creador Visual</title>
+
+<!-- Tipografías de Google Fonts: Cinzel, Lobster y Syne -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Lobster&family=Cinzel:wght@400;600;900&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="styles.css">
+
+<link
+  href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Lobster&family=Syne:wght@400;500;600;700;800&display=swap"
+  rel="stylesheet"
+>
+
+<!-- Tipografía local RM Albion (la regla @font-face está en styles.css) -->
+<link
+  rel="preload"
+  href="fonts/rm_albion.ttf?v=2"
+  as="font"
+  type="font/ttf"
+  crossorigin
+>
+
+<!-- Hoja de estilos principal -->
+<link rel="stylesheet" href="styles.css?v=20261105b">
+
 </head>
+
 <body>
 
-<!-- LOADER -->
-<div id="loader">
+<!-- =========================================
+     2. LOADER (pantalla de carga)
+========================================= -->
+<!-- CSS: #loader, .loader-bar  |  JS: script.js agrega la clase "hidden" -->
+<div id="loader" role="status" aria-live="polite" aria-label="Cargando TabCuar">
+
   <div class="brand" style="font-size:3rem;">TabCuar</div>
+
   <div class="loader-bar"></div>
+
 </div>
 
-<!-- CURSOR -->
+<!-- =========================================
+     3. CURSOR PERSONALIZADO Y BOTÓN VOLVER
+========================================= -->
+<!-- CSS: .cursor, .cursor-ring  |  JS: se mueven con el mouse -->
 <div class="cursor" id="cursor"></div>
 <div class="cursor-ring" id="cursorRing"></div>
 
-<!-- NAV -->
-<nav>
-  <a href="#inicio" class="brand">TabCuar</a>
-  <ul class="nav-links">
-    <li><a href="#arte">Arte</a></li>
-    <li><a href="#juegos">Juegos</a></li>
-    <li><a href="#acuario">Acuario</a></li>
-    <li><a href="#educacion">Lab</a></li>
-    <li><a href="#tienda">Tienda</a></li>
-    <li><a href="#blog">Blog</a></li>
-    <li><a href="#contacto">Contacto</a></li>
-  </ul>
-  <div class="nav-sub">
-    <a href="#arte" class="art">TabCuart</a>
-    <a href="#juegos" class="game">Gehenna</a>
-    <a href="#acuario" class="aqua">Tabcuario</a>
-    <a href="#educacion" class="lab">TabLab</a>
-  </div>
-</nav>
+<!-- Botón para cerrar la capa abierta. CSS: .btn-back  |  JS: closeLayer() -->
+<button class="btn-back" id="backBtn" onclick="closeLayer()">
+  ← Volver
+</button>
 
-<!-- HERO -->
-<section id="inicio" aria-label="Inicio — TabCuar ecosistema creativo">
-  <div class="hero-left">
-    <p class="hero-label">Ecosistema Creativo · Medellín, Colombia</p>
-    <h1 class="hero-brand">TabCuar</h1>
-    <p class="hero-sub">Arte · Juegos · Ecosistemas · Educación</p>
-    <p class="hero-desc">Ilustración en múltiples técnicas, diseño de juegos, acuarofilia y formación artística, integrados en un mismo enfoque creativo.</p>
-    <div class="hero-actions">
-      <a href="#arte" class="btn btn-primary">Ver portafolio</a>
-      <a href="#contacto" class="btn btn-ghost">Encargar obra</a>
-    </div>
-  </div>
-  <div class="hero-right" aria-hidden="true">
-    <div class="hero-glow"></div>
-    <div class="hero-right-bg"></div>
-    <div class="hero-img-area">
-      <img src="Img/logo.png" alt="TabCuar — Logo" class="hero-img" loading="eager" width="480" height="480">
-    </div>
-  </div>
-</section>
 
-<!-- MARQUEE -->
-<div class="marquee-wrap">
+<!-- =========================================
+     4. INICIO — CORAZÓN INTERACTIVO
+========================================= -->
+<!-- La imagen del corazón cambia según la zona: ver HEART_STATES en script.js.
+     La posición de los hotspots se define en styles.css (.zone-proyectos, .zone-estudios, etc.). -->
+<main id="heartStage">
+    <!-- Burbujas decorativas. CSS: .bubble-field span -->
+    <div class="bubble-field" aria-hidden="true">
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+  
+  <div class="stage-header">
+    <p class="stage-eyebrow">Universo creativo de</p>
+    <h1 class="stage-name">TabCuar</h1>
+    <p class="stage-role">Ilustrador y creador visual</p>
+  </div>
+
+  <div class="heart-wrap">
+    <!-- Líneas anatómicas (ocultas por CSS). JS: armZone() usa los ids line-* y node-* -->
+    <svg class="anatomy-lines" id="anatomyLines" aria-hidden="true">
+      <path id="line-proyectos"></path>
+      <path id="line-estudios"></path>
+      <path id="line-TabCuart"></path>
+      <path id="line-contacto"></path>
+      <path id="line-sobre"></path>
+      <circle class="node" id="node-proyectos" r="9"></circle>
+      <circle class="node" id="node-estudios" r="9"></circle>
+      <circle class="node" id="node-TabCuart" r="9"></circle>
+      <circle class="node" id="node-contacto" r="9"></circle>
+      <circle class="node" id="node-sobre" r="9"></circle>
+    </svg>
+
+    <!-- EL CORAZÓN (JS: #heartAnim y #heartFrame) -->
+    <div class="heart-anim" id="heartAnim" role="button" tabindex="0" aria-label="Sobre mí — abrir" data-zone="sobre">
+      <img id="heartFrame" class="heart-frame-img" src="./assets/heart/S1.png" alt="">
+      <video id="heartVideo" class="heart-video" muted loop playsinline style="display:none;"></video>
+      <div class="heart-fallback" id="heartFallback">
+        <!-- Corazón de respaldo. JS lo oculta al iniciar (initHeart) -->
+        <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <radialGradient id="heartGrad" cx="50%" cy="35%">
+              <stop offset="0%" stop-color="#E3262E" stop-opacity=".9"/>
+              <stop offset="100%" stop-color="#5c0d12" stop-opacity=".9"/>
+            </radialGradient>
+          </defs>
+          <path d="M100 176 C 40 132, 14 96, 14 64 C 14 36, 36 18, 60 18 C 78 18, 92 28, 100 44 C 108 28, 122 18, 140 18 C 164 18, 186 36, 186 64 C 186 96, 160 132, 100 176 Z" fill="url(#heartGrad)" stroke="rgba(255,255,255,.12)" stroke-width="1"/>
+        </svg>
+      </div>
+      <!-- ÚNICO "Sobre mí" de la página principal (siempre visible sobre el corazón) -->
+      <span class="heart-center-label">Sobre mí</span>
+    </div>
+
+    <!-- HOTSPOTS = etiquetas anatómicas. JS: lee data-zone para abrir layer-<zona> y dibuja la línea desde el corazón hasta .hotspot-dot (layoutAnatomy) -->
+    <button class="hotspot zone-TabCuart" data-side="left" data-zone="TabCuart" aria-label="TabCuart — galería de ilustración">
+      <span class="hotspot-dot"></span>
+      <span class="hotspot-label">TabCuart</span>
+      <span class="hotspot-desc">Portafolio y galería de ilustración por técnicas.</span>
+    </button>
+    <button class="hotspot zone-estudios" data-side="right" data-zone="estudios" aria-label="TabLab — formación y talleres">
+      <span class="hotspot-dot"></span>
+      <span class="hotspot-label">TabLab</span>
+      <span class="hotspot-desc">Formación, talleres y proceso pedagógico.</span>
+    </button>
+    <button class="hotspot zone-proyectos" data-side="left" data-zone="proyectos" aria-label="TabGame — Gehenna, juego de cartas">
+      <span class="hotspot-dot"></span>
+      <span class="hotspot-label">TabGame</span>
+      <span class="hotspot-desc">Gehenna: La Corte del Juicio.</span>
+    </button>
+    <button class="hotspot zone-contacto" data-side="right" data-zone="contacto" aria-label="TabCuario — peces, plantas y ecosistemas">
+      <span class="hotspot-dot"></span>
+      <span class="hotspot-label">TabCuario</span>
+      <span class="hotspot-desc">Peces, plantas y ecosistemas acuáticos.</span>
+    </button>
+    <!-- "SOBRE MÍ" vive SOLO en el centro del corazón (#heartAnim + .heart-center-label).
+         El hotspot inferior duplicado fue eliminado. -->
+  </div>
+</main>
+
+<!-- Franja de habilidades que se desliza (CSS: .marquee-wrap, .marquee-track) -->
+<div class="stage-skills marquee-wrap">
   <div class="marquee-track">
-    <span class="marquee-item">Ilustración Digital <span>✦</span></span>
-    <span class="marquee-item">Linograbado <span>✦</span></span>
-    <span class="marquee-item">Escultura <span>✦</span></span>
-    <span class="marquee-item">Concept Art <span>✦</span></span>
-    <span class="marquee-item">Gehenna <span>✦</span></span>
-    <span class="marquee-item">Acuarofilia <span>✦</span></span>
-    <span class="marquee-item">Plantas Acuáticas <span>✦</span></span>
-    <span class="marquee-item">7 Pecados Capitales <span>✦</span></span>
-    <span class="marquee-item">Talleres de Ilustración <span>✦</span></span>
-    <span class="marquee-item">Ilustración Digital <span>✦</span></span>
-    <span class="marquee-item">Linograbado <span>✦</span></span>
-    <span class="marquee-item">Escultura <span>✦</span></span>
-    <span class="marquee-item">Concept Art <span>✦</span></span>
-    <span class="marquee-item">Gehenna <span>✦</span></span>
-    <span class="marquee-item">Acuarofilia <span>✦</span></span>
-    <span class="marquee-item">Plantas Acuáticas <span>✦</span></span>
-    <span class="marquee-item">7 Pecados Capitales <span>✦</span></span>
-    <span class="marquee-item">Talleres de Ilustración <span>✦</span></span>
+
+    <span class="marquee-item">  Ilustración Digital   <span>✦</span></span>
+    <span class="marquee-item">  Linograbado   <span>✦</span></span>
+    <span class="marquee-item">  Escultura   <span>✦</span></span>
+    <span class="marquee-item">  Concept Art   <span>✦</span></span>
+    <span class="marquee-item">  Gehenna   <span>✦</span></span>
+    <span class="marquee-item">  Acuarofilia   <span>✦</span></span>
+    <span class="marquee-item">  Plantas Acuáticas   <span>✦</span></span>
+    <span class="marquee-item">  7 Pecados Capitales   <span>✦</span></span>
+    <span class="marquee-item">  Talleres de Ilustración   <span>✦</span></span>
+
+    <!-- REPETICIÓN EXACTA -->
+    <span class="marquee-item">  Ilustración Digital   <span>✦</span></span>
+    <span class="marquee-item">  Linograbado   <span>✦</span></span>
+    <span class="marquee-item">  Escultura   <span>✦</span></span>
+    <span class="marquee-item">  Concept Art   <span>✦</span></span>
+    <span class="marquee-item">  Gehenna   <span>✦</span></span>
+    <span class="marquee-item">  Acuarofilia   <span>✦</span></span>
+    <span class="marquee-item">  Plantas Acuáticas   <span>✦</span></span>
+    <span class="marquee-item">  7 Pecados Capitales   <span>✦</span></span>
+    <span class="marquee-item">  Talleres de Ilustración   <span>✦</span></span>
+
   </div>
 </div>
 
-<!-- DIVISIONES -->
-<section style="padding:5rem 5rem;">
-  <div class="accent-line reveal"><span>El Ecosistema</span></div>
-  <h2 class="reveal" style="font-family:'Cinzel',serif;font-weight:200;font-size:clamp(1.8rem,3.5vw,2.8rem);color:var(--text);margin-bottom:3.5rem;">Cuatro mundos.<br><em style="font-family:'Cormorant Garamond',serif;font-style:italic;font-weight:300;font-size:1.35em;color:var(--text-muted);">Una sola visión.</em></h2>
+<!-- =========================================
+     5. CAPA: SOBRE MÍ (centro del corazón)  |  id="layer-sobre"
+========================================= -->
+<section class="layer" id="layer-sobre" data-zone="sobre" aria-hidden="true">
+  <div class="layer-inner">
 
-  <div class="divisions-grid reveal">
-    <div class="division-card div-art">
-      <div class="div-img-slot">
-        <img src="Img/Pj.png" alt="TabCuart Arte" class="uploaded click-img">
-      </div>
-      <div class="div-content">
-        <div class="div-tag" onclick="location.href='Arte.html'" style="cursor:pointer;">TabCuart</div>
-        <div class="div-name">Arte &amp; Ilustración</div>
-        <p class="div-desc">Digital, tradicional, linograbado, escultura. El núcleo visual del ecosistema.</p>
+    <div class="about-intro reveal">
+      <div class="about-index">01 / IDENTIDAD</div>
+      <div class="about-intro-main">
+        <div class="accent-line"><span>El Artista</span></div>
+        <h2><strong></strong></h2>
+      
       </div>
     </div>
 
-    <div class="division-card div-game">
-      <div class="div-img-slot">
-        <img src="Img/Game.png" alt="TabGame Gehenna" class="uploaded click-img">
-      </div>
-      <div class="div-content">
-        <div class="div-tag">TabGame</div>
-        <div class="div-name">Gehenna</div>
-        <p class="div-desc">Un juego de cartas coleccionables donde los 7 pecados capitales luchan por el poder.</p>
-      </div>
-    </div>
+    <div class="about-stage reveal">
 
-    <div class="division-card div-aqua">
-      <div class="div-img-slot">
-        <img src="Img/Aqua.png" alt="Tabcuario Peces y Plantas" class="uploaded click-img">
-      </div>
-      <div class="div-content">
-        <div class="div-tag">Tabcuario</div>
-        <div class="div-name">Peces &amp; Plantas</div>
-        <p class="div-desc">Galería acuática y tienda de plantas cultivadas con cuidado artesanal.</p>
-      </div>
-    </div>
+      <div class="about-photo-column">
+        <div class="about-photo-card">
+          <span class="about-photo-number">01</span>
 
-    <div class="division-card div-lab">
-      <div class="div-img-slot">
-        <img src="Img/Lab.png" alt="TabLab Educación" class="uploaded click-img">
+          <!-- CAMBIAR AQUÍ LA IMAGEN: guarda tu foto como Img/felipe.jpg (o cambia la ruta del src) -->
+          <img
+            src="Img/Yo.png"
+            alt="Fotografía de Felipe Taborda"
+            class="about-photo click-img"
+            onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
+          >
+
+          <!-- Respaldo visual si la foto aún no existe (monograma, sin controles de carga) -->
+          <div class="about-photo-placeholder" aria-hidden="true">
+            <span class="about-placeholder-mark">FT</span>
+            <strong>TabCuar</strong>
+          </div>
+
+          <div class="about-photo-frame"></div>
+        </div>
+
+        <div class="about-photo-caption">
+          <span>FELIPE TABORDA</span>
+          <span>ILUSTRADOR · CREADOR VISUAL</span>
+        </div>
       </div>
-      <div class="div-content">
-        <div class="div-tag">TabLab</div>
-        <div class="div-name">Educación</div>
-        <p class="div-desc">Talleres, cursos y materiales. Un espacio en formación continua.</p>
-      </div>
-    </div>
+
+      <div class="about-side">
+
+  <!-- SOBRE MÍ -->
+  <div class="about-identity-card">
+    <div>Sobre <span class="about-red">mí</span></div>
+
+    <p class="about-text">
+      Ilustrador y creador multidisciplinario. Mi trabajo combina
+      ilustración, personajes, naturaleza, experimentación gráfica
+      y diferentes técnicas. Me interesa explorar lo orgánico,
+      las texturas, las formas y la fantasía para desarrollar
+      imágenes, personajes y universos propios.
+    </p>
   </div>
-</section>
 
-<!-- TABCUART -->
-<section id="arte">
-  <div class="bg-text">ARTE</div>
 
-  <div class="section-header reveal">
-    <div class="section-number">01</div>
-    <div>
-      <div class="accent-line" style="margin-bottom:.5rem;">
-        <div class="div-tag" onclick="location.href='Arte.html'" style="cursor:pointer;">TabCuart</div>
+  <!-- PROGRAMAS + INTERESES -->
+  <div class="about-bio-grid">
+
+    <div class="about-block">
+      <div class="about-card-label">PROGRAMAS QUE USO</div>
+
+      <div class="about-tools">
+        <div class="tool-card">
+          <span class="tool-number">01</span>
+          <div class="tool-icon">Ps</div>
+          <div>
+            <strong>Adobe Photoshop</strong>
+          </div>
+        </div>
+
+        <div class="tool-card">
+          <span class="tool-number">02</span>
+          <div class="tool-icon">Ae</div>
+          <div>
+            <strong>Adobe After Effects</strong>
+          </div>
+        </div>
+
+        <div class="tool-card">
+          <span class="tool-number">03</span>
+          <div class="tool-icon">Bl</div>
+          <div>
+            <strong>Blender</strong>
+          </div>
+        </div>
       </div>
+    </div>
 
-      <h2 class="section-title clickable-title"
-    onclick="location.href='Arte.html'">
-  Arte &amp;<em>Ilustración</em>
-</h2>
 
-      <div class="section-divider"></div>
+    <div class="about-block">
+      <div class="about-card-label">INTERESES</div>
 
-      <p class="section-desc">
-        Portafolio de obras por técnica. Haz clic en cualquier imagen para ampliarla.
+      <p class="about-text">
+        Naturaleza · Animales · Peces · Plantas · Fantasía ·
+        Monstruos · Anatomía · Texturas · Formas · Experimentación.
       </p>
     </div>
+
   </div>
 
-  <!-- FILTROS (estos sí se quedan) -->
-  <div class="gallery-filter reveal">
-    <button class="filter-btn active" onclick="filterGallery('all',this)">Todas</button>
-    <button class="filter-btn" onclick="filterGallery('digital',this)">Ilustración Digital</button>
-    <button class="filter-btn" onclick="filterGallery('tradicional',this)">Tradicional</button>
-    <button class="filter-btn" onclick="filterGallery('lino',this)">Linograbado</button>
-    <button class="filter-btn" onclick="filterGallery('escultura',this)">Escultura</button>
-    <button class="filter-btn" onclick="filterGallery('exp',this)">Experimental</button>
-    <button class="filter-btn" onclick="filterGallery('Tattoo',this)">Tattoo</button>
-  </div>
 
-  <!-- GALERÍA -->
-  <div class="gallery-grid reveal" id="gallery">
+  <!-- FORMACIÓN -->
+  <div class="about-block about-formation">
+    <div class="about-card-label">FORMACIÓN</div>
 
-    <!-- DIGITAL -->
-    <div class="gallery-item" data-cat="digital">
-      <img src="Img/Dj1.png" class="uploaded click-img">
-      <div class="gallery-overlay">
-        <h4>Ilustración Digital</h4>
-        <p>Abril · 2026</p>
-      </div>
-    </div>
-
-    <!-- LINO -->
-    <div class="gallery-item" data-cat="lino">
-      <img src="Img/lino1.jpg" class="uploaded click-img">
-      <div class="gallery-overlay">
-        <h4>Linograbado</h4>
-        <p>Obra 02 · 2025</p>
-      </div>
-    </div>
-
-    <!-- EXPERIMENTAL -->
-    <div class="gallery-item" data-cat="exp">
-      <img src="Img/exp1.jpg" class="uploaded click-img">
-      <div class="gallery-overlay">
-        <h4>Experimental</h4>
-        <p>Obra 03 · 2025</p>
-      </div>
-    </div>
-
-    <!-- TRADICIONAL -->
-    <div class="gallery-item" data-cat="tradicional">
-      <img src="Img/Pt1.jpg" class="uploaded click-img">
-      <div class="gallery-overlay">
-        <h4>Tradicional</h4>
-        <p>Junio · 2024</p>
-      </div>
-    </div>
-
-    <!-- ESCULTURA -->
-    <div class="gallery-item" data-cat="escultura">
-      <img src="Img/escultura1.jpg" class="uploaded click-img">
-      <div class="gallery-overlay">
-        <h4>Escultura</h4>
-        <p>Obra 05 · 2025</p>
-      </div>
-    </div>
-
-    <!-- Tatoo -->
-    <div class="gallery-item" data-cat="Tattoo">
-      <img src="Img/concept1.jpg" class="uploaded">
-      <div class="gallery-overlay">
-        <h4>Tattoo</h4>
-        <p>Obra 06 · 2025</p>
-      </div>
-    </div>
-
-  <div class="section-cta reveal">
-    <a href="#contacto" class="btn btn-primary">Encargar una ilustración</a>
-  </div>
-</section>
-
-<!-- GEHENNA — TABGAME -->
-<section id="juegos" style="padding:0;background:transparent;">
-  <div class="gehenna-bg"></div>
-  <!-- Embers -->
-  <div class="gehenna-embers" id="embers"></div>
-
-  <div class="gehenna-inner">
-
-    <!-- HEADER -->
-    <div class="gehenna-header reveal">
-      <div class="gehenna-eyebrow">TabGame</div>
-      <h2 class="gehenna-title">GEHENNA</h2>
-      <div class="gehenna-title-sub">La Corte del Juicio</div>
-      <p class="gehenna-tagline">Un juego de cartas estratégico sobre corrupción, poder y ascensión.</p>
-    </div>
-
-    <div class="gehenna-sep reveal"><span class="gehenna-sep-glyph">⬥</span></div>
-
-    <!-- LORE INTRO -->
-    <div class="gehenna-lore-grid reveal">
-      <div class="gehenna-lore-block">
-        <p>Tras la caída del mundo humano, los pecados dejaron de ser simples ideas.<br><strong>Tomaron forma.</strong></p>
-        <p>En Gehenna, un dominio donde el fuego consume lo que la humanidad deja atrás, surge una corte oscura donde cada criatura representa una deformación de la mente humana. Allí, entidades nacidas del deseo, la ambición y la ruina compiten por ascender dentro de una jerarquía corrupta.</p>
-        <p><em>La Corte observa.</em><br><em>La Corte juzga.</em><br><em>Y solo los más corruptos sobreviven.</em></p>
-      </div>
-      <div class="gehenna-lore-dramatic">
-        En un reino donde la corrupción es poder, criaturas nacidas de los pecados humanos luchan por ascender en La Corte del Juicio, donde solo los más corruptos pueden reclamar el trono.
-        <em>El poder no se hereda. Se conquista.</em>
-      </div>
-    </div>
-
-    <!-- EL CONCEPTO -->
-    <div class="gehenna-content-grid reveal">
+    <div class="formation-line">
+      <span class="formation-dot"></span>
       <div>
-        <div class="gehenna-section-title">El Concepto</div>
-        <p class="gehenna-text">GEHENNA: LA CORTE DEL JUICIO es un juego de cartas estratégico donde cada jugador invoca entidades nacidas de los pecados capitales y sus derivados.</p>
-        <p class="gehenna-text">A medida que avanza la partida, los jugadores acumulan corrupción, desarrollan criaturas y construyen su dominio dentro de la Corte.</p>
-        <p class="gehenna-text">El objetivo es simple: convertirse en la entidad más poderosa de la Corte. Pero el camino está lleno de decisiones estratégicas: cuándo evolucionar criaturas, cuándo manipular el campo y cuándo desatar el caos contra los rivales.</p>
+        <strong>Tecnólogo en Logística</strong>
+        <small>Procesos · organización · sistemas</small>
       </div>
+    </div>
+
+    <div class="formation-line">
+      <span class="formation-dot"></span>
       <div>
-        <div class="gehenna-section-title">Corrupción &amp; Ascensión</div>
-        <p class="gehenna-text">En Gehenna, la corrupción no es solo un recurso. <strong style="color:rgba(230,110,60,.85);font-style:normal;">Es el motor del ascenso.</strong></p>
-        <p class="gehenna-text">Durante la partida, las criaturas pueden evolucionar y transformarse en entidades cada vez más poderosas. Cuanta más corrupción circula, mayor es el potencial de crecimiento… pero también el riesgo de perder el control.</p>
-        <p class="gehenna-text">Los jugadores deben decidir cuándo avanzar en la jerarquía y cuándo esperar el momento adecuado para dominar la Corte.</p>
+        <strong>Tecnólogo en Ilustración</strong>
+        <small>En formación · artes visuales</small>
       </div>
     </div>
 
-    <!-- PECADOS -->
-    <div class="reveal">
-      <div class="gehenna-section-title" style="text-align:center;margin-bottom:2.5rem;">Las Facciones — Pecados Convertidos en Poder</div>
-      <p class="gehenna-text" style="text-align:center;max-width:700px;margin:0 auto 3rem;color:rgba(200,160,130,.6);">Cada pecado representa una filosofía distinta del poder y define estilos de juego únicos dentro de la partida.</p>
-      <div class="sins-grid">
-        <div class="sin-card"><span class="sin-glyph">🔥</span><div class="sin-name">Ira</div><div class="sin-desc">Fuerza y destrucción directa. Dominio por la violencia.</div></div>
-        <div class="sin-card"><span class="sin-glyph">💛</span><div class="sin-name">Codicia</div><div class="sin-desc">Acumulación implacable de recursos y poder.</div></div>
-        <div class="sin-card"><span class="sin-glyph">👁</span><div class="sin-name">Envidia</div><div class="sin-desc">Copia y usurpación de habilidades rivales.</div></div>
-        <div class="sin-card"><span class="sin-glyph">😴</span><div class="sin-name">Pereza</div><div class="sin-desc">Pasividad calculada con efectos devastadores.</div></div>
-        <div class="sin-card"><span class="sin-glyph">🍷</span><div class="sin-name">Gula</div><div class="sin-desc">Consumo masivo. Más cartas, más poder.</div></div>
-        <div class="sin-card"><span class="sin-glyph">🦚</span><div class="sin-name">Soberbia</div><div class="sin-desc">Alto costo, poder absoluto e irresistible.</div></div>
-        <div class="sin-card"><span class="sin-glyph">🌹</span><div class="sin-name">Lujuria</div><div class="sin-desc">Control sutil y manipulación del rival.</div></div>
-        <div class="sin-card" style="opacity:.45;border-style:dashed;"><span class="sin-glyph">⚖</span><div class="sin-name">Corrupción</div><div class="sin-desc">Facción oculta. Por revelarse.</div></div>
-      </div>
-    </div>
-
-    <div class="gehenna-sep reveal"><span class="gehenna-sep-glyph">⬥</span></div>
-
-    <!-- CARTAS MUESTRA -->
-    <div class="reveal">
-      <div class="gehenna-section-title" style="text-align:center;margin-bottom:2.5rem;">Cartas de Muestra</div>
-    </div>
-    <div class="card-showcase reveal">
-      <div class="playing-card">
-        <div class="card-header"><div class="card-name">El Codicioso</div><div class="card-cost">4</div></div>
-        <div class="card-art">
-          <svg viewBox="0 0 200 220" xmlns="http://www.w3.org/2000/svg" style="width:90%;height:90%;opacity:.7;">
-            <defs><radialGradient id="c1" cx="50%" cy="40%"><stop offset="0%" stop-color="#c87030" stop-opacity=".4"/><stop offset="100%" stop-color="transparent"/></radialGradient></defs>
-            <rect width="200" height="220" fill="url(#c1)"/>
-            <g stroke="rgba(220,120,60,.7)" fill="none" stroke-width=".8">
-              <ellipse cx="100" cy="80" rx="45" ry="55"/><path d="M 65 130 Q 100 150 135 130 L 140 190 L 60 190 Z"/>
-              <circle cx="80" cy="65" r="8"/><circle cx="120" cy="65" r="8"/><path d="M 80 100 Q 100 112 120 100"/>
-              <ellipse cx="65" cy="162" rx="10" ry="5" opacity=".5"/><ellipse cx="135" cy="162" rx="10" ry="5" opacity=".5"/>
-            </g>
-            <text x="100" y="212" text-anchor="middle" font-family="monospace" font-size="7" fill="rgba(220,100,50,.35)" letter-spacing="2">CODICIA</text>
-          </svg>
-        </div>
-        <div class="card-footer"><div class="card-type">Personaje · Codicia</div><div class="card-effect">Al atacar, roba 2 recursos del oponente y los añade a tu reserva de corrupción.</div><div class="card-stats"><span class="card-stat">ATK <span>3</span></span><span class="card-stat">DEF <span>2</span></span></div></div>
-      </div>
-      <div class="playing-card">
-        <div class="card-header"><div class="card-name">Ira Absoluta</div><div class="card-cost">6</div></div>
-        <div class="card-art">
-          <svg viewBox="0 0 200 220" xmlns="http://www.w3.org/2000/svg" style="width:90%;height:90%;opacity:.7;">
-            <defs><radialGradient id="c2" cx="50%" cy="50%"><stop offset="0%" stop-color="#c83010" stop-opacity=".35"/><stop offset="100%" stop-color="transparent"/></radialGradient></defs>
-            <rect width="200" height="220" fill="url(#c2)"/>
-            <g stroke="rgba(210,80,40,.7)" fill="none" stroke-width=".8">
-              <path d="M 100 20 L 120 80 L 180 80 L 130 120 L 150 180 L 100 148 L 50 180 L 70 120 L 20 80 L 80 80 Z"/>
-              <path d="M 100 45 L 114 85 L 155 85 L 124 108 L 136 148 L 100 128 L 64 148 L 76 108 L 45 85 L 86 85 Z" opacity=".3"/>
-            </g>
-            <text x="100" y="212" text-anchor="middle" font-family="monospace" font-size="7" fill="rgba(200,80,40,.35)" letter-spacing="2">IRA</text>
-          </svg>
-        </div>
-        <div class="card-footer"><div class="card-type">Evento · Ira</div><div class="card-effect">Inflige daño masivo a todos los personajes en juego. El tuyo sobrevive con más de 3 DEF.</div><div class="card-stats"><span class="card-stat">DMG <span>5</span></span></div></div>
-      </div>
-      <div class="playing-card">
-        <div class="card-header"><div class="card-name">La Envidiosa</div><div class="card-cost">3</div></div>
-        <div class="card-art">
-          <svg viewBox="0 0 200 220" xmlns="http://www.w3.org/2000/svg" style="width:90%;height:90%;opacity:.7;">
-            <defs><radialGradient id="c3" cx="50%" cy="40%"><stop offset="0%" stop-color="#802010" stop-opacity=".3"/><stop offset="100%" stop-color="transparent"/></radialGradient></defs>
-            <rect width="200" height="220" fill="url(#c3)"/>
-            <g stroke="rgba(190,70,40,.65)" fill="none" stroke-width=".8">
-              <ellipse cx="100" cy="80" rx="40" ry="50"/><path d="M 65 125 Q 100 145 135 125 L 138 185 L 62 185 Z"/>
-              <circle cx="85" cy="67" r="7"/><circle cx="115" cy="67" r="7"/>
-              <ellipse cx="100" cy="100" rx="24" ry="14" stroke-dasharray="3 3" opacity=".5"/>
-              <circle cx="100" cy="100" r="6" opacity=".4"/>
-            </g>
-            <text x="100" y="212" text-anchor="middle" font-family="monospace" font-size="7" fill="rgba(180,70,40,.35)" letter-spacing="2">ENVIDIA</text>
-          </svg>
-        </div>
-        <div class="card-footer"><div class="card-type">Personaje · Envidia</div><div class="card-effect">Al entrar en juego, copia la habilidad especial del personaje más poderoso del oponente.</div><div class="card-stats"><span class="card-stat">ATK <span>2</span></span><span class="card-stat">DEF <span>4</span></span></div></div>
-      </div>
-    </div>
-
-    <!-- UNIVERSO VISUAL + ESTADO -->
-    <div class="gehenna-content-grid reveal">
+    <div class="formation-line">
+      <span class="formation-dot"></span>
       <div>
-        <div class="gehenna-section-title">Un Universo Visual Oscuro</div>
-        <p class="gehenna-text">Cada carta representa un arquetipo visual del pecado y la corrupción. El lenguaje visual del juego combina simbolismo, minimalismo oscuro y representaciones abstractas de criaturas deformadas por la mente humana.</p>
-        <p class="gehenna-text">La intención es que el arte y las mecánicas trabajen juntos para construir una identidad visual coherente dentro del mundo de Gehenna.</p>
-      </div>
-      <div>
-        <div class="gehenna-section-title">Estado Actual del Proyecto</div>
-        <p class="gehenna-text">El juego se encuentra en fase de prototipo jugable. En esta etapa se desarrollan y prueban:</p>
-        <ul class="gehenna-list">
-          <li>El sistema de evolución de criaturas</li>
-          <li>El equilibrio entre corrupción y progresión</li>
-          <li>La identidad mecánica de cada pecado</li>
-          <li>Nuevas cartas y combinaciones estratégicas</li>
-          <li>El estilo visual definitivo del universo del juego</li>
-        </ul>
-      </div>
-    </div>
-
-    <!-- CIERRE -->
-    <div class="gehenna-status reveal">
-      <div class="gehenna-status-title">La Corte aún no ha terminado de formarse</div>
-      <p class="gehenna-status-text">El mundo de GEHENNA continúa expandiéndose. Nuevas entidades, mecánicas y secretos de la Corte serán revelados a medida que el proyecto avance.</p>
-      <div class="gehenna-final">Porque en Gehenna… el poder no se hereda. Se conquista.</div>
-    </div>
-
-  </div><!-- /gehenna-inner -->
-</section>
-
-<!-- TABCUARIO -->
-<section id="acuario" class="aqua-section">
-  <div class="section-header reveal">
-    <div class="section-number">03</div>
-    <div>
-      <div class="accent-line" style="margin-bottom:.5rem;"><span style="color:var(--accent-aqua);">Tabcuario</span></div>
-      <h2 class="section-title" style="color:var(--accent-aqua);">Peces, Plantas<em style="color:var(--text);">&amp; Ecosistemas</em></h2>
-      <div class="section-divider" style="background:var(--accent-aqua);"></div>
-      <p class="section-desc">Mundos acuáticos cultivados con la misma atención que una ilustración.</p>
-    </div>
-  </div>
-
-  <!-- Tabs -->
-  <div class="aqua-tabs reveal">
-    <button class="aqua-tab active" onclick="switchTab('peces',this)">Peces</button>
-    <button class="aqua-tab" onclick="switchTab('plantas',this)">Plantas &amp; Tienda</button>
-    <button class="aqua-tab" onclick="switchTab('curiosos',this)">Datos Curiosos</button>
-  </div>
-
-  <!-- PECES -->
-  <div class="aqua-panel active reveal" id="tab-peces">
-    <p class="fish-intro">Galería de peces del acuario. Haz clic en cada recuadro para subir una foto.</p>
-    <div class="fish-grid">
-      <div class="fish-slot" onclick="this.querySelector('input').click()"><input type="file" class="file-input" accept="image/*" onchange="loadFishImg(this)"><div class="fish-up-icon">+</div><div class="fish-lbl">Subir pez</div></div>
-      <div class="fish-slot" onclick="this.querySelector('input').click()"><input type="file" class="file-input" accept="image/*" onchange="loadFishImg(this)"><div class="fish-up-icon">+</div><div class="fish-lbl">Subir pez</div></div>
-      <div class="fish-slot" onclick="this.querySelector('input').click()"><input type="file" class="file-input" accept="image/*" onchange="loadFishImg(this)"><div class="fish-up-icon">+</div><div class="fish-lbl">Subir pez</div></div>
-      <div class="fish-slot" onclick="this.querySelector('input').click()"><input type="file" class="file-input" accept="image/*" onchange="loadFishImg(this)"><div class="fish-up-icon">+</div><div class="fish-lbl">Subir pez</div></div>
-      <div class="fish-slot" onclick="this.querySelector('input').click()"><input type="file" class="file-input" accept="image/*" onchange="loadFishImg(this)"><div class="fish-up-icon">+</div><div class="fish-lbl">Subir pez</div></div>
-      <div class="fish-slot" onclick="this.querySelector('input').click()"><input type="file" class="file-input" accept="image/*" onchange="loadFishImg(this)"><div class="fish-up-icon">+</div><div class="fish-lbl">Subir pez</div></div>
-    </div>
-  </div>
-
-  <!-- PLANTAS -->
-  <div class="aqua-panel" id="tab-plantas">
-    <p class="plants-intro">Plantas cultivadas en casa, disponibles para tu acuario. Haz clic en cada recuadro para agregar una foto.</p>
-    <div class="plant-grid">
-      <div class="plant-card"><div class="plant-img" onclick="this.querySelector('input').click()"><input type="file" class="file-input" accept="image/*" onchange="loadPlantImg(this)"><div class="pup-icon">+</div></div><div class="plant-info"><div class="plant-name">Planta 01</div><div class="plant-type">Planta Acuática</div><div class="plant-price">Consultar precio</div></div></div>
-      <div class="plant-card"><div class="plant-img" onclick="this.querySelector('input').click()"><input type="file" class="file-input" accept="image/*" onchange="loadPlantImg(this)"><div class="pup-icon">+</div></div><div class="plant-info"><div class="plant-name">Planta 02</div><div class="plant-type">Planta Acuática</div><div class="plant-price">Consultar precio</div></div></div>
-      <div class="plant-card"><div class="plant-img" onclick="this.querySelector('input').click()"><input type="file" class="file-input" accept="image/*" onchange="loadPlantImg(this)"><div class="pup-icon">+</div></div><div class="plant-info"><div class="plant-name">Planta 03</div><div class="plant-type">Planta Acuática</div><div class="plant-price">Consultar precio</div></div></div>
-      <div class="plant-card"><div class="plant-img" onclick="this.querySelector('input').click()"><input type="file" class="file-input" accept="image/*" onchange="loadPlantImg(this)"><div class="pup-icon">+</div></div><div class="plant-info"><div class="plant-name">Planta 04</div><div class="plant-type">Planta Acuática</div><div class="plant-price">Consultar precio</div></div></div>
-      <div class="plant-card"><div class="plant-img" onclick="this.querySelector('input').click()"><input type="file" class="file-input" accept="image/*" onchange="loadPlantImg(this)"><div class="pup-icon">+</div></div><div class="plant-info"><div class="plant-name">Planta 05</div><div class="plant-type">Planta Acuática</div><div class="plant-price">Consultar precio</div></div></div>
-      <div class="plant-card"><div class="plant-img" onclick="this.querySelector('input').click()"><input type="file" class="file-input" accept="image/*" onchange="loadPlantImg(this)"><div class="pup-icon">+</div></div><div class="plant-info"><div class="plant-name">Planta 06</div><div class="plant-type">Planta Acuática</div><div class="plant-price">Consultar precio</div></div></div>
-      <div class="plant-card"><div class="plant-img" onclick="this.querySelector('input').click()"><input type="file" class="file-input" accept="image/*" onchange="loadPlantImg(this)"><div class="pup-icon">+</div></div><div class="plant-info"><div class="plant-name">Planta 07</div><div class="plant-type">Planta Acuática</div><div class="plant-price">Consultar precio</div></div></div>
-      <div class="plant-card"><div class="plant-img" onclick="this.querySelector('input').click()"><input type="file" class="file-input" accept="image/*" onchange="loadPlantImg(this)"><div class="pup-icon">+</div></div><div class="plant-info"><div class="plant-name">Planta 08</div><div class="plant-type">Planta Acuática</div><div class="plant-price">Consultar precio</div></div></div>
-    </div>
-    <div style="margin-top:2rem;">
-      <a href="#contacto" class="btn btn-aqua" style="font-size:.6rem;">Consultar disponibilidad</a>
-    </div>
-  </div>
-
-  <!-- DATOS CURIOSOS -->
-  <div class="aqua-panel" id="tab-curiosos">
-    <div class="curiosos-grid">
-      <div class="curioso-card"><div class="curioso-num">01</div><p class="curioso-fact">El <strong>ciclo del nitrógeno</strong> es la base de cualquier acuario plantado sano: las bacterias convierten el amoniaco tóxico en nitratos que las plantas consumen como fertilizante.</p></div>
-      <div class="curioso-card"><div class="curioso-num">02</div><p class="curioso-fact">Las plantas acuáticas como la <strong>Anubias</strong> pueden sobrevivir en condiciones de muy poca luz y son ideales para principiantes por su resistencia extrema.</p></div>
-      <div class="curioso-card"><div class="curioso-num">03</div><p class="curioso-fact">Un acuario plantado sin CO2 inyectado puede mantenerse en equilibrio si la densidad de plantas es alta y la iluminación está bien calibrada.</p></div>
-      <div class="curioso-card"><div class="curioso-num">04</div><p class="curioso-fact">La <strong>Bucephalandra</strong> es un género endémico de Borneo. Crece extremadamente despacio, lo que la hace muy valorada en la acuarofilia de colección.</p></div>
-      <div class="curioso-card"><div class="curioso-num">05</div><p class="curioso-fact">Los peces cardinales (<strong>Paracheirodon axelrodi</strong>) son una de las especies más populares del mundo. Provienen del río Negro en Brasil y requieren agua blanda y ácida.</p></div>
-      <div class="curioso-card"><div class="curioso-num">06</div><p class="curioso-fact">El estilo <strong>Nature Aquarium</strong>, creado por Takashi Amano, revolucionó la acuarofilia al tratar el acuario como una composición visual inspirada en paisajes naturales japoneses.</p></div>
-    </div>
-  </div>
-</section>
-
-<!-- TABLAB -->
-<section id="educacion" class="lab-section">
-  <div class="section-header reveal">
-    <div class="section-number">04</div>
-    <div>
-      <div class="accent-line" style="margin-bottom:.5rem;"><span style="color:var(--accent-lab);">TabLab</span></div>
-      <h2 class="section-title" style="color:var(--accent-lab);">Educación<em style="color:var(--text);">Creativa</em></h2>
-      <div class="section-divider" style="background:var(--accent-lab);"></div>
-      <p class="section-desc">En formación continua. Compartiendo el proceso de aprender mientras enseño.</p>
-    </div>
-  </div>
-  <div class="lab-3col reveal">
-    <div class="lab-big-card">
-      <span class="lab-big-icon">✏️</span>
-      <span class="lab-big-tag">Presencial / Virtual</span>
-      <h3 class="lab-big-title">Talleres</h3>
-      <p class="lab-big-desc">Sesiones prácticas de ilustración, linograbado y dibujo. Grupos pequeños para un aprendizaje más cercano y personalizado. Fechas y temas varían según disponibilidad.</p>
-    </div>
-    <div class="lab-big-card">
-      <span class="lab-big-icon">💻</span>
-      <span class="lab-big-tag">En Desarrollo</span>
-      <h3 class="lab-big-title">Cursos</h3>
-      <p class="lab-big-desc">Formación estructurada en ilustración digital y tradicional. Fundamentos del dibujo, composición, color y técnica. Próximamente disponibles en formato digital.</p>
-    </div>
-    <div class="lab-big-card">
-      <span class="lab-big-icon">📚</span>
-      <span class="lab-big-tag">Recursos</span>
-      <h3 class="lab-big-title">Materiales</h3>
-      <p class="lab-big-desc">Guías, referencias, ejercicios prácticos y bibliografía curada para acompañar tu proceso de aprendizaje en ilustración y artes visuales.</p>
-    </div>
-  </div>
-  <div class="philosophy reveal">
-    <blockquote>"Enseñar ilustración no es transferir técnicas — es enseñar a mirar, a dudar, a intentar y a volver a intentarlo con más información."</blockquote>
-    <cite style="color:var(--accent-lab);">Filosofía pedagógica — TabLab</cite>
-  </div>
-</section>
-
-<!-- TIENDA -->
-<section id="tienda">
-  <div class="bg-text" style="right:auto;left:-2vw;">SHOP</div>
-  <div class="section-header reveal">
-    <div class="section-number">05</div>
-    <div>
-      <div class="accent-line" style="margin-bottom:.5rem;"><span>Tienda</span></div>
-      <h2 class="section-title">Obras<em>Disponibles</em></h2>
-      <div class="section-divider"></div>
-      <p class="section-desc">Prints, originales y esculturas disponibles. Escríbeme para consultar precios y envíos.</p>
-    </div>
-  </div>
-  <div class="store-grid reveal">
-    <div class="store-card"><div class="store-img" onclick="this.querySelector('input').click()"><input type="file" class="file-input" accept="image/*" onchange="loadStoreImg(this)"><div class="upload-placeholder"><div class="upload-icon">+</div><div class="upload-label">Subir obra</div></div></div><div class="store-info"><div class="store-name">Obra 01</div><div class="store-type">Técnica · Formato</div><div class="store-price">— COP</div></div></div>
-    <div class="store-card"><div class="store-img" onclick="this.querySelector('input').click()"><input type="file" class="file-input" accept="image/*" onchange="loadStoreImg(this)"><div class="upload-placeholder"><div class="upload-icon">+</div><div class="upload-label">Subir obra</div></div></div><div class="store-info"><div class="store-name">Obra 02</div><div class="store-type">Técnica · Formato</div><div class="store-price">— COP</div></div></div>
-    <div class="store-card"><div class="store-img" onclick="this.querySelector('input').click()"><input type="file" class="file-input" accept="image/*" onchange="loadStoreImg(this)"><div class="upload-placeholder"><div class="upload-icon">+</div><div class="upload-label">Subir obra</div></div></div><div class="store-info"><div class="store-name">Obra 03</div><div class="store-type">Técnica · Formato</div><div class="store-price">— COP</div></div></div>
-    <div class="store-card"><div class="store-img" onclick="this.querySelector('input').click()"><input type="file" class="file-input" accept="image/*" onchange="loadStoreImg(this)"><div class="upload-placeholder"><div class="upload-icon">+</div><div class="upload-label">Subir obra</div></div></div><div class="store-info"><div class="store-name">Obra 04</div><div class="store-type">Técnica · Formato</div><div class="store-price">— COP</div></div></div>
-  </div>
-  <div style="text-align:center;margin-top:3rem;" class="reveal">
-    <a href="#contacto" class="btn btn-primary">Consultar por una pieza</a>
-  </div>
-</section>
-
-<!-- SOBRE -->
-<section id="sobre" aria-labelledby="sobre-titulo">
-  <div class="about-grid reveal">
-    <div class="about-portrait" onclick="this.querySelector('input').click()" role="button" tabindex="0" aria-label="Subir foto o retrato">
-      <input type="file" class="file-input" accept="image/*" onchange="loadPortraitImg(this)" aria-hidden="true">
-      <div class="upload-placeholder">
-        <div class="upload-icon" style="width:60px;height:60px;font-size:1.6rem;" aria-hidden="true">+</div>
-        <span class="upload-label">Subir foto o retrato</span>
-      </div>
-    </div>
-    <div class="about-content">
-      <div class="accent-line"><span>El Artista</span></div>
-      <h2 id="sobre-titulo">Tab<strong>Cuar</strong></h2>
-      <p class="about-role">Felipe Taborda · Tecnólogo en Logística · Tecnólogo en Ilustración (en formación) · Ilustrador Multidisciplinario · Medellín, Colombia</p>
-      <p class="about-text">Soy el creador de TabCuar: un ecosistema que integra ilustración, un juego de cartas coleccionables, acuarofilia y enseñanza bajo una misma visión. Entiendo la creatividad como territorio, no como disciplina.</p>
-      <p class="about-text">Trabajo en ilustración digital y tradicional, linograbado, escultura y experimentación gráfica. Desarrollo Gehenna, un juego de cartas sobre los 7 pecados capitales, cultivo plantas acuáticas y comparto mi proceso como docente en formación.</p>
-      <p class="about-text">Mi background en logística y mi formación artística me dan una perspectiva particular: el rigor de los sistemas junto con la apertura del arte experimental.</p>
-      <div class="about-cta">
-        <a href="#contacto" class="btn btn-primary">Escribirme</a>
-        <a href="#arte" class="btn btn-ghost">Ver portafolio</a>
+        <strong>Diplomado en Docencia Universitaria</strong>
+        <small>Educación · pedagogía · formación</small>
       </div>
     </div>
   </div>
-</section>
-<!-- BLOG -->
-<section id="blog">
-  <div class="section-header reveal">
-    <div class="section-number">07</div>
-    <div>
-      <div class="accent-line" style="margin-bottom:.5rem;"><span>Bitácora</span></div>
-      <h2 class="section-title">Artículos &amp;<em>Publicaciones</em></h2>
-      <div class="section-divider"></div>
-      <p class="section-desc">Espacio para artículos, procesos creativos y publicaciones del ecosistema TabCuar.</p>
-    </div>
-  </div>
-  <div class="blog-empty reveal">
-    <div class="blog-empty-icon">✦</div>
-    <div class="blog-empty-title">Las publicaciones estarán aquí pronto.</div>
-    <div class="blog-empty-sub">Ilustración · Arte · Acuarios · Gehenna · Educación</div>
-  </div>
-</section>
 
-<!-- CONTACTO -->
-<section id="contacto" class="contact-section">
-  <div class="section-header reveal">
-    <div class="section-number">08</div>
-    <div>
-      <div class="accent-line" style="margin-bottom:.5rem;"><span>Contacto</span></div>
-      <h2 class="section-title">Hablemos<em>de tu proyecto</em></h2>
-      <div class="section-divider"></div>
-    </div>
-  </div>
-  <div class="contact-grid reveal">
-    <div class="contact-info">
-      <h3>¿Quieres encargar una obra, tomar un taller o explorar el ecosistema TabCuar?</h3>
-      <p>TabCuar está abierto a comisiones, colaboraciones, clases y proyectos creativos de toda índole.</p>
-      <div class="contact-types">
-        <div class="contact-type"><span class="ctdot"></span>Clases de ilustración y talleres</div>
-        <div class="contact-type"><span class="ctdot" style="background:var(--accent-art);"></span>Comisiones de ilustración y arte</div>
-        <div class="contact-type"><span class="ctdot" style="background:#c0392b;"></span>Cartas Gehenna y proyectos de juego</div>
-        <div class="contact-type"><span class="ctdot" style="background:var(--accent-aqua);"></span>Venta de plantas acuáticas</div>
-        <div class="contact-type"><span class="ctdot" style="background:var(--accent-lab);"></span>Colaboraciones creativas</div>
+
+  <!-- PROYECTOS -->
+  <div class="about-block about-projects">
+
+    <div class="about-card-label">PROYECTOS</div>
+
+    <div class="about-projects-grid">
+
+      <div class="about-project">
+        <strong>TabCuart</strong>
+        <span>
+          Portafolio personal de ilustración y creación visual.
+        </span>
       </div>
-      <div class="social-links">
-        <a href="#" class="social-link">Instagram</a>
-        <a href="#" class="social-link">Behance</a>
-        <a href="#" class="social-link">TikTok</a>
-        <a href="#" class="social-link">YouTube</a>
+
+      <div class="about-project">
+        <strong>TabGame</strong>
+        <span>
+          Desarrollo de juegos, actualmente con
+          <em>Gehenna: La Corte del Juicio</em>.
+        </span>
       </div>
+
+      <div class="about-project">
+        <strong>Tabcuario</strong>
+        <span>
+          Acuariofilia, peces, plantas acuáticas y ecosistemas.
+        </span>
+      </div>
+
+      <div class="about-project">
+        <strong>TabLab</strong>
+        <span>
+          Creación de material educativo desde la ilustración
+          y la docencia.
+        </span>
+      </div>
+
     </div>
-    <div class="contact-form">
-      <div class="form-group"><label>Nombre completo</label><input type="text" placeholder="Tu nombre"></div>
-      <div class="form-group"><label>Correo electrónico</label><input type="email" placeholder="hola@ejemplo.com"></div>
-      <div class="form-group"><label>¿Qué te interesa?</label><input type="text" placeholder="Clases, comisiones, plantas, colaboraciones..."></div>
-      <div class="form-group"><label>Tu mensaje</label><textarea placeholder="Cuéntame sobre tu proyecto, idea o consulta..."></textarea></div>
-      <button class="btn btn-primary" style="align-self:flex-start;" onclick="handleSubmit(event)">Enviar mensaje</button>
-    </div>
-  </div>
-</section>
 
-<!-- FOOTER -->
-<footer>
-  <a href="#inicio" class="brand">TabCuar</a>
-  <div class="footer-tagline">Arte · Juegos · Ecosistemas · Educación — Medellín, Colombia</div>
-  <div class="footer-copy">© 2025 TabCuar<br>Todos los derechos reservados</div>
-
-</footer>
-
-
-<!-- VISOR DE IMAGEN -->
-<div id="imgModal" class="img-modal">
-  <span class="img-close">&times;</span>
-  <img class="img-modal-content" id="imgExpanded">
 </div>
 
+        <div class="about-cta">
+          <a href="#" class="btn btn-primary" onclick="openContact();return false;">Escribirme</a>
+          <a href="#" class="btn btn-ghost" onclick="openLayer('TabCuart');return false;">Ver mi trabajo</a>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- =====================================================
+         02 / CONTACTO  (movido desde la antigua capa layer-contacto)
+         JS: openContact() abre "Sobre mí" y desplaza hasta #sobreContacto
+    ====================================================== -->
+    <div class="about-contact" id="sobreContacto">
+
+      <div class="about-intro reveal">
+        <div class="about-index">02 / Contacto</div>
+        <div class="about-intro-main">
+          <div class="accent-line"><span>Contacto</span></div>
+          <h2 class="section-title">Hablemos<em>de tu proyecto</em></h2>
+          <div class="section-divider"></div>
+        </div>
+      </div>
+
+    <div class="contact-simple reveal">
+        <p class="contact-lead">Si quieres encargar una obra, tomar un taller o colaborar en un proyecto creativo, puedes escribirme directamente.</p>
+        <div class="contact-channels">
+          <div class="contact-channel">
+            <span class="contact-label">Correo</span>
+            <a class="contact-value" id="contactEmail" href="mailto:tabcuart.22@gmail.com" data-email="tabcuart.22@gmail.com">tabcuart.22@gmail.com</a>
+            <button type="button" class="contact-copy" onclick="copyContactEmail(this)">Copiar correo</button>
+          </div>
+          <div class="contact-channel">
+            <span class="contact-label">Instagram</span>
+            <a class="contact-value" href="https://instagram.com/TabCuar" target="_blank" rel="noopener noreferrer">@TabCuar</a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="about-closing reveal">
+      <span class="about-closing-line"></span>
+      <p>Orgánico · Experimental · Texturas · Fantasía · Formas</p>
+      <span class="about-closing-line"></span>
+    </div>
+
+    <footer class="layer-footer">
+      <span class="brand">TabCuar</span>
+      <div class="footer-tagline">Arte · Juegos · Ecosistemas · Educación — Medellín, Colombia</div>
+      <div class="footer-copy">© 2026 TabCuar<br>Todos los derechos reservados</div>
+      <p class="footer-legal">No está permitido subir, comercializar, distribuir ni utilizar estas imágenes para entrenar o alimentar sistemas de IA sin autorización previa del autor.</p>
+    </footer>
+  </div>
+</section>
+<!-- =========================================
+     6. CAPA: PORTAFOLIO TabCuart  |  id="layer-TabCuart"
+========================================= -->
+<!-- =========================================
+     6. CAPA: PORTAFOLIO TabCuart
+========================================= -->
+<section class="layer" id="layer-TabCuart" data-zone="TabCuart" aria-hidden="true">
+
+  <div class="layer-inner">
+
+    <!-- CABECERA (título principal + zona de animación integrada) -->
+    <div class="section-header section-header--media reveal">
+
+      <div class="section-header-text">
+
+        <div class="accent-line" style="margin-bottom:.5rem;">
+          <span>Portafolio · Arte &amp; Ilustración</span>
+        </div>
+
+        <!-- TÍTULO PRINCIPAL de la sección -->
+        <h2 class="section-title section-title--hero">TabCuart</h2>
+
+        <p class="section-subtitle">Ilustración, grabado, escultura y animación</p>
+
+        <div class="section-divider"></div>
+
+        <p class="section-desc">
+          Un recorrido por las distintas técnicas, procesos y formas de experimentación
+          que hacen parte de mi trabajo como ilustrador y creador.
+        </p>
+
+      </div>
+
+      <!-- ==========================================================
+           ZONA DE ANIMACIÓN DE TABCUART  (aquí va TU animación)
+           ----------------------------------------------------------
+           CÓMO COLOCARLA: pon la ruta de tu archivo en data-src.
+             • Video:   data-src="Video/animacion-tabcuart.mp4"   (también .webm)
+             • GIF/WebP/imagen: data-src="Video/animacion-tabcuart.gif"
+           QUÉ ARCHIVO REEMPLAZAR: guarda tu animación en la carpeta Video/
+           con ese mismo nombre, o cambia el nombre en data-src.
+           Mientras data-src esté vacío se ve la composición editorial de abajo.
+           (No hay botones de carga: todo se cambia desde este código.)
+           JS: initVideoSlots()
+      ========================================================== -->
+      <figure class="video-slot" data-video-slot data-src="Video/animacion-tabcuart.mp4">
+        <!-- CAMBIAR AQUÍ LA ANIMACIÓN: se inserta automáticamente aquí desde data-src -->
+        <video class="video-slot-media" muted loop playsinline autoplay preload="metadata"></video>
+        <img class="video-slot-media video-slot-img" alt="Animación de TabCuart" hidden>
+        <div class="video-slot-empty" aria-hidden="true">
+          <span class="video-slot-ring video-slot-ring--1"></span>
+          <span class="video-slot-ring video-slot-ring--2"></span>
+          <span class="video-slot-ring video-slot-ring--3"></span>
+          <span class="video-slot-glyph">TC</span>
+        </div>
+        <figcaption class="video-slot-tag" hidden></figcaption>
+      </figure>
+
+    </div>
+
+
+    <!-- INFORMACIÓN DE LA TÉCNICA -->
+    <section class="technique-intro reveal" id="techniqueIntro">
+
+      <div class="technique-intro-main">
+
+        <div class="accent-line">
+          <span id="techniqueKicker">PORTAFOLIO</span>
+        </div>
+
+        <h3 id="techniqueTitle">Todas las técnicas</h3>
+
+        <p id="techniqueDescription">
+          Explora una selección de trabajos desarrollados mediante diferentes técnicas,
+          procesos y medios visuales.
+        </p>
+
+      </div>
+
+
+      <div class="technique-info">
+
+        <div class="technique-info-box">
+
+          <span class="technique-info-label">ENFOQUE</span>
+
+          <strong id="techniqueFocus">
+            Ilustración multidisciplinaria
+          </strong>
+
+        </div>
+
+
+        <div class="technique-info-box">
+
+          <span class="technique-info-label">PROCESO</span>
+
+          <strong id="techniqueProcessLabel">
+            Exploración y experimentación
+          </strong>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- =========================================
+         FILTROS
+    ========================================== -->
+
+    <div class="gallery-filter reveal">
+
+      <button class="filter-btn active"
+              onclick="filterGallery('all', this)">
+        Todas
+      </button>
+
+      <button class="filter-btn"
+              onclick="filterGallery('digital', this)">
+        Ilustración Digital
+      </button>
+
+      <button class="filter-btn"
+              onclick="filterGallery('tradicional', this)">
+        Ilustración Análoga
+      </button>
+
+      <button class="filter-btn"
+              onclick="filterGallery('lino', this)">
+        Grabado
+      </button>
+
+      <button class="filter-btn"
+              onclick="filterGallery('escultura', this)">
+        Escultura
+      </button>
+
+      <button class="filter-btn"
+              onclick="filterGallery('animacion', this)">
+        Animación
+      </button>
+
+      <button class="filter-btn"
+              onclick="filterGallery('3d', this)">
+        3D
+      </button>
+
+      <button class="filter-btn"
+              onclick="filterGallery('tattoo', this)">
+        Tattoo
+      </button>
+
+    </div>
+
+
+    <!-- =========================================
+         WORKS WHEEL
+    ========================================== -->
+
+    <div class="gallery-grid works-wheel reveal"
+         id="gallery"
+         tabindex="0"
+         aria-label="Galería circular de trabajos">
+         
+         <!-- FONDO ANIMADO: PARTÍCULAS / AGUJERO NEGRO -->
+<canvas class="wheel-particles" id="wheelParticles"></canvas>
+
+      <!-- CENTRO -->
+
+      <div class="works-wheel-center">
+
+        <span class="wheel-eyebrow">
+          TABCUART
+        </span>
+
+        <strong class="wheel-title"
+                id="wheelCenterTitle">
+          ARTE &amp; ILUSTRACIÓN
+        </strong>
+
+        <div class="wheel-line"></div>
+
+        <span class="wheel-action">
+          ARRASTRA · GIRA · EXPLORA
+        </span>
+
+        <span class="wheel-count"
+              id="wheelCenterCount">
+          08 OBRAS
+        </span>
+
+      </div>
+
+
+      <!-- =====================================
+           DIGITAL
+      ====================================== -->
+
+      <div class="gallery-item"
+           data-cat="digital"
+           data-title="Ilustración Digital"
+           data-year="2026">
+
+        <img src="Img/Dj1.png"
+             class="uploaded click-img"
+             alt="Ilustración digital 01">
+
+        <div class="gallery-overlay">
+
+          <span class="gallery-number">01</span>
+
+          <div>
+            <h4>Desprendimiento</h4>
+            <p>Obra · 2026</p>
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <div class="gallery-item"
+           data-cat="digital"
+           data-title="Ilustración Digital"
+           data-year="2026">
+
+        <img src="Img/Dj2.png"
+             class="uploaded click-img"
+             alt="Ilustración digital 02">
+
+        <div class="gallery-overlay">
+
+          <span class="gallery-number">02</span>
+
+          <div>
+            <h4>Melancolía</h4>
+            <p>Obra · 2024</p>
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <div class="gallery-item"
+           data-cat="digital"
+           data-title="Ilustración Digital"
+           data-year="2026">
+
+        <img src="Img/Dj3.png"
+             class="uploaded click-img"
+             alt="Ilustración digital 03">
+
+        <div class="gallery-overlay">
+
+          <span class="gallery-number">03</span>
+
+          <div>
+            <h4>Ilustración Digital</h4>
+            <p>Obra · 2026</p>
+          </div>
+
+        </div>
+
+      </div>
+
+    
+
+      <!-- =====================================
+           ANÁLOGA
+      ====================================== -->
+
+      <div class="gallery-item"
+           data-cat="tradicional"
+           data-title="Ilustración Análoga"
+           data-year="2024">
+
+        <img src="Img/Arbol.png"
+             class="uploaded click-img"
+             alt="Ilustración análoga 01">
+
+        <div class="gallery-overlay">
+
+          <span class="gallery-number">01</span>
+
+          <div>
+            <h4>Ilustración Análoga</h4>
+            <p>Obra · 2026</p>
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <div class="gallery-item"
+           data-cat="tradicional"
+           data-title="Ilustración Análoga"
+           data-year="2024">
+
+        <img src="Img/Pt2.jpg"
+             class="uploaded click-img"
+             alt="Ilustración análoga 02">
+
+        <div class="gallery-overlay">
+
+          <span class="gallery-number">02</span>
+
+          <div>
+            <h4>Ilustración Análoga</h4>
+            <p>Obra · 2024</p>
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <div class="gallery-item"
+           data-cat="tradicional"
+           data-title="Ilustración Análoga"
+           data-year="2024">
+
+        <img src="Img/Pt1.jpg"
+             class="uploaded click-img"
+             alt="Ilustración análoga 03">
+
+        <div class="gallery-overlay">
+
+          <span class="gallery-number">03</span>
+
+          <div>
+            <h4>Ilustración Análoga</h4>
+            <p>Obra · 2024</p>
+          </div>
+
+        </div>
+
+      </div>
+
+        <div class="gallery-item"
+           data-cat="tradicional"
+           data-title="Ilustración Análoga"
+           data-year="2024">
+
+        <img src="Img/Pt3.jpg"
+             class="uploaded click-img"
+             alt="Ilustración análoga 03">
+
+        <div class="gallery-overlay">
+
+          <span class="gallery-number">03</span>
+
+          <div>
+            <h4>Ilustración Análoga</h4>
+            <p>Obra · 2024</p>
+          </div>
+
+        </div>
+
+      </div>
+
+      <!-- =====================================
+           GRABADO
+      ====================================== -->
+
+      <div class="gallery-item"
+           data-cat="lino"
+           data-title="Grabado"
+           data-year="2025">
+
+        <img src="Img/lino1.jpg"
+             class="uploaded click-img"
+             alt="Grabado 01">
+
+        <div class="gallery-overlay">
+
+          <span class="gallery-number">01</span>
+
+          <div>
+            <h4>Grabado</h4>
+            <p>Obra · 2025</p>
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <div class="gallery-item"
+           data-cat="lino"
+           data-title="Grabado"
+           data-year="2025">
+
+        <img src="Img/lino2.jpg"
+             class="uploaded click-img"
+             alt="Grabado 02">
+
+        <div class="gallery-overlay">
+
+          <span class="gallery-number">02</span>
+
+          <div>
+            <h4>Grabado</h4>
+            <p>Obra · 2025</p>
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <div class="gallery-item"
+           data-cat="lino"
+           data-title="Grabado"
+           data-year="2025">
+
+        <img src="Img/lino3.jpg"
+             class="uploaded click-img"
+             alt="Grabado 03">
+
+        <div class="gallery-overlay">
+
+          <span class="gallery-number">03</span>
+
+          <div>
+            <h4>Grabado</h4>
+            <p>Obra · 2025</p>
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <!-- =====================================
+           ESCULTURA
+      ====================================== -->
+
+      <div class="gallery-item"
+           data-cat="escultura"
+           data-title="Escultura"
+           data-year="2025">
+
+        <img src="Img/escultura1.jpg"
+             class="uploaded click-img"
+             alt="Escultura 01">
+
+        <div class="gallery-overlay">
+
+          <span class="gallery-number">01</span>
+
+          <div>
+            <h4>Escultura</h4>
+            <p>Obra · 2025</p>
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <div class="gallery-item"
+           data-cat="escultura"
+           data-title="Escultura"
+           data-year="2025">
+
+        <img src="Img/escultura2.jpg"
+             class="uploaded click-img"
+             alt="Escultura 02">
+
+        <div class="gallery-overlay">
+
+          <span class="gallery-number">02</span>
+
+          <div>
+            <h4>Escultura</h4>
+            <p>Obra · 2025</p>
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <div class="gallery-item"
+           data-cat="escultura"
+           data-title="Escultura"
+           data-year="2025">
+
+        <img src="Img/escultura3.jpg"
+             class="uploaded click-img"
+             alt="Escultura 03">
+
+        <div class="gallery-overlay">
+
+          <span class="gallery-number">03</span>
+
+          <div>
+            <h4>Escultura</h4>
+            <p>Obra · 2025</p>
+          </div>
+
+        </div>
+
+      </div>
+
+<!-- =====================================
+     ANIMACIÓN
+====================================== -->
+
+<div class="gallery-item"
+     data-cat="animacion"
+     data-title="Animación"
+     data-year="2026">
+
+  <video class="uploaded click-video"
+         src="Video/animacion-tabcuart.mp4"
+         muted
+         loop
+         playsinline
+         preload="metadata">
+  </video>
+
+  <div class="gallery-overlay">
+
+    <span class="gallery-number">01</span>
+
+    <div>
+      <h4>Animación</h4>
+      <p>Obra · 2026</p>
+    </div>
+
+  </div>
+
+</div>
+
+
+<div class="gallery-item"
+     data-cat="animacion"
+     data-title="Animación"
+     data-year="2026">
+
+  <video class="uploaded click-video"
+         src="Video/roto.mp4"
+         muted
+         loop
+         playsinline
+         preload="metadata">
+  </video>
+
+  <div class="gallery-overlay">
+
+    <span class="gallery-number">02</span>
+
+    <div>
+      <h4>Animación</h4>
+      <p>Obra · 2026</p>
+    </div>
+
+  </div>
+
+</div>
+
+
+
+
+      <!-- =====================================
+           3D
+      ====================================== -->
+
+      <div class="gallery-item"
+           data-cat="3d"
+           data-title="3D"
+           data-year="2026">
+
+          <video class="uploaded click-video"
+         src="Video/0001_1.mp4"
+         autoplay
+         muted
+         loop
+         playsinline
+         preload="auto">
+  </video>
+
+  <div class="gallery-overlay">
+
+    <span class="gallery-number">01</span>
+
+    <div>
+      <h4>Animación</h4>
+      <p>Obra · 2026</p>
+    </div>
+
+  </div>
+
+</div>
+
+
+      <div class="gallery-item"
+           data-cat="3d"
+           data-title="3D"
+           data-year="2026">
+
+        <img src="Img/blender2.jpg"
+             class="uploaded click-img"
+             alt="Proyecto 3D 02">
+
+        <div class="gallery-overlay">
+
+          <span class="gallery-number">02</span>
+
+          <div>
+            <h4>3D</h4>
+            <p>Obra · 2026</p>
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <div class="gallery-item"
+           data-cat="3d"
+           data-title="3D"
+           data-year="2026">
+
+        <img src="Img/blender3.jpg"
+             class="uploaded click-img"
+             alt="Proyecto 3D 03">
+
+        <div class="gallery-overlay">
+
+          <span class="gallery-number">03</span>
+
+          <div>
+            <h4>3D</h4>
+            <p>Obra · 2026</p>
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <!-- =====================================
+           TATTOO
+      ====================================== -->
+
+      <div class="gallery-item"
+           data-cat="tattoo"
+           data-title="Tattoo"
+           data-year="2025">
+
+        <img src="Img/concept1.jpg"
+             class="uploaded click-img"
+             alt="Tattoo 01">
+
+        <div class="gallery-overlay">
+
+          <span class="gallery-number">01</span>
+
+          <div>
+            <h4>Tattoo</h4>
+            <p>Obra · 2025</p>
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <div class="gallery-item"
+           data-cat="tattoo"
+           data-title="Tattoo"
+           data-year="2025">
+
+        <img src="Img/concept2.jpg"
+             class="uploaded click-img"
+             alt="Tattoo 02">
+
+        <div class="gallery-overlay">
+
+          <span class="gallery-number">02</span>
+
+          <div>
+            <h4>Tattoo</h4>
+            <p>Obra · 2025</p>
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <div class="gallery-item"
+           data-cat="tattoo"
+           data-title="Tattoo"
+           data-year="2025">
+
+        <img src="Img/concept3.jpg"
+             class="uploaded click-img"
+             alt="Tattoo 03">
+
+        <div class="gallery-overlay">
+
+          <span class="gallery-number">03</span>
+
+          <div>
+            <h4>Tattoo</h4>
+            <p>Obra · 2025</p>
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  <!-- =========================================
+         PROCESO
+    ========================================== -->
+
+    <section class="technique-process" id="techniqueProcess">
+
+      <div class="process-heading reveal">
+
+        <div>
+
+          <div class="accent-line">
+            <span>AVANCES &amp; PROCESO</span>
+          </div>
+
+          <h3 id="processTitle">
+            Explora el proceso creativo
+          </h3>
+
+          <p id="processDescription">
+            Arrastra para descubrir cómo evoluciona cada proyecto, desde las primeras ideas hasta el resultado final.
+          </p>
+
+          <div class="pv-works" id="pvWorks" role="group" aria-label="Trabajo cuyo proceso se muestra"></div>
+
+        </div>
+
+        <div class="process-stage-count">
+          <span id="processCount">
+            04 ETAPAS
+          </span>
+        </div>
+
+      </div>
+
+
+      <!-- =========================================================
+           PROCESO Y RESULTADO — DOS BLOQUES
+           IZQUIERDA: Boceto · Desarrollo · Proceso (galería arrastrable)
+           DERECHA  : Resultado final (video)
+           ----------------------------------------------------------
+           CAMBIAR IMÁGENES: edita el src de cada etapa.
+             01 Boceto          → Img/Etp1.png
+             02 Desarrollo      → Img/Etp2.png
+             03 Proceso         → Img/Etp3.png   (si ese archivo aún no existe se usa un detalle ampliado de Etp2.png)
+             04 Resultado final → Video/0001_1.mp4 (también acepta .webm)
+           AGREGAR UNA ETAPA: copia un <figure class="pv-slide"> y un <button class="pv-tab"> (el JS la detecta sola).
+           JS: bloque "PROCESO EXPLORABLE" en script.js
+      ========================================================== -->
+      <div class="pv" id="processJourney">
+        <div class="pv-duo">
+
+          <!-- BLOQUE IZQUIERDO · BOCETO → DESARROLLO → PROCESO -->
+          <section class="pv-explore reveal" id="pvExplore" aria-label="Boceto, desarrollo y proceso">
+            <header class="pv-bar">
+              <span class="pv-bar-kicker" id="pvKicker">Boceto · Desarrollo · Proceso</span>
+              <span class="pv-bar-count" id="pvCount" aria-hidden="true">Etapa 1 / 3</span>
+            </header>
+
+            <div class="pv-viewport" id="pvViewport" tabindex="0" role="group" aria-roledescription="carrusel"
+                 aria-label="Etapas del proceso. Arrastra, desliza o usa las flechas del teclado.">
+
+              <!-- Las etapas (.pv-slide) y las pestañas (.pv-tab) se generan desde PROCESS_DATA (script.js): una sola estructura sirve a todos los trabajos. -->
+              <p class="pv-hint" aria-hidden="true"><span>←</span><span>Arrastra para explorar</span><span>→</span></p>
+            </div>
+
+                        <!-- ESTADO VACÍO: se muestra cuando el trabajo elegido aún no tiene procesos en PROCESS_DATA -->
+            <div class="pv-empty" id="pvEmpty" hidden>
+              <svg class="pv-empty-eye" viewBox="0 0 64 40" aria-hidden="true" focusable="false">
+                <path d="M3 20 Q32 -7 61 20 Q32 47 3 20Z"/>
+                <path d="M10 33 L54 7" />
+              </svg>
+              <p class="pv-empty-title">Sin proceso publicado</p>
+              <p class="pv-empty-text" id="pvEmptyText">Este trabajo aún no tiene imágenes de proceso.</p>
+            </div>
+
+            <div class="pv-controls">
+              <button type="button" class="pv-arrow" id="pvPrev" aria-label="Etapa anterior">&#8249;</button>
+              <div class="pv-scrub" id="pvScrub">
+                <!-- CONTROL ARRASTRABLE. El <input type="range"> sigue siendo el control real (teclado, lectores de pantalla,
+                     táctil); queda transparente encima y .pv-knob es su apariencia. CSS: bloque "PROCESO" en styles.css. -->
+                <div class="pv-slider">
+                  <span class="pv-rail" aria-hidden="true"><span class="pv-rail-fill"></span></span>
+                  <input type="range" class="pv-range" id="pvRange" min="0" max="100" step="0.5" value="0" aria-label="Del boceto al proceso">
+                  <span class="pv-knob" aria-hidden="true">
+                    <span class="pv-knob-tip"><b id="pvTipName">Boceto</b><em>Arrástrame</em></span>
+                    <svg class="pv-knob-orbit" viewBox="0 0 64 64" focusable="false"><circle cx="32" cy="32" r="29.5"/></svg>
+                    <span class="pv-knob-ripple"></span>
+                    <span class="pv-knob-core">
+                      <!-- OJO: indicador de la etapa. Se agarra y se arrastra (Pointer Events, ver "PROCESO EXPLORABLE" en script.js).
+                           La pupila mira hacia donde se mueve; parpadea al cambiar de etapa. -->
+                      <svg class="pv-eye" viewBox="0 0 64 40" focusable="false">
+                        <defs>
+                          <radialGradient id="pvEyeIris" cx="50%" cy="46%" r="62%">
+                            <stop offset="0" stop-color="#fff" stop-opacity=".5"/>
+                            <stop offset=".42" stop-color="#e3262e"/>
+                            <stop offset="1" stop-color="#3a050a"/>
+                          </radialGradient>
+                          <clipPath id="pvEyeClip"><path d="M3 20 Q32 -7 61 20 Q32 47 3 20Z"/></clipPath>
+                        </defs>
+                        <g class="pv-eye-ball">
+                          <path class="pv-eye-sclera" d="M3 20 Q32 -7 61 20 Q32 47 3 20Z"/>
+                          <g clip-path="url(#pvEyeClip)">
+                            <g class="pv-eye-look">
+                              <circle class="pv-eye-iris" cx="32" cy="20" r="12.5" fill="url(#pvEyeIris)"/>
+                              <ellipse class="pv-eye-pupil" cx="32" cy="20" rx="3.4" ry="9"/>
+                              <circle class="pv-eye-glint" cx="37" cy="14.5" r="2.2"/>
+                            </g>
+                            <path class="pv-eye-lid" d="M0 -4 H64 V20 Q32 2 0 20Z"/>
+                          </g>
+                          <path class="pv-eye-line" d="M3 20 Q32 -7 61 20"/>
+                        </g>
+                      </svg>
+                    </span>
+                  </span>
+                </div>
+                <div class="pv-tabs" role="tablist" aria-label="Etapas"></div>
+              </div>
+              <button type="button" class="pv-arrow" id="pvNext" aria-label="Etapa siguiente">&#8250;</button>
+            </div>
+
+            <div class="pv-caption" aria-live="polite">
+              <p class="pv-stage-name" id="pvName"><b>01</b>Boceto</p>
+              <p class="pv-stage-text" id="pvText">Primeras ideas, pruebas de composición y exploración visual.</p>
+            </div>
+          </section>
+
+          <!-- BLOQUE DERECHO · RESULTADO FINAL -->
+          <section class="pv-final reveal" aria-label="Resultado final">
+            <header class="pv-bar">
+              <span class="pv-bar-kicker">Resultado final</span>
+              <span class="pv-bar-count" id="pvFinalCount" aria-hidden="true">Etapa 4</span>
+            </header>
+
+            <div class="pv-frame pv-frame--video is-paused" role="button" tabindex="0" aria-label="Resultado final: reproducir o pausar la animación">
+              <span class="pv-chip"><b>04</b> Resultado final</span>
+              <video id="processVideo3" src="Video/0001_1.mp4" muted loop playsinline preload="metadata"></video>
+              <img id="processFinalImg" class="pv-final-img" alt="" hidden decoding="async">
+            </div>
+
+            <div class="pv-caption">
+              <p class="pv-stage-name"><b>04</b><span id="processStep3Title">Resultado final</span></p>
+              <p class="pv-stage-text" id="processStep3Text">Pieza final después del proceso de exploración y construcción.</p>
+            </div>
+          </section>
+
+        </div>
+      </div><!-- /pv -->
+
+
+      <div class="technique-extra reveal">
+
+        <div class="technique-extra-box">
+
+          <span class="technique-info-label">
+            HERRAMIENTAS / MATERIALES
+          </span>
+
+          <div class="tool-icons" id="techniqueTools"></div>
+
+        </div>
+
+      </div>
+
+    </section>
+<!-- =========================================
+         LIBROS & CÓMICS  (PORTAFOLIO → LIBROS & CÓMICS → AVANCES & PROCESO)
+         JS: initBookViewers() + initBookLibraries() (carrusel de portadas y visor PDF; pdf.js se carga solo al usarlo)
+    ========================================== -->
+    <section class="books-section reveal" id="tabcuartBooks">
+      <div class="books-heading">
+        <div class="accent-line"><span>LIBROS &amp; CÓMICS</span></div>
+        <h3>Libros &amp; Cómics</h3>
+        <p>Historias, cuadernos y cómics para leer página a página, directamente en la web.</p>
+      </div>
+      <!-- CARRUSEL DE LIBROS: las portadas se generan desde BOOK_LIBRARY.tabcuart en script.js
+           (CAMBIAR AQUÍ portada, título y PDF → script.js, sección 23). -->
+      <div class="book-carousel" data-book-library="tabcuart">
+        <div class="book-shelf">
+          <button type="button" class="book-shelf-nav" data-shelf-prev aria-label="Libros anteriores">&#8249;</button>
+          <div class="book-shelf-track" data-shelf-track role="tablist" aria-label="Libros disponibles"></div>
+          <button type="button" class="book-shelf-nav" data-shelf-next aria-label="Libros siguientes">&#8250;</button>
+        </div>
+        <article class="book-viewer" id="bookTabcuart" data-book data-pdf="">
+          <header class="book-info">
+            <span class="book-kicker" data-book-kicker>Libro 01</span>
+            <h4 class="book-title" data-book-title>Título del libro</h4>
+            <p class="book-desc" data-book-desc>Descripción breve.</p>
+            <p class="book-meta" data-book-meta></p>
+            <p class="book-nav-hint">Pasa las páginas con los botones, las flechas del teclado o deslizando.</p>
+          </header>
+          <div class="book-stage" data-book-stage tabindex="0" aria-label="Visor de libro. Usa las flechas del teclado para pasar páginas.">
+            <div class="book-spread" data-book-spread>
+              <canvas class="book-canvas" data-book-left></canvas>
+              <canvas class="book-canvas" data-book-right></canvas>
+            </div>
+            <div class="book-empty" data-book-empty>
+              <span class="book-empty-icon" aria-hidden="true"></span>
+              <strong>Elige un libro</strong>
+              <span>Selecciona una portada para abrirlo aquí.</span>
+            </div>
+          </div>
+          <div class="book-controls">
+            <button type="button" data-book-prev aria-label="Página anterior">&#8249;</button>
+            <span class="book-pageinfo" data-book-info>— / —</span>
+            <button type="button" data-book-next aria-label="Página siguiente">&#8250;</button>
+            <button type="button" data-book-full aria-label="Pantalla completa">&#10530;</button>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- CTA -->
+
+    <div class="section-cta reveal">
+
+      <a href="#" class="btn btn-cta" onclick="openContact();return false;">Encargar una ilustración</a>
+
+    </div>
+
+
+    <!-- FOOTER -->
+
+    <footer class="layer-footer">
+
+      <span class="brand">
+        TabCuar
+      </span>
+
+      <div class="footer-tagline">
+        Arte · Juegos · Ecosistemas · Educación — Medellín, Colombia
+      </div>
+
+      <div class="footer-copy">
+        © 2026 TabCuar<br>
+        Todos los derechos reservados
+      </div>
+      <p class="footer-legal">No está permitido subir, comercializar, distribuir ni utilizar estas imágenes para entrenar o alimentar sistemas de IA sin autorización previa del autor.</p>
+
+    </footer>
+
+  </div>
+
+</section>
+<!-- =========================================
+     7. CAPA: ESTUDIOS (TabLab)  |  id="layer-estudios"
+========================================= -->
+<section class="layer" id="layer-estudios" data-zone="estudios" aria-hidden="true">
+  <div class="layer-inner">
+    <div class="section-header reveal">
+      <div>
+        <div class="accent-line" style="margin-bottom:.5rem;"><span>TabLab</span></div>
+        <h2 class="section-title">Educación<em>Creativa</em></h2>
+        <div class="section-divider"></div>
+        <p class="section-desc section-desc--wide">En formación continua. Compartiendo el proceso de aprender mientras enseño.</p>
+      </div>
+    </div>
+    <div class="lab-3col reveal">
+      <div class="lab-big-card">
+        <span class="lab-big-icon">✏️</span>
+        <span class="lab-big-tag">Presencial / Virtual</span>
+        <h3 class="lab-big-title">Talleres</h3>
+        <p class="lab-big-desc">Sesiones prácticas de ilustración, linograbado y dibujo. Grupos pequeños para un aprendizaje más cercano y personalizado. Fechas y temas varían según disponibilidad.</p>
+      </div>
+      <div class="lab-big-card">
+        <span class="lab-big-icon">💻</span>
+        <span class="lab-big-tag">En Desarrollo</span>
+        <h3 class="lab-big-title">Cursos</h3>
+        <p class="lab-big-desc">Formación estructurada en ilustración digital y tradicional. Fundamentos del dibujo, composición, color y técnica. Próximamente disponibles en formato digital.</p>
+      </div>
+      <div class="lab-big-card">
+        <span class="lab-big-icon">📚</span>
+        <span class="lab-big-tag">Recursos</span>
+        <h3 class="lab-big-title">Materiales</h3>
+        <p class="lab-big-desc">Guías, referencias, ejercicios prácticos y bibliografía curada para acompañar tu proceso de aprendizaje en ilustración y artes visuales.</p>
+      </div>
+    </div>
+    <div class="philosophy reveal">
+      <blockquote>"Enseñar ilustración no es transferir técnicas — es enseñar a mirar, a dudar, a intentar y a volver a intentarlo con más información."</blockquote>
+      <cite style="color:var(--accent-lab);">Filosofía pedagógica — TabLab</cite>
+    </div>
+
+    <footer class="layer-footer">
+      <span class="brand">TabCuar</span>
+      <div class="footer-tagline">Arte · Juegos · Ecosistemas · Educación — Medellín, Colombia</div>
+      <div class="footer-copy">© 2026 TabCuar<br>Todos los derechos reservados</div>
+      <p class="footer-legal">No está permitido subir, comercializar, distribuir ni utilizar estas imágenes para entrenar o alimentar sistemas de IA sin autorización previa del autor.</p>
+    </footer>
+  </div>
+</section>
+
+<!-- =========================================
+     8. CAPA: PROYECTOS (TabGame · Gehenna)  |  id="layer-proyectos"
+========================================= -->
+<section class="layer" id="layer-proyectos" data-zone="proyectos" aria-hidden="true">
+  <div class="layer-inner">
+    <!-- 8.1 PANEL: GEHENNA (id="proy-gehenna") -->
+    <div class="tab-panel active" id="proy-gehenna">
+      <section id="juegos" style="padding:0;background:transparent;">
+        <div class="gehenna-bg"></div>
+        <!-- JS: createEmbers() llena este contenedor con brasas -->
+        <div class="gehenna-embers" id="embers"></div>
+        <div class="gehenna-inner">
+          <div class="gehenna-header gehenna-hero reveal">
+            <div class="gehenna-eyebrow">TabGame</div>
+            <h2 class="gehenna-title">GEHENNA</h2>
+            <div class="gehenna-title-sub">La Corte del Juicio</div>
+            <p class="gehenna-tagline">Un juego de cartas estratégico sobre corrupción, poder y ascensión.</p>
+            <!-- CAMBIAR AQUÍ LA IMAGEN de Gehenna: edita el src (Img/Game.png). Imagen protagonista del proyecto. -->
+            <figure class="gehenna-hero-art">
+              <img src="Img/Game.png" alt="TabGame — Gehenna: La Corte del Juicio" class="uploaded click-img" onerror="this.style.display='none'; this.parentElement.classList.add('is-missing');">
+              <span class="gehenna-hero-art-glyph" aria-hidden="true">⬥</span>
+            </figure>
+          </div>
+          <div class="gehenna-sep reveal"><span class="gehenna-sep-glyph">⬥</span></div>
+          <div class="gehenna-lore-grid reveal">
+            <div class="gehenna-lore-block">
+              <p>Tras la caída del mundo humano, los pecados dejaron de ser simples ideas.<br><strong>Tomaron forma.</strong></p>
+              <p>En Gehenna, un dominio donde el fuego consume lo que la humanidad deja atrás, surge una corte oscura donde cada criatura representa una deformación de la mente humana. Allí, entidades nacidas del deseo, la ambición y la ruina compiten por ascender dentro de una jerarquía corrupta.</p>
+              <p><em>La Corte observa.</em><br><em>La Corte juzga.</em><br><em>Y solo los más corruptos sobreviven.</em></p>
+            </div>
+            <div class="gehenna-lore-dramatic">
+              En un reino donde la corrupción es poder, criaturas nacidas de los pecados humanos luchan por ascender en La Corte del Juicio, donde solo los más corruptos pueden reclamar el trono.
+              <em>El poder no se hereda. Se conquista.</em>
+            </div>
+          </div>
+
+          <div class="gehenna-content-grid reveal">
+            <div>
+              <div class="gehenna-section-title">El Concepto</div>
+              <p class="gehenna-text">GEHENNA: LA CORTE DEL JUICIO es un juego de cartas estratégico donde cada jugador invoca entidades nacidas de los pecados capitales y sus derivados.</p>
+              <p class="gehenna-text">A medida que avanza la partida, los jugadores acumulan corrupción, desarrollan criaturas y construyen su dominio dentro de la Corte.</p>
+              <p class="gehenna-text">El objetivo es simple: convertirse en la entidad más poderosa de la Corte. Pero el camino está lleno de decisiones estratégicas: cuándo evolucionar criaturas, cuándo manipular el campo y cuándo desatar el caos contra los rivales.</p>
+            </div>
+            <div>
+              <div class="gehenna-section-title">Corrupción &amp; Ascensión</div>
+              <p class="gehenna-text">En Gehenna, la corrupción no es solo un recurso. <strong style="color:rgba(230,110,60,.85);font-style:normal;">Es el motor del ascenso.</strong></p>
+              <p class="gehenna-text">Durante la partida, las criaturas pueden evolucionar y transformarse en entidades cada vez más poderosas. Cuanta más corrupción circula, mayor es el potencial de crecimiento… pero también el riesgo de perder el control.</p>
+              <p class="gehenna-text">Los jugadores deben decidir cuándo avanzar en la jerarquía y cuándo esperar el momento adecuado para dominar la Corte.</p>
+            </div>
+          </div>
+
+          <div class="reveal">
+            <div class="gehenna-section-title" style="text-align:center;margin-bottom:2.5rem;">Las Facciones — Pecados Convertidos en Poder</div>
+            <p class="gehenna-text" style="text-align:center;max-width:700px;margin:0 auto 3rem;color:rgba(200,160,130,.6);">Cada pecado representa una filosofía distinta del poder y define estilos de juego únicos dentro de la partida.</p>
+            <div class="sins-grid">
+              <div class="sin-card"><span class="sin-glyph">🔥</span><div class="sin-name">Ira</div><div class="sin-desc">Fuerza y destrucción directa. Dominio por la violencia.</div></div>
+              <div class="sin-card"><span class="sin-glyph">💛</span><div class="sin-name">Codicia</div><div class="sin-desc">Acumulación implacable de recursos y poder.</div></div>
+              <div class="sin-card"><span class="sin-glyph">👁</span><div class="sin-name">Envidia</div><div class="sin-desc">Copia y usurpación de habilidades rivales.</div></div>
+              <div class="sin-card"><span class="sin-glyph">😴</span><div class="sin-name">Pereza</div><div class="sin-desc">Pasividad calculada con efectos devastadores.</div></div>
+              <div class="sin-card"><span class="sin-glyph">🍷</span><div class="sin-name">Gula</div><div class="sin-desc">Consumo masivo. Más cartas, más poder.</div></div>
+              <div class="sin-card"><span class="sin-glyph">🦚</span><div class="sin-name">Soberbia</div><div class="sin-desc">Alto costo, poder absoluto e irresistible.</div></div>
+              <div class="sin-card"><span class="sin-glyph">🌹</span><div class="sin-name">Lujuria</div><div class="sin-desc">Control sutil y manipulación del rival.</div></div>
+              <div class="sin-card" data-obs="secret" tabindex="0" style="opacity:.45;border-style:dashed;"><span class="sin-glyph">⚖</span><div class="sin-name">Corrupción</div><div class="sin-desc">Facción oculta. Por revelarse.</div></div>
+            </div>
+          </div>
+
+          <div class="gehenna-sep reveal"><span class="gehenna-sep-glyph">⬥</span></div>
+
+          <div class="reveal">
+            <div class="gehenna-section-title" style="text-align:center;margin-bottom:2.5rem;">Cartas de Muestra</div>
+          </div>
+          <div class="card-showcase reveal">
+            <div class="playing-card">
+              <div class="card-header"><div class="card-name">El Codicioso</div><div class="card-cost">4</div></div>
+              <div class="card-art">
+                <svg viewBox="0 0 200 220" xmlns="http://www.w3.org/2000/svg" style="width:90%;height:90%;opacity:.7;">
+                  <defs><radialGradient id="c1" cx="50%" cy="40%"><stop offset="0%" stop-color="#c87030" stop-opacity=".4"/><stop offset="100%" stop-color="transparent"/></radialGradient></defs>
+                  <rect width="200" height="220" fill="url(#c1)"/>
+                  <g stroke="rgba(220,120,60,.7)" fill="none" stroke-width=".8">
+                    <ellipse cx="100" cy="80" rx="45" ry="55"/><path d="M 65 130 Q 100 150 135 130 L 140 190 L 60 190 Z"/>
+                    <circle cx="80" cy="65" r="8"/><circle cx="120" cy="65" r="8"/><path d="M 80 100 Q 100 112 120 100"/>
+                    <ellipse cx="65" cy="162" rx="10" ry="5" opacity=".5"/><ellipse cx="135" cy="162" rx="10" ry="5" opacity=".5"/>
+                  </g>
+                  <text x="100" y="212" text-anchor="middle" font-family="monospace" font-size="7" fill="rgba(220,100,50,.35)" letter-spacing="2">CODICIA</text>
+                </svg>
+              </div>
+              <div class="card-footer"><div class="card-type">Personaje · Codicia</div><div class="card-effect">Al atacar, roba 2 recursos del oponente y los añade a tu reserva de corrupción.</div><div class="card-stats"><span class="card-stat">ATK <span>3</span></span><span class="card-stat">DEF <span>2</span></span></div></div>
+            </div>
+            <div class="playing-card">
+              <div class="card-header"><div class="card-name">Ira Absoluta</div><div class="card-cost">6</div></div>
+              <div class="card-art">
+                <svg viewBox="0 0 200 220" xmlns="http://www.w3.org/2000/svg" style="width:90%;height:90%;opacity:.7;">
+                  <defs><radialGradient id="c2" cx="50%" cy="50%"><stop offset="0%" stop-color="#c83010" stop-opacity=".35"/><stop offset="100%" stop-color="transparent"/></radialGradient></defs>
+                  <rect width="200" height="220" fill="url(#c2)"/>
+                  <g stroke="rgba(210,80,40,.7)" fill="none" stroke-width=".8">
+                    <path d="M 100 20 L 120 80 L 180 80 L 130 120 L 150 180 L 100 148 L 50 180 L 70 120 L 20 80 L 80 80 Z"/>
+                    <path d="M 100 45 L 114 85 L 155 85 L 124 108 L 136 148 L 100 128 L 64 148 L 76 108 L 45 85 L 86 85 Z" opacity=".3"/>
+                  </g>
+                  <text x="100" y="212" text-anchor="middle" font-family="monospace" font-size="7" fill="rgba(200,80,40,.35)" letter-spacing="2">IRA</text>
+                </svg>
+              </div>
+              <div class="card-footer"><div class="card-type">Evento · Ira</div><div class="card-effect">Inflige daño masivo a todos los personajes en juego. El tuyo sobrevive con más de 3 DEF.</div><div class="card-stats"><span class="card-stat">DMG <span>5</span></span></div></div>
+            </div>
+            <div class="playing-card">
+              <div class="card-header"><div class="card-name">La Envidiosa</div><div class="card-cost">3</div></div>
+              <div class="card-art">
+                <svg viewBox="0 0 200 220" xmlns="http://www.w3.org/2000/svg" style="width:90%;height:90%;opacity:.7;">
+                  <defs><radialGradient id="c3" cx="50%" cy="40%"><stop offset="0%" stop-color="#802010" stop-opacity=".3"/><stop offset="100%" stop-color="transparent"/></radialGradient></defs>
+                  <rect width="200" height="220" fill="url(#c3)"/>
+                  <g stroke="rgba(190,70,40,.65)" fill="none" stroke-width=".8">
+                    <ellipse cx="100" cy="80" rx="40" ry="50"/><path d="M 65 125 Q 100 145 135 125 L 138 185 L 62 185 Z"/>
+                    <circle cx="85" cy="67" r="7"/><circle cx="115" cy="67" r="7"/>
+                    <ellipse cx="100" cy="100" rx="24" ry="14" stroke-dasharray="3 3" opacity=".5"/>
+                    <circle cx="100" cy="100" r="6" opacity=".4"/>
+                  </g>
+                  <text x="100" y="212" text-anchor="middle" font-family="monospace" font-size="7" fill="rgba(180,70,40,.35)" letter-spacing="2">ENVIDIA</text>
+                </svg>
+              </div>
+              <div class="card-footer"><div class="card-type">Personaje · Envidia</div><div class="card-effect">Al entrar en juego, copia la habilidad especial del personaje más poderoso del oponente.</div><div class="card-stats"><span class="card-stat">ATK <span>2</span></span><span class="card-stat">DEF <span>4</span></span></div></div>
+            </div>
+          </div>
+
+          <div class="gehenna-content-grid reveal">
+            <div>
+              <div class="gehenna-section-title">Un Universo Visual Oscuro</div>
+              <p class="gehenna-text">Cada carta representa un arquetipo visual del pecado y la corrupción. El lenguaje visual del juego combina simbolismo, minimalismo oscuro y representaciones abstractas de criaturas deformadas por la mente humana.</p>
+              <p class="gehenna-text">La intención es que el arte y las mecánicas trabajen juntos para construir una identidad visual coherente dentro del mundo de Gehenna.</p>
+            </div>
+            <div>
+              <div class="gehenna-section-title">Estado Actual del Proyecto</div>
+              <p class="gehenna-text">El juego se encuentra en fase de prototipo jugable. En esta etapa se desarrollan y prueban:</p>
+              <ul class="gehenna-list">
+                <li>El sistema de evolución de criaturas</li>
+                <li>El equilibrio entre corrupción y progresión</li>
+                <li>La identidad mecánica de cada pecado</li>
+                <li>Nuevas cartas y combinaciones estratégicas</li>
+                <li>El estilo visual definitivo del universo del juego</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="gehenna-status reveal">
+            <div class="gehenna-status-title">La Corte aún no ha terminado de formarse</div>
+            <p class="gehenna-status-text">El mundo de GEHENNA continúa expandiéndose. Nuevas entidades, mecánicas y secretos de la Corte serán revelados a medida que el proyecto avance.</p>
+            <div class="gehenna-final">Porque en Gehenna… el poder no se hereda. Se conquista.</div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <footer class="layer-footer">
+      <span class="brand">TabCuar</span>
+      <div class="footer-tagline">Arte · Juegos · Ecosistemas · Educación — Medellín, Colombia</div>
+      <div class="footer-copy">© 2026 TabCuar<br>Todos los derechos reservados</div>
+      <p class="footer-legal">No está permitido subir, comercializar, distribuir ni utilizar estas imágenes para entrenar o alimentar sistemas de IA sin autorización previa del autor.</p>
+    </footer>
+  </div>
+</section>
+
+<!-- =========================================
+     9. CAPA: TABCUARIO (antes Contacto)  |  id="layer-contacto" (se conserva el ID por el hotspot y el corazón)
+========================================= -->
+<section class="layer" id="layer-contacto" data-zone="contacto" aria-hidden="true">
+  <div class="layer-inner">
+
+    <!-- PANEL: TABCUARIO (id="proy-tabcuario") — movido desde layer-proyectos (antes 8.2).
+         Es el único panel de esta capa, por eso queda siempre activo (tab-panel active). -->
+    <div class="tab-panel active" id="proy-tabcuario">
+      <section id="acuario" class="aqua-section">
+        <div class="section-header reveal">
+          <div>
+            <div class="accent-line" style="margin-bottom:.5rem;"><span style="color:var(--accent-aqua);">Tabcuario</span></div>
+            <h2 class="section-title" style="color:var(--accent-aqua);">Peces, Plantas<em style="color:var(--text);">&amp; Ecosistemas</em></h2>
+            <div class="section-divider" style="background:var(--accent-aqua);"></div>
+            <p class="section-desc section-desc--wide">Mundos acuáticos cultivados con la misma atención que una ilustración.</p>
+          </div>
+        </div>
+
+        <!-- Pestañas. JS: switchLocalTab(id, boton, clasePanel, prefijo) -->
+        <div class="aqua-tabs reveal">
+          <button class="aqua-tab active" onclick="switchLocalTab('peces',this,'aqua-panel','tab-')">Peces</button>
+          <button class="aqua-tab" onclick="switchLocalTab('plantas',this,'aqua-panel','tab-')">Plantas</button>
+          <button class="aqua-tab" onclick="switchLocalTab('curiosos',this,'aqua-panel','tab-')">Datos Curiosos</button>
+        </div>
+        <div class="aqua-panel active reveal" id="tab-peces">
+          <!-- Cada ficha es editable: cambia nombre, especie, datos y descripción.
+               CAMBIAR AQUÍ LA IMAGEN de cada pez: edita el src del <img> dentro de .fish-slot (carpeta Img/peces/). -->
+          <div class="fish-grid">
+            <article class="fish-card">
+              <div class="fish-slot">
+                <!-- CAMBIAR AQUÍ LA IMAGEN: reemplaza la ruta de src (ficha 01) -->
+                <img class="uploaded click-img" src="Img/peces/pez-01.jpg" alt="Pez 01" loading="lazy" onerror="this.style.display='none'; this.parentElement.classList.add('is-missing');">
+              </div>
+              <div class="fish-info">
+                <span class="fish-index">Ficha 01</span>
+                <h4 class="fish-name">Nombre del pez</h4>
+                <p class="fish-species">Especie científica</p>
+                <dl class="fish-data">
+                  <div><dt>Origen</dt><dd>Región</dd></div>
+                  <div><dt>Tamaño</dt><dd>— cm</dd></div>
+                  <div><dt>Agua</dt><dd>pH · °C</dd></div>
+                </dl>
+                <p class="fish-desc">Descripción breve: carácter, comportamiento y por qué forma parte del acuario.</p>
+              </div>
+            </article>
+            <article class="fish-card">
+              <div class="fish-slot">
+                <!-- CAMBIAR AQUÍ LA IMAGEN: reemplaza la ruta de src (ficha 02) -->
+                <img class="uploaded click-img" src="Img/peces/pez-02.jpg" alt="Pez 02" loading="lazy" onerror="this.style.display='none'; this.parentElement.classList.add('is-missing');">
+              </div>
+              <div class="fish-info">
+                <span class="fish-index">Ficha 02</span>
+                <h4 class="fish-name">Nombre del pez</h4>
+                <p class="fish-species">Especie científica</p>
+                <dl class="fish-data">
+                  <div><dt>Origen</dt><dd>Región</dd></div>
+                  <div><dt>Tamaño</dt><dd>— cm</dd></div>
+                  <div><dt>Agua</dt><dd>pH · °C</dd></div>
+                </dl>
+                <p class="fish-desc">Descripción breve: carácter, comportamiento y por qué forma parte del acuario.</p>
+              </div>
+            </article>
+            <article class="fish-card">
+              <div class="fish-slot">
+                <!-- CAMBIAR AQUÍ LA IMAGEN: reemplaza la ruta de src (ficha 03) -->
+                <img class="uploaded click-img" src="Img/peces/pez-03.jpg" alt="Pez 03" loading="lazy" onerror="this.style.display='none'; this.parentElement.classList.add('is-missing');">
+              </div>
+              <div class="fish-info">
+                <span class="fish-index">Ficha 03</span>
+                <h4 class="fish-name">Nombre del pez</h4>
+                <p class="fish-species">Especie científica</p>
+                <dl class="fish-data">
+                  <div><dt>Origen</dt><dd>Región</dd></div>
+                  <div><dt>Tamaño</dt><dd>— cm</dd></div>
+                  <div><dt>Agua</dt><dd>pH · °C</dd></div>
+                </dl>
+                <p class="fish-desc">Descripción breve: carácter, comportamiento y por qué forma parte del acuario.</p>
+              </div>
+            </article>
+            <article class="fish-card">
+              <div class="fish-slot">
+                <!-- CAMBIAR AQUÍ LA IMAGEN: reemplaza la ruta de src (ficha 04) -->
+                <img class="uploaded click-img" src="Img/peces/pez-04.jpg" alt="Pez 04" loading="lazy" onerror="this.style.display='none'; this.parentElement.classList.add('is-missing');">
+              </div>
+              <div class="fish-info">
+                <span class="fish-index">Ficha 04</span>
+                <h4 class="fish-name">Nombre del pez</h4>
+                <p class="fish-species">Especie científica</p>
+                <dl class="fish-data">
+                  <div><dt>Origen</dt><dd>Región</dd></div>
+                  <div><dt>Tamaño</dt><dd>— cm</dd></div>
+                  <div><dt>Agua</dt><dd>pH · °C</dd></div>
+                </dl>
+                <p class="fish-desc">Descripción breve: carácter, comportamiento y por qué forma parte del acuario.</p>
+              </div>
+            </article>
+            <article class="fish-card">
+              <div class="fish-slot">
+                <!-- CAMBIAR AQUÍ LA IMAGEN: reemplaza la ruta de src (ficha 05) -->
+                <img class="uploaded click-img" src="Img/peces/pez-05.jpg" alt="Pez 05" loading="lazy" onerror="this.style.display='none'; this.parentElement.classList.add('is-missing');">
+              </div>
+              <div class="fish-info">
+                <span class="fish-index">Ficha 05</span>
+                <h4 class="fish-name">Nombre del pez</h4>
+                <p class="fish-species">Especie científica</p>
+                <dl class="fish-data">
+                  <div><dt>Origen</dt><dd>Región</dd></div>
+                  <div><dt>Tamaño</dt><dd>— cm</dd></div>
+                  <div><dt>Agua</dt><dd>pH · °C</dd></div>
+                </dl>
+                <p class="fish-desc">Descripción breve: carácter, comportamiento y por qué forma parte del acuario.</p>
+              </div>
+            </article>
+            <article class="fish-card">
+              <div class="fish-slot">
+                <!-- CAMBIAR AQUÍ LA IMAGEN: reemplaza la ruta de src (ficha 06) -->
+                <img class="uploaded click-img" src="Img/peces/pez-06.jpg" alt="Pez 06" loading="lazy" onerror="this.style.display='none'; this.parentElement.classList.add('is-missing');">
+              </div>
+              <div class="fish-info">
+                <span class="fish-index">Ficha 06</span>
+                <h4 class="fish-name">Nombre del pez</h4>
+                <p class="fish-species">Especie científica</p>
+                <dl class="fish-data">
+                  <div><dt>Origen</dt><dd>Región</dd></div>
+                  <div><dt>Tamaño</dt><dd>— cm</dd></div>
+                  <div><dt>Agua</dt><dd>pH · °C</dd></div>
+                </dl>
+                <p class="fish-desc">Descripción breve: carácter, comportamiento y por qué forma parte del acuario.</p>
+              </div>
+            </article>
+            </div>
+
+          <!-- LIBROS (TabCuario) -->
+          <section class="books-section books-section--aqua" id="tabcuarioBooks">
+            <div class="books-heading">
+              <div class="accent-line"><span>LIBROS</span></div>
+              <h3>Libros</h3>
+              <p>Una pequeña biblioteca digital sobre acuarios, plantas y ecosistemas para leer en la web.</p>
+            </div>
+            <!-- CARRUSEL DE LIBROS: las portadas se generan desde BOOK_LIBRARY.tabcuario en script.js
+           (CAMBIAR AQUÍ portada, título y PDF → script.js, sección 23). -->
+      <div class="book-carousel" data-book-library="tabcuario">
+        <div class="book-shelf">
+          <button type="button" class="book-shelf-nav" data-shelf-prev aria-label="Libros anteriores">&#8249;</button>
+          <div class="book-shelf-track" data-shelf-track role="tablist" aria-label="Libros disponibles"></div>
+          <button type="button" class="book-shelf-nav" data-shelf-next aria-label="Libros siguientes">&#8250;</button>
+        </div>
+        <article class="book-viewer" id="bookTabcuario" data-book data-pdf="">
+          <header class="book-info">
+            <span class="book-kicker" data-book-kicker>Libro 01</span>
+            <h4 class="book-title" data-book-title>Título del libro</h4>
+            <p class="book-desc" data-book-desc>Descripción breve.</p>
+            <p class="book-meta" data-book-meta></p>
+            <p class="book-nav-hint">Pasa las páginas con los botones, las flechas del teclado o deslizando.</p>
+          </header>
+          <div class="book-stage" data-book-stage tabindex="0" aria-label="Visor de libro. Usa las flechas del teclado para pasar páginas.">
+            <div class="book-spread" data-book-spread>
+              <canvas class="book-canvas" data-book-left></canvas>
+              <canvas class="book-canvas" data-book-right></canvas>
+            </div>
+            <div class="book-empty" data-book-empty>
+              <span class="book-empty-icon" aria-hidden="true"></span>
+              <strong>Elige un libro</strong>
+              <span>Selecciona una portada para abrirlo aquí.</span>
+            </div>
+          </div>
+          <div class="book-controls">
+            <button type="button" data-book-prev aria-label="Página anterior">&#8249;</button>
+            <span class="book-pageinfo" data-book-info>— / —</span>
+            <button type="button" data-book-next aria-label="Página siguiente">&#8250;</button>
+            <button type="button" data-book-full aria-label="Pantalla completa">&#10530;</button>
+          </div>
+        </article>
+      </div>
+          </section>
+        </div>
+        <div class="aqua-panel" id="tab-plantas">
+          <!-- Galería de plantas. CAMBIAR AQUÍ LA IMAGEN de cada planta: edita el src del <img> dentro de .plant-img (carpeta Img/plantas/). -->
+          <div class="plant-grid">
+            <article class="plant-card">
+              <div class="plant-img">
+                <!-- CAMBIAR AQUÍ LA IMAGEN: reemplaza la ruta de src (planta 01) -->
+                <img class="uploaded click-img" src="Img/plantas/planta-01.jpg" alt="Planta 01" loading="lazy" onerror="this.style.display='none'; this.parentElement.classList.add('is-missing');">
+              </div>
+              <div class="plant-info"><span class="plant-index">01</span><h4 class="plant-name">Nombre de la planta</h4><p class="plant-type">Especie · Tipo</p><p class="plant-desc">Descripción breve (opcional).</p></div>
+            </article>
+            <article class="plant-card">
+              <div class="plant-img">
+                <!-- CAMBIAR AQUÍ LA IMAGEN: reemplaza la ruta de src (planta 02) -->
+                <img class="uploaded click-img" src="Img/plantas/planta-02.jpg" alt="Planta 02" loading="lazy" onerror="this.style.display='none'; this.parentElement.classList.add('is-missing');">
+              </div>
+              <div class="plant-info"><span class="plant-index">02</span><h4 class="plant-name">Nombre de la planta</h4><p class="plant-type">Especie · Tipo</p><p class="plant-desc">Descripción breve (opcional).</p></div>
+            </article>
+            <article class="plant-card">
+              <div class="plant-img">
+                <!-- CAMBIAR AQUÍ LA IMAGEN: reemplaza la ruta de src (planta 03) -->
+                <img class="uploaded click-img" src="Img/plantas/planta-03.jpg" alt="Planta 03" loading="lazy" onerror="this.style.display='none'; this.parentElement.classList.add('is-missing');">
+              </div>
+              <div class="plant-info"><span class="plant-index">03</span><h4 class="plant-name">Nombre de la planta</h4><p class="plant-type">Especie · Tipo</p><p class="plant-desc">Descripción breve (opcional).</p></div>
+            </article>
+            <article class="plant-card">
+              <div class="plant-img">
+                <!-- CAMBIAR AQUÍ LA IMAGEN: reemplaza la ruta de src (planta 04) -->
+                <img class="uploaded click-img" src="Img/plantas/planta-04.jpg" alt="Planta 04" loading="lazy" onerror="this.style.display='none'; this.parentElement.classList.add('is-missing');">
+              </div>
+              <div class="plant-info"><span class="plant-index">04</span><h4 class="plant-name">Nombre de la planta</h4><p class="plant-type">Especie · Tipo</p><p class="plant-desc">Descripción breve (opcional).</p></div>
+            </article>
+            <article class="plant-card">
+              <div class="plant-img">
+                <!-- CAMBIAR AQUÍ LA IMAGEN: reemplaza la ruta de src (planta 05) -->
+                <img class="uploaded click-img" src="Img/plantas/planta-05.jpg" alt="Planta 05" loading="lazy" onerror="this.style.display='none'; this.parentElement.classList.add('is-missing');">
+              </div>
+              <div class="plant-info"><span class="plant-index">05</span><h4 class="plant-name">Nombre de la planta</h4><p class="plant-type">Especie · Tipo</p><p class="plant-desc">Descripción breve (opcional).</p></div>
+            </article>
+            <article class="plant-card">
+              <div class="plant-img">
+                <!-- CAMBIAR AQUÍ LA IMAGEN: reemplaza la ruta de src (planta 06) -->
+                <img class="uploaded click-img" src="Img/plantas/planta-06.jpg" alt="Planta 06" loading="lazy" onerror="this.style.display='none'; this.parentElement.classList.add('is-missing');">
+              </div>
+              <div class="plant-info"><span class="plant-index">06</span><h4 class="plant-name">Nombre de la planta</h4><p class="plant-type">Especie · Tipo</p><p class="plant-desc">Descripción breve (opcional).</p></div>
+            </article>
+            <article class="plant-card">
+              <div class="plant-img">
+                <!-- CAMBIAR AQUÍ LA IMAGEN: reemplaza la ruta de src (planta 07) -->
+                <img class="uploaded click-img" src="Img/plantas/planta-07.jpg" alt="Planta 07" loading="lazy" onerror="this.style.display='none'; this.parentElement.classList.add('is-missing');">
+              </div>
+              <div class="plant-info"><span class="plant-index">07</span><h4 class="plant-name">Nombre de la planta</h4><p class="plant-type">Especie · Tipo</p><p class="plant-desc">Descripción breve (opcional).</p></div>
+            </article>
+            <article class="plant-card">
+              <div class="plant-img">
+                <!-- CAMBIAR AQUÍ LA IMAGEN: reemplaza la ruta de src (planta 08) -->
+                <img class="uploaded click-img" src="Img/plantas/planta-08.jpg" alt="Planta 08" loading="lazy" onerror="this.style.display='none'; this.parentElement.classList.add('is-missing');">
+              </div>
+              <div class="plant-info"><span class="plant-index">08</span><h4 class="plant-name">Nombre de la planta</h4><p class="plant-type">Especie · Tipo</p><p class="plant-desc">Descripción breve (opcional).</p></div>
+            </article>
+            </div>
+        </div>
+        <div class="aqua-panel" id="tab-curiosos">
+          <div class="curiosos-grid">
+            <div class="curioso-card"><div class="curioso-num">01</div><p class="curioso-fact">El <strong>ciclo del nitrógeno</strong> es la base de cualquier acuario plantado sano: las bacterias convierten el amoniaco tóxico en nitratos que las plantas consumen como fertilizante.</p></div>
+            <div class="curioso-card"><div class="curioso-num">02</div><p class="curioso-fact">Las plantas acuáticas como la <strong>Anubias</strong> pueden sobrevivir en condiciones de muy poca luz y son ideales para principiantes por su resistencia extrema.</p></div>
+            <div class="curioso-card"><div class="curioso-num">03</div><p class="curioso-fact">Un acuario plantado sin CO2 inyectado puede mantenerse en equilibrio si la densidad de plantas es alta y la iluminación está bien calibrada.</p></div>
+            <div class="curioso-card"><div class="curioso-num">04</div><p class="curioso-fact">La <strong>Bucephalandra</strong> es un género endémico de Borneo. Crece extremadamente despacio, lo que la hace muy valorada en la acuarofilia de colección.</p></div>
+            <div class="curioso-card"><div class="curioso-num">05</div><p class="curioso-fact">Los peces cardinales (<strong>Paracheirodon axelrodi</strong>) son una de las especies más populares del mundo. Provienen del río Negro en Brasil y requieren agua blanda y ácida.</p></div>
+            <div class="curioso-card"><div class="curioso-num">06</div><p class="curioso-fact">El estilo <strong>Nature Aquarium</strong>, creado por Takashi Amano, revolucionó la acuarofilia al tratar el acuario como una composición visual inspirada en paisajes naturales japoneses.</p></div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <footer class="layer-footer">
+      <span class="brand">TabCuar</span>
+      <div class="footer-tagline">Arte · Juegos · Ecosistemas · Educación — Medellín, Colombia</div>
+      <div class="footer-copy">© 2026 TabCuar<br>Todos los derechos reservados</div>
+      <p class="footer-legal">No está permitido subir, comercializar, distribuir ni utilizar estas imágenes para entrenar o alimentar sistemas de IA sin autorización previa del autor.</p>
+    </footer>
+  </div>
+</section>
+
+<!-- =========================================
+     10. VISOR DE IMAGEN / OBRA AMPLIADA
+========================================= -->
+<!-- CSS: .img-modal*  |  JS: sección 18 (openImageViewer / closeImageViewer).
+     Las imágenes .click-img de la galería TabCuart muestran imagen + ficha técnica.
+     Las demás .click-img (Gehenna, Tabcuario) muestran solo la imagen (.is-solo).
+     Los datos de cada obra se editan en script.js → WORKS_INFO. -->
+
+<div id="imgModal"
+     class="img-modal"
+     role="dialog"
+     aria-modal="true"
+     aria-hidden="true"
+     aria-labelledby="imgModalTitle">
+  <!-- LA CARTA: tipo + nº (arriba), nombre, ilustración, ficha técnica y navegación (abajo).
+       Las obras de la galería usan la carta completa; las demás imágenes (.is-solo) muestran solo la ilustración. -->
+  <div class="img-modal-dialog">
+    <button type="button" class="img-close" id="imgClose" aria-label="Cerrar vista ampliada">&times;</button>
+    <header class="img-card-head">
+      <div class="accent-line"><span id="imgModalKicker">Obra</span></div>
+      <span class="img-card-no" id="imgCardNo" aria-hidden="true"></span>
+    </header>
+    <h3 class="img-modal-title" id="imgModalTitle">Obra</h3>
+    <figure class="img-modal-figure" id="imgFigure">
+      <!-- IMÁGENES -->
+      <img class="img-modal-content" id="imgExpanded" alt="">
+      <!-- VIDEOS -->
+      <video class="img-modal-content" id="videoExpanded" controls playsinline preload="metadata"></video>
+      <i class="img-card-foil" aria-hidden="true"></i>
+    </figure>
+    <aside class="img-modal-info" id="imgInfo">
+      <dl class="img-modal-meta" id="imgModalMeta"></dl>
+      <div class="img-modal-rule" aria-hidden="true"></div>
+      <p class="img-modal-desc" id="imgModalDesc"></p>
+    </aside>
+    <div class="img-card-foot" id="imgCardFoot">
+      <button type="button" class="img-card-btn" id="imgPrev" aria-label="Obra anterior">&#8249;</button>
+      <button type="button" class="img-card-btn img-card-btn--text" id="imgProcessBtn" hidden>Ver proceso</button>
+      <button type="button" class="img-card-btn" id="imgNext" aria-label="Obra siguiente">&#8250;</button>
+    </div>
+  </div>
+</div>
+
+<!-- =========================================
+     11. JAVASCRIPT
+========================================= -->
 <script src="script.js"></script>
 
 </body>
