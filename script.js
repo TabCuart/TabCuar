@@ -147,7 +147,8 @@ const WORKS_DEFAULTS = {
 const WORKS_INFO = {
 
   /* ----- Ilustración Digital ----- */
-  'Dj1.png': {
+
+  'Desprendimiento.png': {
   title: 'Desprendimiento',
   technique: 'Ilustración digital',
   year: '2026',
@@ -157,7 +158,7 @@ const WORKS_INFO = {
   ]
 },
 
- 'Dj2.png': {
+ 'Melancolia.png': {
   title: 'Melancolía',
   technique: 'Ilustración digital',
   year: '2024',
@@ -166,8 +167,25 @@ const WORKS_INFO = {
     ['Software', 'Photoshop']
   ]
 },
-
-  'Dj3.png':        { title: '', technique: '', year: '', description: '', extra: [] },
+ 'Deus.png': {
+  title: 'Deus',
+  technique: 'Ilustración digital',
+  year: '2026',
+  description: '...',
+  extra: [
+    ['Software', 'Photoshop']
+  ]
+},
+  
+ 'Transformación.png': {
+  title: 'Transformación',
+  technique: 'Ilustración digital',
+  year: '2026',
+  description: '...',
+  extra: [
+    ['Software', 'Photoshop']
+  ]
+},
 
   /* ----- Ilustración Análoga ----- */
   'Pt1.jpg':        { title: '', technique: '', year: '', description: '', extra: [] },
@@ -198,21 +216,6 @@ const WORKS_INFO = {
   'concept1.jpg':   { title: '', technique: '', year: '', description: '', extra: [] },
   'concept2.jpg':   { title: '', technique: '', year: '', description: '', extra: [] },
   'concept3.jpg':   { title: '', technique: '', year: '', description: '', extra: [] }
-
-  /* EJEMPLO de una obra completa:
-
-  'Dj1.png': {
-    title: 'La Corte del Juicio',
-    technique: 'Pintura digital',
-    year: '2026',
-    description: 'Texto que se muestra junto a la imagen.',
-    extra: [
-      ['Formato', '3000 × 4000 px'],
-      ['Software', 'Adobe Photoshop']
-    ]
-  }
-
-  */
 
 };
 
@@ -265,12 +268,21 @@ function buildHeartLayers() {
     img.alt = '';
     img.decoding = 'async';
     img.draggable = false;
-    img.src = HEART_STATES[key];
-
     heartFrame.parentNode.insertBefore(img, heartFrame.nextSibling);
     heartLayers[key] = img;
 
   });
+
+  /* Los demás estados se piden DESPUÉS de que el corazón principal (S1) ya cargó,
+     para que no compitan con él por la red y el corazón aparezca de inmediato. */
+  const loadRest = () => Object.keys(heartLayers).forEach(key => {
+    if (key !== 'inicio' && !heartLayers[key].src) heartLayers[key].src = HEART_STATES[key];
+  });
+  if (heartFrame.complete && heartFrame.naturalWidth) setTimeout(loadRest, 150);
+  else {
+    heartFrame.addEventListener('load', () => setTimeout(loadRest, 150), { once: true });
+    heartFrame.addEventListener('error', loadRest, { once: true });
+  }
 }
 
 
@@ -963,9 +975,9 @@ function loadPortraitImg(input) {
   const root = document.documentElement;
 
 
-  const MIN_MS = reduceMotion ? 0 : 1300;   /* tiempo mínimo de pantalla de carga   */
+  const MIN_MS = reduceMotion ? 0 : 900;    /* tiempo mínimo de pantalla de carga   */
   const MAX_MS = 6500;                /* nunca esperar más que esto           */
-  const PLAY_MS = 3000;               /* duración total de la secuencia       */
+  const PLAY_MS = 2200;               /* duración total de la secuencia       */
 
   const t0 = performance.now();
 
@@ -1054,10 +1066,10 @@ function loadPortraitImg(input) {
     /* deja ver la barra completa un instante, luego desvanece */
     setTimeout(() => {
       if (loader) loader.classList.add('hidden');
-    }, reduceMotion ? 0 : 280);
+    }, reduceMotion ? 0 : 200);
 
     /* la secuencia arranca cuando el loader ya se está yendo */
-    setTimeout(play, reduceMotion ? 0 : 560);
+    setTimeout(play, reduceMotion ? 0 : 300);
 
   }
 
@@ -2281,7 +2293,7 @@ const PROCESS_DATA = {
   ],
 
   /* Ilustración digital 03: el PROCESO es un video (1 etapa) y el FINAL es la imagen Dj3.png */
-  'Dj3.png': [
+  'Deus.png': [
     { "type": "video", "src": "Video/0002_1.mp4", "title": "Proceso", "text": "Así se construye la ilustración, de principio a fin.", "alt": "Video del proceso de la ilustración" }
   ],
 
@@ -2290,16 +2302,28 @@ const PROCESS_DATA = {
     { "src": "Img/Esc1.jpg", "title": "Boceto y Soporte", "text": "Preparación de la superficie, trazado de líneas guía y estructura inicial.", "alt": "Preparación de la base de la escultura" },
     { "src": "Img/Esc2.jpg", "title": "Ensamblaje", "text": "Fijación y distribución de botones creando volúmenes, texturas y capas de relieve.", "alt": "Proceso de ensamblaje con botones" },
     { "src": "Img/Esc3.png", "title": "Detalles y Sellado", "text": "Ajuste fino de contrastes, fijación de piezas sueltas y acabado final.", "alt": "Detalles finales y acabado de la escultura" }
+  ], // <-- Aquí faltaba la coma
+
+  /* Escultura / Cuadro de botones */
+  'Escarabajo.jpg': [
+    { "src": "Img/Analogo/Escarabajo 1.jpg", "title": "Boceto y Soporte", "text": "Preparación de la superficie, trazado de líneas guía y estructura inicial.", "alt": "Preparación de la base de la escultura" }, // <-- Agrega la extensión real (.jpg / .png)
+    { "src": "Img/Analogo/Escarabajo 2.jpg", "title": "Ensamblaje", "text": "Fijación y distribución de botones creando volúmenes, texturas y capas de relieve.", "alt": "Proceso de ensamblaje con botones" },
   ]
 };
 
 /* RESULTADO FINAL por trabajo (bloque derecho).
    type: 'image' o 'video'. Un trabajo sin entrada usa el video por defecto del HTML (Video/0001_1.mp4). */
 const FINAL_DATA = {
+  'Deus.png': { type: 'image', src: 'Img/Digital/Deus.png', title: 'Resultado final', text: 'La ilustración terminada.', alt: 'Ilustración digital terminada' },
+  
   'Dj3.png': { type: 'image', src: 'Img/Dj3.png', title: 'Resultado final', text: 'La ilustración terminada.', alt: 'Ilustración digital terminada' },
   
   /* Resultado final de la escultura */
-  'escultura1.jpg': { type: 'image', src: 'Img/escultura1.jpg', title: 'Resultado final', text: 'Escultura de pared terminada.', alt: 'Fotografía de la escultura de pared terminada' }
+  'escultura1.jpg': { type: 'image', src: 'Img/escultura1.jpg', title: 'Resultado final', text: 'Escultura de pared terminada.', alt: 'Fotografía de la escultura de pared terminada' },
+
+/* Resultado final de la escultura */
+  'Escarabajo.jpg': { type: 'image', src: 'Img/Analogo/Escarabajo.jpg', title: 'Resultado final', text: 'Escultura de pared terminada.', alt: 'Fotografía de la escultura de pared terminada' }
+
 };
 /* =========================================================
    INFORMACIÓN DE LA OBRA
@@ -2343,6 +2367,7 @@ function resolveWorkInfo(item, media) {
   return {
 
     key: file,
+    cat: category,
     kicker:
       number
         ? 'Obra ' + number
@@ -2399,6 +2424,15 @@ function renderWorkInfo(info) {
   const desc =
     document.getElementById('imgModalDesc');
 
+
+  /* Color neón de la carta según la técnica (ver styles.css, "CARTA NEÓN") */
+  const dialog =
+    document.querySelector('#imgModal .img-modal-dialog');
+
+  if (dialog) {
+    if (info.cat) dialog.dataset.cat = info.cat;
+    else delete dialog.dataset.cat;
+  }
 
   if (kicker) {
     kicker.textContent =
@@ -2559,6 +2593,12 @@ function openImageViewer(media) {
     'is-solo',
     !item
   );
+
+  if (!item) {
+    const soloDialog =
+      modal.querySelector('.img-modal-dialog');
+    if (soloDialog) delete soloDialog.dataset.cat;
+  }
 
 
   const isVideo =
@@ -3124,7 +3164,7 @@ window.addEventListener(
     );
 
     centerX = width / 2;
-    centerY = height * 0.42;   /* mismo punto que las tarjetas y el texto central (top: 42%) */
+    centerY = height * 0.52;   /* mismo punto que las tarjetas y el texto central (--wheel-cy en styles.css) */
   }
 
 
@@ -5954,12 +5994,10 @@ var ts = zoneScale * (
       c: function (ctx) { return [{ l: 'Talleres', n: 'es_talleres' }, { l: 'Cursos', n: 'es_cursos' }, { l: 'Materiales', n: 'es_materiales' }].concat(navTail(ctx)); } },
 
     /* ---------- TABGAME (proyectos · Gehenna) ---------- */
-    pr_intro: { t: 'Gehenna: La Corte del Juicio, un juego de cartas estratégico sobre corrupción, poder y ascensión. ¿Quieres probar un duelo?', x: 'sly', exit: false,
-      c: [{ l: YES, act: 'scroll', arg: '#gehennaDuel', say: 'La Corte observa.' }, { l: NO, n: 'pr_alt' }] },
-    pr_alt: { t: 'Entonces te cuento: cada pecado capital representa una filosofía distinta del poder. ¿Quieres conocerlos?', x: 'curious', exit: false,
+    pr_intro: { t: 'Gehenna: La Corte del Juicio, un juego de cartas estratégico sobre corrupción, poder y ascensión. Cada pecado capital representa una filosofía distinta del poder. ¿Quieres conocerlos?', x: 'sly', exit: false,
       c: [{ l: YES, act: 'scroll', arg: '#gp', say: 'Los siete pecados.' }, { l: NO, n: 'pr_menu' }] },
     pr_menu: { t: '¿Qué prefieres en TabGame?', x: 'sly',
-      c: function (ctx) { return [{ l: 'Jugar un duelo', act: 'scroll', arg: '#gehennaDuel', say: 'La Corte observa.' }, { l: 'Conocer los pecados', act: 'scroll', arg: '#gp' }, { l: 'Ver las cartas de muestra', act: 'scroll', arg: '.card-showcase' }].concat(navTail(ctx)); } },
+      c: function (ctx) { return [{ l: 'Conocer los pecados', act: 'scroll', arg: '#gp' }, { l: 'Ver las cartas de muestra', act: 'scroll', arg: '.card-showcase' }].concat(navTail(ctx)); } },
 
     /* ---------- TABCUARIO (contacto) ---------- */
     tq_intro: { t: 'TabCuario: Peces, Plantas & Ecosistemas, mundos acuáticos cultivados con la misma atención que una ilustración. ¿Qué quieres ver?', x: 'calm',
@@ -6319,15 +6357,22 @@ if (charImg && charImg.complete && charImg.naturalWidth > 0) {
       if (!worksEl) return;
       worksEl.textContent = '';
       var cur = workKey ? findItem(workKey) : null, cat = cur ? cur.dataset.cat : null;
-      var list = viewerCollect().filter(function (it) { return !cat || it.dataset.cat === cat; });
+      /* SOLO los trabajos que ya tienen proceso en PROCESS_DATA; al añadir uno nuevo (ProcessSystem.add o PROCESS_DATA) aparece su nombre solo */
+      var list = [];
+      viewerCollect().forEach(function (it) {
+        if (cat && it.dataset.cat !== cat) return;
+        var m = it.querySelector('.click-img, .click-video'); if (!m) return;
+        var info = resolveWorkInfo(it, m);
+        if (steps(info.key).length) list.push(info);
+      });
+      worksEl.hidden = !list.length;
       if (list.length) {
         var fb = cat && document.querySelector('.filter-btn[onclick*="\'' + cat + '\'"]');
         var lab = document.createElement('span'); lab.className = 'pv-works-label'; lab.textContent = (fb ? fb.textContent.trim() : 'Trabajo') + ' ·'; worksEl.appendChild(lab);
       }
-      list.forEach(function (it) {
-        var m = it.querySelector('.click-img, .click-video'); if (!m) return;
-        var info = resolveWorkInfo(it, m), b = document.createElement('button');
-        b.type = 'button'; b.className = 'pv-work' + (steps(info.key).length ? ' has-process' : ''); b.textContent = info.title;
+      list.forEach(function (info, i) {
+        var b = document.createElement('button');
+        b.type = 'button'; b.className = 'pv-work has-process'; b.textContent = info.title; b.style.setProperty('--n', i);
         b.setAttribute('aria-pressed', String(info.key === workKey)); b.dataset.work = info.key;
         b.addEventListener('click', function () { if (info.key !== workKey) { touched(); render(info.key); } });
         worksEl.appendChild(b);
@@ -6618,176 +6663,6 @@ if (charImg && charImg.complete && charImg.naturalWidth > 0) {
 })();
 
 /* =========================================================
-   TABGAME — DUELO ANTE LA CORTE (juego de cartas RECONSTRUIDO)
-   El código del juego original (cartas, rondas, medidores, elecciones) ya no existía; se reconstruye con
-   lo que la página conserva: las cartas de muestra (nombre, coste, ATK/DEF/DMG y efecto, leídos del HTML) y el
-   texto de Gehenna (corrupción como motor, decidir cuándo avanzar o esperar, riesgo de perder el control).
-   Reglas visibles en la propia sección. Constantes de equilibrio: ROUNDS, START_POWER, GAIN, MAX_CORR.
-   Facciones con habilidad (por el pecado de la carta): Codicia = roba 2 de Corrupción al atacar · Envidia = copia la
-   habilidad del personaje rival al entrar · Ira (Evento) = daño masivo; el tuyo sobrevive con más de 3 DEF.
-========================================================= */
-(function () {
-  'use strict';
-  var host = document.getElementById('proy-gehenna'), show = host && host.querySelector('.card-showcase');
-  if (!show) return;
-  var ROUNDS = 5, START_POWER = 10, START_CORR = 3, GAIN = 3, MAX_CORR = 10, TIMER = 650;
-
-  /* cartas reales: se leen de las cartas de muestra del HTML */
-  var CARDS = [].slice.call(show.querySelectorAll('.playing-card')).map(function (el) {
-    var q = function (s) { var e = el.querySelector(s); return e ? e.textContent.trim() : ''; };
-    var type = q('.card-type').split('·'), st = { ATK: 0, DEF: 0, DMG: 0 };
-    [].forEach.call(el.querySelectorAll('.card-stat'), function (s) { var m = s.textContent.match(/(ATK|DEF|DMG)\s*(\d+)/); if (m) st[m[1]] = +m[2]; });
-    return { name: q('.card-name'), cost: parseInt(q('.card-cost'), 10) || 0, kind: (type[0] || '').trim(), faction: (type[1] || '').trim(), effect: q('.card-effect'),
-             atk: st.ATK, def: st.DEF, dmg: st.DMG, html: el.innerHTML.replace(/\sid="[^"]*"/g, '') };
-  }).filter(function (c) { return c.name; });
-  if (!CARDS.length) return;
-
-  var O = function (t, o) { if (window.Obs) window.Obs.say(t, o || {}); };
-  var sec = document.createElement('section');
-  sec.className = 'gd'; sec.id = 'gehennaDuel';       /* sin .reveal: lo crea JS después de iniciar el observador de aparición */ sec.setAttribute('aria-label', 'Duelo ante la Corte');
-  var side = function (k, n) {
-    return '<div class="gd-side gd-' + k + '" data-side="' + k + '"><div class="gd-who"><b>' + n + '</b><span class="gd-pow-n"></span></div>' +
-      '<div class="gd-bar" aria-hidden="true"><i></i></div>' +
-      '<div class="gd-corr" aria-label="Corrupción"><em>Corrupción</em><span class="gd-pips" aria-hidden="true">' + new Array(MAX_CORR + 1).join('<i></i>') + '</span><span class="gd-corr-n"></span></div>' +
-      '<div class="gd-field"></div></div>';
-  };
-  sec.innerHTML =
-    '<div class="gehenna-section-title gd-title">Duelo ante la Corte</div>' +
-    '<p class="gd-intro">Cinco rondas contra la Corte. La corrupción crece cada ronda: elige una carta… o espera. Gana quien conserve más Poder.</p>' +
-    '<div class="gd-board">' + side('court', 'La Corte') +
-      '<div class="gd-mid"><span class="gd-round" id="gdRound"></span><p class="gd-log" id="gdLog" aria-live="polite"></p></div>' + side('you', 'Tú') + '</div>' +
-    '<div class="gd-hand" id="gdHand" role="group" aria-label="Tu mano"></div>' +
-    '<div class="gd-over" id="gdOver" hidden><p id="gdResult"></p><button type="button" class="gd-btn" id="gdAgain">Jugar de nuevo</button></div>' +
-    '<details class="gd-rules"><summary>Reglas del duelo</summary><ul>' +
-      '<li>Cada bando empieza con ' + START_POWER + ' de Poder y ' + START_CORR + ' de Corrupción. Al inicio de cada ronda ambos ganan ' + GAIN + ' de Corrupción (máximo ' + MAX_CORR + ').</li>' +
-      '<li>Elige una carta pagando su coste en Corrupción, o espera para ganar ' + GAIN + ' más. La Corte decide a la vez que tú.</li>' +
-      '<li>Personaje: ocupa tu campo y ataca cada ronda. Daño al Poder rival = su ATK − la mitad de la DEF del personaje rival (mínimo 1). Sin rival en campo, todo el ATK.</li>' +
-      '<li>Evento (Ira Absoluta): daño masivo a todos los personajes en juego; el tuyo sobrevive si tiene más de 3 DEF.</li>' +
-      '<li>El Codicioso: al atacar roba 2 de Corrupción al oponente. La Envidiosa: al entrar copia la habilidad del personaje rival.</li>' +
-      '<li>Si tu Corrupción llega a ' + MAX_CORR + ' pierdes el control: −2 de Poder y la Corrupción baja a 6.</li>' +
-      '<li>Tras ' + ROUNDS + ' rondas gana quien tenga más Poder; si quedan igualados, es un empate.</li></ul></details>';
-  show.after(sec);
-  if (window.Obs) window.Obs.watch(sec, 'La Corte te espera. ¿Aceptas el duelo?');
-
-  var $ = function (s) { return sec.querySelector(s); };
-  var els = { you: $('.gd-you'), court: $('.gd-court') }, handEl = $('#gdHand'), logEl = $('#gdLog'), roundEl = $('#gdRound'), overEl = $('#gdOver'), resEl = $('#gdResult');
-  var S, timers = [];
-  var later = function (fn, ms) { timers.push(setTimeout(fn, ms)); };
-  var clear = function () { timers.forEach(clearTimeout); timers = []; };
-  var other = function (k) { return k === 'you' ? 'court' : 'you'; };
-  var label = function (k) { return k === 'you' ? 'Tú' : 'La Corte'; };
-  var clampN = function (v, a, b) { return Math.max(a, Math.min(b, v)); };
-
-  function fresh() { return { round: 0, busy: false, over: false, you: { p: START_POWER, c: START_CORR, f: null }, court: { p: START_POWER, c: START_CORR, f: null } }; }
-  function steals(side) { var f = side.f; return !!f && (f.copy === 'steal' || f.card.faction === 'Codicia'); }
-
-  function renderSide(k, hit) {
-    var d = S[k], e = els[k];
-    e.querySelector('.gd-pow-n').textContent = 'Poder ' + Math.max(0, d.p);
-    e.querySelector('.gd-bar i').style.width = clampN(d.p / START_POWER * 100, 0, 100) + '%';
-    [].forEach.call(e.querySelectorAll('.gd-pips i'), function (p, i) { p.classList.toggle('on', i < d.c); });
-    e.querySelector('.gd-corr-n').textContent = d.c + '/' + MAX_CORR;
-    var f = e.querySelector('.gd-field');
-    f.textContent = '';
-    if (d.f) {
-      var n = document.createElement('b'); n.textContent = d.f.card.name;
-      var s = document.createElement('span'); s.textContent = 'ATK ' + d.f.card.atk + ' · DEF ' + d.f.card.def + (steals(d) ? ' · roba' : '');
-      f.appendChild(n); f.appendChild(s); f.classList.add('has');
-    } else { f.textContent = 'Sin personaje'; f.classList.remove('has'); }
-    if (hit) { e.classList.remove('is-hit'); void e.offsetWidth; e.classList.add('is-hit'); }
-  }
-  function renderAll() { renderSide('you'); renderSide('court'); roundEl.textContent = S.round ? 'Ronda ' + S.round + ' / ' + ROUNDS : ''; }
-
-  function renderHand() {
-    handEl.textContent = '';
-    CARDS.forEach(function (card, i) {
-      var b = document.createElement('button'); b.type = 'button'; b.className = 'playing-card gd-card'; b.innerHTML = card.html; b.disabled = S.busy || S.over || card.cost > S.you.c;
-      b.setAttribute('aria-label', card.name + ', coste ' + card.cost + '. ' + card.effect);
-      b.addEventListener('click', function () { play(card); });
-      handEl.appendChild(b);
-    });
-    var w = document.createElement('button'); w.type = 'button'; w.className = 'gd-wait'; w.disabled = S.busy || S.over;
-    w.innerHTML = '<b>Esperar</b><span>+' + GAIN + ' Corrupción<br>«Esperar también es una jugada.»</span>';
-    w.addEventListener('click', function () { play(null); });
-    handEl.appendChild(w);
-  }
-
-  function startRound() {
-    S.round++; S.busy = false;
-    S.you.c = Math.min(MAX_CORR, S.you.c + (S.round > 1 ? GAIN : 0)); S.court.c = Math.min(MAX_CORR, S.court.c + (S.round > 1 ? GAIN : 0));
-    renderAll(); renderHand();
-    logEl.textContent = S.round === 1 ? 'La Corte observa. Elige tu primera jugada.' : 'Nueva ronda: la corrupción crece.';
-  }
-
-  function courtPick() {                 /* la Corte elige entre lo que puede pagar; no gasta un evento si no hay personajes que dañar */
-    var ok = CARDS.filter(function (c) { return c.cost <= S.court.c && (c.kind !== 'Evento' || S.you.f); });
-    if (!ok.length || Math.random() < .12) return null;
-    return ok[Math.floor(Math.random() * ok.length)];
-  }
-
-  function play(card) {
-    if (S.busy || S.over) return;
-    S.busy = true; renderHand();
-    var cc = courtPick(), L = [];
-    [['you', card], ['court', cc]].forEach(function (p) {
-      var d = S[p[0]], cd = p[1];
-      if (cd) { d.c -= cd.cost; L.push(label(p[0]) + ' juega ' + cd.name + '.'); }
-      else { d.c = Math.min(MAX_CORR, d.c + GAIN); L.push(label(p[0]) + ' espera (+' + GAIN + ' Corrupción).'); }
-    });
-    renderAll(); logEl.textContent = L.join(' ');
-    later(function () { resolve(card, cc); }, TIMER);
-  }
-
-  function resolve(yc, cc) {
-    var L = [], played = { you: yc, court: cc }, hit = {};
-    /* 1) eventos: daño masivo a todos los personajes en juego */
-    ['you', 'court'].forEach(function (k) {
-      var cd = played[k]; if (!cd || cd.kind !== 'Evento') return;
-      [k, other(k)].forEach(function (t) {
-        var f = S[t].f; if (!f) return;
-        if (t === k && f.card.def > 3) L.push(f.card.name + ' resiste el daño (DEF ' + f.card.def + ').');
-        else { L.push(f.card.name + ' cae ante ' + cd.name + '.'); S[t].f = null; }
-      });
-    });
-    /* 2) personajes entran en juego; la Envidia copia la habilidad del personaje rival */
-    ['you', 'court'].forEach(function (k) { var cd = played[k]; if (cd && cd.kind === 'Personaje') S[k].f = { card: cd, copy: null }; });
-    ['you', 'court'].forEach(function (k) {
-      var f = S[k].f, cd = played[k], r = S[other(k)];
-      if (f && cd && cd.faction === 'Envidia' && r.f && steals(r)) { f.copy = 'steal'; L.push(f.card.name + ' copia la habilidad de ' + r.f.card.name + '.'); }
-    });
-    /* 3) combate */
-    ['you', 'court'].forEach(function (k) {
-      var f = S[k].f; if (!f) return;
-      var r = S[other(k)], dmg = r.f ? Math.max(1, f.card.atk - Math.floor(r.f.card.def / 2)) : f.card.atk;   /* la DEF absorbe la mitad (mínimo 1 de daño) */
-      r.p -= dmg; hit[other(k)] = true;
-      L.push(label(k) + ': ' + f.card.name + ' ataca (' + dmg + ' de daño' + (r.f ? ', DEF ' + r.f.card.def : '') + ').');
-      if (steals(S[k]) && r.c > 0) { var t = Math.min(2, r.c); r.c -= t; S[k].c = Math.min(MAX_CORR, S[k].c + t); L.push(label(k) + ' roba ' + t + ' de Corrupción.'); }
-    });
-    /* 4) perder el control */
-    ['you', 'court'].forEach(function (k) {
-      if (S[k].c >= MAX_CORR) { S[k].p -= 2; S[k].c = 6; hit[k] = true; L.push(label(k) + ' pierde el control: −2 de Poder.'); }
-    });
-    renderSide('you', hit.you); renderSide('court', hit.court);
-    logEl.textContent = L.join(' ');
-    var dead = S.you.p <= 0 || S.court.p <= 0;
-    if (dead || S.round >= ROUNDS) later(finish, 1100); else later(startRound, 1400);
-  }
-
-  function finish() {
-    S.over = true; renderHand();
-    var y = S.you.p, c = S.court.p, win = y > c, tie = y === c;
-    var msg = win ? 'Ascendiste: la Corte te reconoce con ' + y + ' de Poder frente a ' + Math.max(0, c) + '.'
-            : tie ? 'Empate: nadie asciende todavía.'
-            : 'La Corte juzga… y gana (' + Math.max(0, c) + ' frente a ' + Math.max(0, y) + ').';
-    resEl.textContent = msg; overEl.hidden = false; logEl.textContent = '';
-    O(win ? 'Ascendiste. Por ahora.' : tie ? 'Un empate… la Corte espera.' : 'La Corte juzga. Y gana.', { expr: win ? 'happy' : 'sly', ms: 4200 });
-  }
-  function reset() { clear(); S = fresh(); overEl.hidden = true; startRound(); }
-  $('#gdAgain').addEventListener('click', reset);
-  reset();
-})();
-
-/* =========================================================
    SOBRE MÍ — CARTAS DE JUEGO
    Los bloques EXISTENTES (identidad, programas, intereses, formación, proyectos) se mueven (no se reescriben)
    a cartas coleccionables: marco, categoría, número, gemas y pie. Sin información nueva: categorías y conteos
@@ -6895,7 +6770,7 @@ if (charImg && charImg.complete && charImg.naturalWidth > 0) {
   /* ---------- Reparto al entrar en pantalla ---------- */
   function deal() { deck.classList.add('is-dealt'); }
   if (reduceMotion || !('IntersectionObserver' in window)) deal();
-  else new IntersectionObserver(function (en, io) { if (en[0].isIntersecting) { deal(); io.disconnect(); } }, { threshold: .12 }).observe(deck);
+  else new IntersectionObserver(function (en, io) { if (en[0].isIntersecting) { deal(); io.disconnect(); } }, { threshold: .12 }).observe(cards[0]);   /* (el deck usa display:contents en pantallas grandes: se observa su primera carta) */
 
   /* ---------- Abrir / cerrar (una a la vez) ---------- */
   function setOpen(c, on) {
@@ -6951,4 +6826,174 @@ if (charImg && charImg.complete && charImg.naturalWidth > 0) {
   /* al cerrar la capa se sueltan todas */
   var _close = window.closeLayer;
   if (typeof _close === 'function') window.closeLayer = function () { cards.forEach(function (c) { if (c.classList.contains('is-live')) setOpen(c, false); leave(c); }); return _close.apply(this, arguments); };
+})();
+
+
+/* =========================================================
+   SEÑAL DE SCROLL — avisa cuando la capa abierta tiene más contenido abajo
+   HTML: #scrollCue · CSS: .scroll-cue (styles.css, "SEÑAL DE SCROLL")
+========================================================= */
+(function () {
+  var cue = document.getElementById('scrollCue');
+  if (!cue) return;
+  var MARGIN = 80;      /* px de contenido restante a partir de los cuales ya no se muestra */
+
+  function activeLayer() { return document.querySelector('.layer.active'); }
+
+  function update() {
+    var l = activeLayer();
+    var more = !!l && (l.scrollHeight - l.scrollTop - l.clientHeight) > MARGIN &&
+               !document.body.classList.contains('viewer-open');
+    cue.classList.toggle('is-visible', more);
+  }
+
+  /* scroll no burbujea: se escucha en captura para cubrir cualquier capa */
+  document.addEventListener('scroll', function (e) {
+    if (e.target && e.target.classList && e.target.classList.contains('layer')) update();
+  }, true);
+  window.addEventListener('resize', update);
+
+  /* abrir/cerrar capas, cambiar de pestaña o cargar imágenes cambia la altura */
+  var mo = new MutationObserver(function () { setTimeout(update, 60); });
+  mo.observe(document.body, { attributes: true, attributeFilter: ['class'] });
+  [].forEach.call(document.querySelectorAll('.layer'), function (l) {
+    mo.observe(l, { attributes: true, attributeFilter: ['class'] });
+    mo.observe(l, { subtree: true, attributes: true, attributeFilter: ['class', 'hidden'] });
+  });
+  if (window.ResizeObserver) {
+    var ro = new ResizeObserver(update);
+    [].forEach.call(document.querySelectorAll('.layer-inner'), function (n) { ro.observe(n); });
+  }
+  window.addEventListener('load', update);
+  setInterval(update, 800);   /* red de seguridad (imágenes lazy, fuentes, animaciones) */
+
+  /* clic: baja casi una pantalla con suavidad */
+  cue.addEventListener('click', function () {
+    var l = activeLayer();
+    if (!l) return;
+    l.scrollBy({ top: Math.round(l.clientHeight * 0.8), behavior: 'smooth' });
+  });
+})();
+
+
+/* =========================================================
+   TABCUART — FUEGO SUTIL + MARCOS QUE SE ADAPTAN A LA IMAGEN
+   FUEGO : crea (una sola vez) las llamas y brasas detrás de cada tablero. Todo el aspecto está en styles.css (".tc-fire").
+   MARCOS: mide la proporción de la imagen/video visible y ajusta --pv-h de cada lado del bloque "Avances & Proceso".
+   CAMBIAR AQUÍ: la altura mínima y máxima de los marcos en hFor() · cuántas llamas/brasas hay en addFire().
+========================================================= */
+(function () {
+  'use strict';
+  var clamp = function (v, a, b) { return Math.max(a, Math.min(b, v)); };
+
+  /* ---------- FUEGO ---------- */
+  function seeded(seed) { var s = seed; return function () { s = (s * 16807) % 2147483647; return (s - 1) / 2147483646; }; }
+  function addFire(host, seed, hot) {
+    if (!host || host.querySelector(':scope > .tc-fire')) return;
+    var rnd = seeded(seed), fire = document.createElement('div'), flames = document.createElement('div'), embers = document.createElement('div'), i, el;
+    fire.className = 'tc-fire' + (hot ? ' tc-fire--hot' : ''); fire.setAttribute('aria-hidden', 'true');
+    flames.className = 'tc-flames'; embers.className = 'tc-embers';
+    var nF = hot ? 5 : 8, nE = hot ? 16 : 12;
+    for (i = 0; i < nF; i++) {
+      el = document.createElement('i'); el.className = 'tc-flame';
+      el.style.cssText = '--x:' + (((i + .5) / nF) * 100 + (rnd() - .5) * 6).toFixed(1) + '%;--w:' + (16 + rnd() * 14).toFixed(1) + '%;--h:' + Math.round(150 + rnd() * 130) +
+        'px;--d:' + (2.4 + rnd() * 2.6).toFixed(2) + 's;--dl:-' + (rnd() * 5).toFixed(2) + 's';
+      flames.appendChild(el);
+    }
+    for (i = 0; i < nE; i++) {
+      el = document.createElement('b'); el.className = 'tc-ember';
+      el.style.cssText = '--x:' + (3 + rnd() * 94).toFixed(1) + '%;--s:' + (2 + rnd() * 2.6).toFixed(1) + 'px;--dx:' + Math.round((rnd() - .5) * 90) + 'px;--r:' + Math.round(55 + rnd() * 45) +
+        ';--d:' + (8 + rnd() * 7).toFixed(1) + 's;--dl:-' + (rnd() * 14).toFixed(1) + 's';
+      embers.appendChild(el);
+    }
+    fire.appendChild(flames); fire.appendChild(embers); host.appendChild(fire);
+  }
+  function initFire() {
+    var L = '#layer-TabCuart ';
+    [[L + '.technique-intro', 11, false], [L + '.technique-process', 23, false], [L + '.books-section', 37, false], [L + '.pv-final', 51, true]].forEach(function (c) {
+      addFire(document.querySelector(c[0]), c[1], c[2]);
+    });
+    /* mismo fuego para los demás tableros: Sobre mí, Contacto, Estudios y cada panel de TabCuario */
+    [['#layer-sobre .about-stage', 61], ['#layer-sobre .about-contact', 67], ['#layer-estudios .lab-3col', 73], ['#layer-estudios .philosophy', 79]].forEach(function (c) {
+      addFire(document.querySelector(c[0]), c[1], false);
+    });
+    [].forEach.call(document.querySelectorAll('#layer-contacto .aqua-panel'), function (p, i) { addFire(p, 83 + i * 7, false); });
+  }
+
+  /* ---------- MARCOS QUE SE ADAPTAN ---------- */
+  function initFit() {
+    var duo = document.querySelector('#processJourney .pv-duo'); if (!duo) return;
+    var explore = duo.querySelector('.pv-explore'), fin = duo.querySelector('.pv-final'), vp = document.getElementById('pvViewport'),
+        frame = fin && fin.querySelector('.pv-frame'), fimg = document.getElementById('processFinalImg'), fvid = document.getElementById('processVideo3'),
+        fbg = null, pending = false;
+    if (!explore || !fin || !vp || !frame) return;
+
+    function ratio(el) {
+      if (!el) return 0;
+      if (el.tagName === 'VIDEO') return el.videoWidth && el.videoHeight ? el.videoWidth / el.videoHeight : 0;
+      return el.naturalWidth && el.naturalHeight ? el.naturalWidth / el.naturalHeight : 0;
+    }
+    function curMedia() {
+      var w = vp.clientWidth || 1, s = vp.querySelectorAll('.pv-slide')[Math.round(vp.scrollLeft / w)];
+      return s ? s.querySelector('img:not(.pv-bg), video') : null;
+    }
+    function finalMedia() { return fimg && !fimg.hidden ? fimg : fvid; }
+    /* altura del marco para un ancho y una proporción (ancho/alto) dados */
+    function hFor(w, r) { return Math.round(clamp(w / clamp(r, .6, 2.1), window.innerWidth < 700 ? 200 : 300, Math.min(window.innerHeight * .68, 700))); }
+
+    function syncBg() {                       /* el resultado final (imagen) rellena sus franjas con su propia imagen desenfocada */
+      var src = fimg && !fimg.hidden ? fimg.getAttribute('src') : '';
+      if (!src) return;
+      if (!fbg) { fbg = document.createElement('img'); fbg.className = 'pv-bg'; fbg.alt = ''; fbg.setAttribute('aria-hidden', 'true'); fbg.draggable = false; frame.insertBefore(fbg, frame.firstChild); }
+      if (fbg.getAttribute('src') !== src) fbg.src = src;
+    }
+    /* proporciones de las etapas del proceso (precarga las imágenes "lazy" para decidir el diseño desde el inicio) */
+    var cache = {}, pre = {};
+    function slideRatios() {
+      var out = [], list = vp.querySelectorAll('.pv-slide'), k, m, r, src, t;
+      for (k = 0; k < list.length; k++) {
+        m = list[k].querySelector('img:not(.pv-bg), video'); if (!m) continue;
+        r = ratio(m);
+        if (!r && m.tagName === 'IMG') {
+          src = m.getAttribute('src');
+          if (src && cache[src]) r = cache[src];
+          else if (src && !pre[src]) { pre[src] = 1; t = new Image(); (function (u, im) { im.onload = function () { cache[u] = im.naturalWidth / im.naturalHeight; schedule(); }; im.src = u; })(src, t); }
+        } else if (r && m.tagName === 'IMG') cache[m.getAttribute('src')] = r;
+        if (r) out.push(r);
+      }
+      return out;
+    }
+    /* Si el proceso o el resultado son HORIZONTALES (> STACK_AT), el bloque se apila a todo el ancho para que se vean grandes;
+       si son verticales/cuadrados quedan lado a lado. Para no apilar nunca: STACK_AT = 99. */
+    var STACK_AT = 99;   /* 99 = nunca apilar: proceso y resultado siempre lado a lado */
+    function apply() {
+      pending = false; syncBg();
+      var rs = slideRatios(), lm = rs.length ? rs.reduce(function (a, b) { return a + b; }, 0) / rs.length : 0, rF = ratio(finalMedia()), big = Math.max(lm, rF);
+      var stacked = duo.classList.contains('is-stacked');
+      if (big > STACK_AT) stacked = true; else if (big && big < STACK_AT - .15) stacked = false;
+      duo.classList.toggle('is-stacked', stacked);
+      var rl = ratio(curMedia()), rr = rF, wl = vp.clientWidth, wr = frame.clientWidth;
+      var CARD = 1.15;   /* proporción del marco (ancho/alto): 1.15 = ligeramente horizontal. Sube el número para marcos MÁS BAJOS (1.3, 1.5…), bájalo para marcos más altos (1, .75…) */
+      var hl = wl ? hFor(wl, CARD) : 0, hr = wr ? hFor(wr, CARD) : 0;
+      if (!stacked && hl && hr && Math.abs(hl - hr) / Math.max(hl, hr) < .15) hl = hr = Math.round((hl + hr) / 2);   /* casi iguales: se alinean */
+      if (!hl) hl = hr; if (!hr) hr = hl;
+      if (hl) explore.style.setProperty('--pv-h', hl + 'px');
+      if (hr) fin.style.setProperty('--pv-h', hr + 'px');
+    }
+    function schedule() { if (pending) return; pending = true; requestAnimationFrame(apply); }
+
+    duo.addEventListener('load', schedule, true);               /* load / loadedmetadata no burbujean: se escuchan en captura */
+    duo.addEventListener('loadedmetadata', schedule, true);
+    vp.addEventListener('scroll', schedule, { passive: true });
+    window.addEventListener('resize', schedule);
+    if (window.MutationObserver) {
+      new MutationObserver(schedule).observe(vp, { childList: true });
+      [fimg, fvid].forEach(function (n) { if (n) new MutationObserver(schedule).observe(n, { attributes: true, attributeFilter: ['src', 'hidden'] }); });
+    }
+    if (window.ResizeObserver) { var ro = new ResizeObserver(schedule); ro.observe(vp); ro.observe(frame); }
+    schedule();
+  }
+
+  function init() { initFire(); initFit(); }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init); else init();
 })();

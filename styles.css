@@ -1160,13 +1160,13 @@ html.intro-pending .heart-anim {
 
 html.intro-play .stage-eyebrow { animation: introRise .85s cubic-bezier(.16,1,.3,1) .05s both; }
 html.intro-play .stage-name    { animation: introName 1.1s cubic-bezier(.16,1,.3,1) .2s both; }
-html.intro-play .stage-role    { animation: introRise .85s cubic-bezier(.16,1,.3,1) .45s both; }
+html.intro-play .stage-role    { animation: introRise .75s cubic-bezier(.16,1,.3,1) .25s both; }
 
 /* El corazón entra con scale/opacity y conserva su latido (transform) sin conflicto */
 html.intro-play .heart-anim:not(.pulse-strong) {
     animation:
         heartbeat var(--pulse-slow) ease-in-out infinite,
-        introHeart 1.3s cubic-bezier(.16,1,.3,1) .5s both;
+        introHeart .75s cubic-bezier(.16,1,.3,1) .05s both;
 }
 /* Onda inicial que sale del corazón */
 .heart-wrap::before {
@@ -1180,20 +1180,20 @@ html.intro-play .heart-anim:not(.pulse-strong) {
     pointer-events: none;
     z-index: 0;
 }
-html.intro-play .heart-wrap::before { animation: introRing 2s cubic-bezier(.2,.7,.2,1) .95s both; }
+html.intro-play .heart-wrap::before { animation: introRing 1.6s cubic-bezier(.2,.7,.2,1) .35s both; }
 
-html.intro-play .anatomy-lines { animation: introFade 1s ease-out 1.1s both; }
+html.intro-play .anatomy-lines { animation: introFade .8s ease-out .5s both; }
 
-.hotspot:nth-of-type(1) { --d: 1.15s; }
-.hotspot:nth-of-type(2) { --d: 1.27s; }
-.hotspot:nth-of-type(3) { --d: 1.39s; }
-.hotspot:nth-of-type(4) { --d: 1.51s; }
+.hotspot:nth-of-type(1) { --d: .5s; }
+.hotspot:nth-of-type(2) { --d: .6s; }
+.hotspot:nth-of-type(3) { --d: .7s; }
+.hotspot:nth-of-type(4) { --d: .8s; }
 html.intro-play .hotspot       { animation: introFade .7s ease-out var(--d, 1.2s) both; }
 html.intro-play .hotspot-label { animation: introRiseSm .9s cubic-bezier(.16,1,.3,1) var(--d, 1.2s) both; }
 html.intro-play .hotspot-dot   { animation: introPop .6s cubic-bezier(.3,1.5,.5,1) var(--d, 1.2s) both; }
 
 html.intro-play .bubble-field  { animation: introFade 1.8s ease-out .3s both; }
-html.intro-play .stage-skills  { animation: introRise .9s cubic-bezier(.16,1,.3,1) 1.6s both; }
+html.intro-play .stage-skills  { animation: introRise .8s cubic-bezier(.16,1,.3,1) .9s both; }
 
 @media (prefers-reduced-motion: reduce) {
     html.intro-pending .stage-eyebrow,
@@ -1759,7 +1759,7 @@ body.layer-open .btn-back {
 ========================================================= */
 
 /* ---- Sección ---- */
-.layer .books-section { width: 100%; max-width: 1400px; margin: 7rem auto 0; padding: 0 var(--gap); }
+.layer .books-section { width: 100%; max-width: 1400px; margin: 7rem auto 0; padding: 0 var(--gap, 0); }
 /* Fix: .layer-inner es flex en columna y el margin:auto hacía que la sección se encogiera al ancho de su contenido.
    width:100% la estira hasta el máximo; para ganar aún más ancho, sube el max-width de arriba. */
 .books-section .books-heading { text-align: center; margin-bottom: 3rem; }
@@ -2054,6 +2054,7 @@ body.layer-open .btn-back {
 
   --wheel-card-width: 320px;
   --wheel-card-height: 450px;
+  --wheel-cy: 52%;   /* altura del centro del círculo (agujero negro + tarjetas + texto). Más alto = más abajo */
 
   position: relative;
   display: block;
@@ -2065,7 +2066,7 @@ body.layer-open .btn-back {
   margin: 1rem 0 4rem;
 
   perspective: 1600px;
-  perspective-origin: 50% 40%;
+  perspective-origin: 50% var(--wheel-cy);
 
   overflow: hidden;
   isolation: isolate;
@@ -2099,7 +2100,7 @@ body.layer-open .btn-back {
 .works-wheel-center {
   position: absolute;
   left: 50%;
-  top: 42%;
+  top: var(--wheel-cy, 42%);
   transform: translate(-50%, -50%);
   z-index: 100;
 
@@ -2157,7 +2158,7 @@ body.layer-open .btn-back {
 .gallery-item {
   position: absolute;
   left: 50%;
-  top: 42%;
+  top: var(--wheel-cy, 42%);
 
   width: var(--wheel-card-width);
   height: var(--wheel-card-height);
@@ -3376,7 +3377,7 @@ footer {
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: clamp(.5rem, 2vw, 2rem);
+    padding: clamp(.3rem, 1vw, 1rem);
     background:
         radial-gradient(circle at 50% 40%, rgba(181,22,32,.14), transparent 55%),
         rgba(0,0,0,.94);
@@ -3394,15 +3395,15 @@ body.viewer-open { overflow: hidden; }
 
 /* ----- La carta: proporción de carta coleccionable, marco doble y esquinas ----- */
 .img-modal-dialog {
-    --card-h: min(94vh, 920px);
-    --card-h: min(94dvh, 920px);
+    --card-h: min(97vh, 1500px);
+    --card-h: min(97dvh, 1500px);
     position: relative;
     display: grid;
     grid-template-columns: minmax(0, 1fr);
     grid-template-rows: auto auto minmax(0, 1fr) auto auto;
     grid-template-areas: "head" "title" "art" "info" "foot";
     gap: .65rem;
-    width: min(94vw, calc(var(--card-h) * .68));
+    width: min(97vw, calc(var(--card-h) * .64));
     height: var(--card-h);
     min-width: 0;
     padding: clamp(.9rem, 2.2vh, 1.4rem) clamp(.9rem, 2.6vw, 1.5rem) clamp(.8rem, 2vh, 1.2rem);
@@ -4664,7 +4665,7 @@ body:has(.img-modal.is-open) #obs { opacity: 0; }
    Las imágenes usan object-fit: contain (sin deformar ni recortar) sobre un fondo desenfocado de la misma imagen. */
 .pv {
   --pv-w: min(94vw, 1900px);
-  --pv-h: clamp(360px, min(44vw, 80vh), 900px);
+  --pv-h: clamp(300px, min(34vw, 62vh), 640px);
   width: var(--pv-w);
   margin: 2.5rem 0 3.5rem calc(50% - (var(--pv-w) / 2));
 }
@@ -4814,7 +4815,7 @@ body:has(.img-modal.is-open) #obs { opacity: 0; }
 .pv-tab:hover, .pv-tab:focus-visible { color: #fff; outline: none; }
 .pv-tab[aria-selected="true"] { color: #fff; text-shadow: var(--glow-red-soft); }
 
-.pv-caption { margin-top: 1.3rem; min-height: 6rem; }
+.pv-caption { margin-top: .9rem; min-height: 4.5rem; }
 .pv-stage-name { margin: 0 0 .5rem; font: 400 clamp(1.9rem, 3.2vw, 3rem)/1.05 var(--font-titulo, serif); letter-spacing: .04em; color: #fff; }
 .pv-stage-name b { margin-right: .4em; font-weight: 400; color: var(--accent-2, #e3262e); }
 .pv-stage-text { margin: 0; max-width: 52ch; font: 400 1.08rem/1.7 var(--font-texto, sans-serif); color: var(--text-muted); }
@@ -4832,8 +4833,8 @@ body:has(.img-modal.is-open) #obs { opacity: 0; }
 @media (pointer: coarse) { .pv-scrub { --knob: 66px; } }
 @media (max-width: 1200px) { .pv .pv-explore, .pv .pv-final { padding: 0; } }
 @media (max-width: 860px) {
-  .pv { --pv-h: clamp(260px, 78vw, 640px); }
-  .pv-duo { grid-template-columns: minmax(0, 1fr); gap: 2.6rem; }
+  .pv { --pv-h: clamp(200px, 48vw, 640px); }
+  .pv-duo { gap: 1rem; }
   .pv-caption { min-height: 0; }
 }
 @media (max-width: 520px) {
@@ -5395,3 +5396,1589 @@ body:has(.img-modal.is-open) #obs { opacity: 0; }
 .pv-frame--video.is-image::before, .pv-frame--video.is-image::after { display: none !important; }
 .pv-frame--video .pv-final-img { position: relative; z-index: 1; display: block; width: 100%; height: 100%; object-fit: contain; pointer-events: none; }
 .pv-frame--video .pv-final-img[hidden], .pv-frame--video video[hidden] { display: none; }
+
+
+/* =========================================================
+   CARTA NEÓN — cada técnica tiene su propio color
+   JS: renderWorkInfo() pone data-cat="<técnica>" en .img-modal-dialog.
+   CAMBIAR AQUÍ el color de una técnica: edita --neon (hex) y --neon-rgb (los mismos valores en R,G,B).
+   Al redefinir --accent / --accent-2 dentro de la carta, todo lo que ya usaba el rojo
+   (esquinas, filetes, línea del tipo, descripción, hover de botones) toma el neón.
+========================================================= */
+.img-modal-dialog[data-cat] {
+    --accent: var(--neon);
+    --accent-2: var(--neon);
+}
+.img-modal-dialog[data-cat="digital"]     { --neon: #ff1744; --neon-rgb: 255,23,68; }   /* rojo */
+.img-modal-dialog[data-cat="tradicional"] { --neon: #ff9100; --neon-rgb: 255,145,0; }   /* naranja */
+.img-modal-dialog[data-cat="lino"]        { --neon: #00e5ff; --neon-rgb: 0,229,255; }   /* cian */
+.img-modal-dialog[data-cat="escultura"]   { --neon: #ff2bd6; --neon-rgb: 255,43,214; }  /* magenta */
+.img-modal-dialog[data-cat="animacion"]   { --neon: #b44dff; --neon-rgb: 180,77,255; }  /* violeta */
+.img-modal-dialog[data-cat="3d"]          { --neon: #2f7bff; --neon-rgb: 47,123,255; }  /* azul eléctrico */
+.img-modal-dialog[data-cat="tattoo"]      { --neon: #ff1744; --neon-rgb: 255,23,68; }   /* rojo */
+
+.img-modal-dialog[data-cat] {
+    border-color: rgba(var(--neon-rgb), .95);
+    background:
+        radial-gradient(120% 60% at 50% 0%, rgba(var(--neon-rgb), .10), transparent 60%),
+        linear-gradient(165deg, rgba(var(--neon-rgb), .12), transparent 40%),
+        #0d0b0c;
+    box-shadow:
+        0 30px 90px rgba(0,0,0,.75),
+        0 0 6px rgba(var(--neon-rgb), .9),
+        0 0 26px rgba(var(--neon-rgb), .55),
+        0 0 70px rgba(var(--neon-rgb), .30),
+        inset 0 0 0 6px #0d0b0c,
+        inset 0 0 0 7px rgba(var(--neon-rgb), .45),
+        inset 0 0 26px rgba(var(--neon-rgb), .12);
+}
+.img-modal-dialog[data-cat]::before {
+    border-color: rgba(var(--neon-rgb), .55);
+    filter: drop-shadow(0 0 4px rgba(var(--neon-rgb), .9));
+}
+.img-modal-dialog[data-cat] .img-card-head .accent-line span {
+    color: var(--neon);
+    text-shadow: 0 0 8px rgba(var(--neon-rgb), .9), 0 0 18px rgba(var(--neon-rgb), .5);
+}
+.img-modal-dialog[data-cat] .img-modal-title {
+    border-block-color: rgba(var(--neon-rgb), .8);
+    background: linear-gradient(90deg, transparent, rgba(var(--neon-rgb), .18), transparent);
+    text-shadow: 0 0 14px rgba(var(--neon-rgb), .55);
+    box-shadow: 0 1px 12px -6px rgba(var(--neon-rgb), .9), 0 -1px 12px -6px rgba(var(--neon-rgb), .9);
+}
+.img-modal-dialog[data-cat] .img-modal-figure {
+    border-color: rgba(var(--neon-rgb), .75);
+    box-shadow:
+        inset 0 0 0 3px rgba(0,0,0,.55),
+        inset 0 0 40px rgba(0,0,0,.55),
+        0 0 14px rgba(var(--neon-rgb), .35);
+}
+/* la etiqueta de TÉCNICA resalta en neón; el resto de etiquetas (año…) queda en tono suave */
+.img-modal-dialog[data-cat] .img-modal-meta-row {
+    border-color: rgba(var(--neon-rgb), .35);
+    background: rgba(var(--neon-rgb), .05);
+}
+.img-modal-dialog[data-cat] .img-modal-meta-row:first-child {
+    border-color: var(--neon);
+    background: rgba(var(--neon-rgb), .12);
+    box-shadow: 0 0 12px rgba(var(--neon-rgb), .55), inset 0 0 10px rgba(var(--neon-rgb), .18);
+}
+.img-modal-dialog[data-cat] .img-modal-meta-row:first-child dd {
+    color: var(--neon);
+    text-shadow: 0 0 8px rgba(var(--neon-rgb), .85);
+}
+.img-modal-dialog[data-cat] .img-modal-rule {
+    box-shadow: 0 0 8px rgba(var(--neon-rgb), .8);
+}
+.img-modal-dialog[data-cat] .img-modal-desc {
+    border-left-width: 3px;
+    background: rgba(var(--neon-rgb), .05);
+    box-shadow: -4px 0 14px -6px rgba(var(--neon-rgb), .9);
+}
+.img-modal-dialog[data-cat] .img-card-foot {
+    border-top-color: rgba(var(--neon-rgb), .4);
+}
+.img-modal-dialog[data-cat] .img-card-btn {
+    border-color: rgba(var(--neon-rgb), .6);
+}
+.img-modal-dialog[data-cat] .img-card-btn:hover {
+    background: rgba(var(--neon-rgb), .18);
+    box-shadow: 0 0 18px rgba(var(--neon-rgb), .7);
+}
+.img-modal-dialog[data-cat] .img-close:hover {
+    box-shadow: 0 0 14px rgba(var(--neon-rgb), .7);
+}
+
+
+/* =========================================================
+   TABLERO DE CARTAS — bloque "Avances & Proceso"
+   Mesa de juego oscura (fieltro con retícula de rombos y sello central) donde el proceso y el resultado final
+   son dos CARTAS sobre sus zonas, separadas por una línea central, con la fila de materiales como zona de recursos.
+   HTML: #techniqueProcess > .process-heading + .pv (.pv-duo > .pv-explore / .pv-final) + .technique-extra   (no cambia).
+   JS: sin cambios (PROCESO EXPLORABLE sigue funcionando igual).
+   CAMBIAR AQUÍ: el color del tablero con --board (R,G,B) · el patrón de fondo en --board-lattice / --board-sigil.
+========================================================= */
+.layer .technique-process {
+    --pv-w: min(94vw, 1900px);
+    --board: 227,38,46;
+    --duo-gap: clamp(1.2rem, 2.6vw, 2.8rem);
+    --board-lattice: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='46' height='46' viewBox='0 0 46 46'%3E%3Cpath d='M23 0 L46 23 L23 46 L0 23 Z' fill='none' stroke='%23ffffff' stroke-opacity='.045' stroke-width='1'/%3E%3Ccircle cx='23' cy='23' r='1.2' fill='%23e3262e' fill-opacity='.22'/%3E%3C/svg%3E");
+    --board-sigil: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 400' fill='none' stroke='%23e3262e' stroke-width='1.4'%3E%3Ccircle cx='200' cy='200' r='190' stroke-opacity='.35'/%3E%3Ccircle cx='200' cy='200' r='176' stroke-opacity='.18' stroke-dasharray='3 9'/%3E%3Ccircle cx='200' cy='200' r='128' stroke-opacity='.28'/%3E%3Ccircle cx='200' cy='200' r='62' stroke-opacity='.3'/%3E%3Cpath d='M200 10 L226 174 L390 200 L226 226 L200 390 L174 226 L10 200 L174 174 Z' stroke-opacity='.3'/%3E%3Cpath d='M200 138 Q252 200 200 262 Q148 200 200 138Z' stroke-opacity='.4'/%3E%3Ccircle cx='200' cy='200' r='14' stroke-opacity='.5'/%3E%3C/svg%3E");
+    position: relative;
+    isolation: isolate;
+    width: var(--pv-w);
+    margin: 7rem 0 3rem calc(50% - (var(--pv-w) / 2));
+    padding: clamp(1.6rem, 3.4vw, 3.2rem) clamp(1rem, 3vw, 2.8rem) clamp(1.4rem, 2.6vw, 2.4rem);
+    border: 2px solid rgba(var(--board), .55);
+    border-radius: 22px;
+    background:
+        linear-gradient(rgb(var(--board)), rgb(var(--board))) top 16px left 16px / 34px 2px no-repeat,
+        linear-gradient(rgb(var(--board)), rgb(var(--board))) top 16px left 16px / 2px 34px no-repeat,
+        linear-gradient(rgb(var(--board)), rgb(var(--board))) top 16px right 16px / 34px 2px no-repeat,
+        linear-gradient(rgb(var(--board)), rgb(var(--board))) top 16px right 16px / 2px 34px no-repeat,
+        linear-gradient(rgb(var(--board)), rgb(var(--board))) bottom 16px left 16px / 34px 2px no-repeat,
+        linear-gradient(rgb(var(--board)), rgb(var(--board))) bottom 16px left 16px / 2px 34px no-repeat,
+        linear-gradient(rgb(var(--board)), rgb(var(--board))) bottom 16px right 16px / 34px 2px no-repeat,
+        linear-gradient(rgb(var(--board)), rgb(var(--board))) bottom 16px right 16px / 2px 34px no-repeat,
+        radial-gradient(120% 80% at 50% 38%, rgba(181,22,32,.20), transparent 62%),
+        var(--board-lattice),
+        #0a0708;
+    box-shadow:
+        0 40px 110px rgba(0,0,0,.7),
+        0 0 0 6px #070506,
+        0 0 0 7px rgba(255,255,255,.07),
+        0 0 40px rgba(var(--board), .22),
+        inset 0 0 120px rgba(0,0,0,.65);
+}
+/* filete interior */
+.layer .technique-process::before {
+    content: "";
+    position: absolute;
+    inset: 9px;
+    z-index: -1;
+    pointer-events: none;
+    border: 1px solid rgba(255,255,255,.07);
+    border-radius: 15px;
+}
+/* sello central: círculos, estrella y ojo, apenas visible bajo las cartas */
+.layer .technique-process::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    top: 52%;
+    z-index: -1;
+    width: min(78%, 980px);
+    aspect-ratio: 1;
+    translate: -50% -50%;
+    pointer-events: none;
+    background: var(--board-sigil) center / contain no-repeat;
+    opacity: .55;
+}
+
+/* cabecera = placa del tablero */
+.layer .technique-process .process-heading {
+    margin-bottom: clamp(1.4rem, 2.4vw, 2.4rem);
+    padding-bottom: clamp(1rem, 2vw, 1.8rem);
+    border-bottom: 1px solid transparent;
+    border-image: linear-gradient(90deg, transparent, rgba(var(--board), .75), transparent) 1;
+}
+.layer .technique-process .process-heading h3 {
+    text-shadow: 0 0 22px rgba(var(--board), .35);
+}
+.process-stage-count span {
+    display: inline-block;
+    padding: .5rem 1rem;
+    border: 1px solid rgba(var(--board), .6);
+    border-radius: 4px;
+    background: rgba(var(--board), .08);
+    box-shadow: 0 0 14px rgba(var(--board), .25), inset 0 0 10px rgba(var(--board), .12);
+    text-shadow: 0 0 8px rgba(var(--board), .8);
+    white-space: nowrap;
+}
+/* mazos: cada trabajo es una pestaña con forma de carta */
+.layer .technique-process .pv-work {
+    border-radius: 5px;
+    background: rgba(8,6,7,.75);
+}
+.layer .technique-process .pv-work[aria-pressed="true"] {
+    background: rgba(var(--board), .2);
+    box-shadow: 0 0 14px rgba(var(--board), .45);
+}
+
+/* mesa: el visor deja de ser un bloque suelto y pasa a ser el campo de juego */
+.layer .technique-process .pv {
+    width: 100%;
+    margin: 0 0 clamp(1.2rem, 2.4vw, 2.2rem);
+}
+.layer .technique-process .pv-duo {
+    position: relative;
+    gap: var(--duo-gap);
+}
+/* línea central del tablero con rombo */
+.layer .technique-process .pv-duo::before {
+    content: "";
+    position: absolute;
+    top: 6px;
+    bottom: 6px;
+    left: calc((100% - var(--duo-gap)) * 1.15 / 2.15 + var(--duo-gap) / 2);
+    width: 1px;
+    pointer-events: none;
+    background: linear-gradient(180deg, transparent, rgba(var(--board), .6) 18%, rgba(var(--board), .6) 82%, transparent);
+}
+.layer .technique-process .pv-duo::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: calc((100% - var(--duo-gap)) * 1.15 / 2.15 + var(--duo-gap) / 2);
+    width: 14px;
+    height: 14px;
+    translate: -50% -50%;
+    rotate: 45deg;
+    pointer-events: none;
+    background: #0a0708;
+    border: 1px solid rgb(var(--board));
+    box-shadow: 0 0 12px rgba(var(--board), .8);
+}
+.layer .technique-process .pv-duo.is-empty::before,
+.layer .technique-process .pv-duo.is-empty::after { display: none; }
+
+/* zonas de carta: casilla con borde punteado */
+.layer .technique-process .pv .pv-explore,
+.layer .technique-process .pv .pv-final {
+    position: relative;
+    padding: clamp(.8rem, 1.5vw, 1.3rem);
+    border: 1px dashed rgba(var(--board), .4);
+    border-radius: 18px;
+    background: rgba(0,0,0,.32);
+    box-shadow: inset 0 0 40px rgba(0,0,0,.45);
+}
+.layer .technique-process .pv-bar {
+    margin-bottom: .9rem;
+    padding: 0 .2rem .7rem;
+    border-bottom: 1px solid rgba(255,255,255,.08);
+}
+.layer .technique-process .pv-explore .pv-bar-kicker::before,
+.layer .technique-process .pv-final .pv-bar-kicker::before {
+    margin-right: .55em;
+    color: rgb(var(--board));
+    text-shadow: 0 0 8px rgba(var(--board), .9);
+}
+.layer .technique-process .pv-explore .pv-bar-kicker::before { content: "\2660"; }   /* ♠ */
+.layer .technique-process .pv-final .pv-bar-kicker::before { content: "\265B"; }     /* ♛ */
+
+/* las cartas: marco doble, esquinas de carta y brillo rojo */
+.layer .technique-process .pv-viewport,
+.layer .technique-process .pv-frame--video {
+    border: 2px solid rgba(var(--board), .65);
+    border-radius: 14px;
+    box-shadow:
+        0 22px 55px rgba(0,0,0,.7),
+        0 0 0 5px #0a0708,
+        0 0 0 6px rgba(255,255,255,.14),
+        0 0 34px rgba(var(--board), .28);
+}
+.layer .technique-process .pv-viewport:hover,
+.layer .technique-process .pv-viewport.is-drag,
+.layer .technique-process .pv-frame--video:hover {
+    border-color: rgb(var(--board));
+    box-shadow:
+        0 26px 65px rgba(0,0,0,.75),
+        0 0 0 5px #0a0708,
+        0 0 0 6px rgba(var(--board), .55),
+        0 0 48px rgba(var(--board), .5);
+}
+.layer .technique-process .pv-chip {
+    border-radius: 4px;
+    border-color: rgba(var(--board), .6);
+}
+.layer .technique-process .pv-hint {
+    border-radius: 4px;
+    border-color: rgba(var(--board), .4);
+}
+
+/* riel de etapas y texto de la carta */
+.layer .technique-process .pv-controls {
+    margin-top: 1.6rem;
+    border: 1px solid rgba(var(--board), .35);
+    border-radius: 10px;
+    box-shadow: inset 0 0 22px rgba(0,0,0,.6);
+}
+.layer .technique-process .pv-caption {
+    margin-top: 1.1rem;
+    padding: .85rem 1.1rem;
+    border-left: 3px solid rgb(var(--board));
+    background: linear-gradient(90deg, rgba(var(--board), .08), transparent 75%);
+    box-shadow: -6px 0 16px -8px rgba(var(--board), .9);
+}
+
+/* zona de recursos: herramientas y materiales */
+.layer .technique-process .technique-extra {
+    margin-top: 0;
+}
+.layer .technique-process .technique-extra-box {
+    border: 1px dashed rgba(var(--board), .4);
+    border-radius: 14px;
+    background: rgba(0,0,0,.32);
+    box-shadow: inset 0 0 30px rgba(0,0,0,.45);
+}
+
+@media (max-width: 430px) {
+    .layer .technique-process .pv-duo::before,
+    .layer .technique-process .pv-duo::after { display: none; }
+    .layer .technique-process::after { width: 120%; }
+}
+@media (max-width: 640px) {
+    .layer .technique-process {
+        padding: 1.2rem .8rem 1rem;
+        border-radius: 16px;
+        background-position: top 10px left 10px, top 10px left 10px, top 10px right 10px, top 10px right 10px,
+                             bottom 10px left 10px, bottom 10px left 10px, bottom 10px right 10px, bottom 10px right 10px,
+                             0 0, 0 0, 0 0;
+    }
+    .layer .technique-process .pv .pv-explore,
+    .layer .technique-process .pv .pv-final { padding: .6rem; }
+}
+
+/* =========================================================
+   SEÑAL DE SCROLL — un ojo inyectado en sangre que llora hacia abajo
+   HTML: <button id="scrollCue" class="scroll-cue">  ·  JS: bloque "SEÑAL DE SCROLL" al final de script.js.
+   Sutil: pequeño, centrado, sin franja que tape el contenido; solo aparece si hay más contenido debajo.
+   CAMBIAR AQUÍ: el texto en index.html (.sc-label) · el color con --sc-color.
+========================================================= */
+.scroll-cue {
+    --sc-color: #e3262e;
+    position: fixed;
+    left: 50%;
+    bottom: 0;
+    z-index: 740;
+    width: 150px;
+    height: 104px;
+    margin: 0;
+    padding: 0 0 .55rem;
+    display: grid;
+    justify-items: center;
+    align-content: end;
+    gap: .15rem;
+    border: 0;
+    background: radial-gradient(ellipse 75px 104px at 50% 100%, rgba(4,2,3,.92), rgba(4,2,3,.5) 55%, transparent 100%);
+    color: var(--sc-color);
+    cursor: none;
+    pointer-events: none;
+    opacity: 0;
+    visibility: hidden;
+    transform: translate(-50%, 30%);
+    transition: opacity .5s ease, transform .5s ease, visibility 0s linear .5s;
+}
+.scroll-cue.is-visible {
+    opacity: .9;
+    visibility: visible;
+    pointer-events: auto;
+    transform: translate(-50%, 0);
+    transition: opacity .5s ease, transform .5s ease, visibility 0s;
+}
+.scroll-cue:hover { opacity: 1; }
+.sc-eye {
+    width: 66px;
+    height: auto;
+    overflow: visible;
+    filter: drop-shadow(0 0 5px rgba(255,40,30,.8)) drop-shadow(0 0 16px rgba(227,38,46,.55));
+    animation: sc-twitch 6s steps(1, end) infinite;
+}
+/* espasmo nervioso del ojo */
+@keyframes sc-twitch {
+    0%, 91%, 100% { transform: translate(0, 0) rotate(0); }
+    92% { transform: translate(-1px, 1px) rotate(-1.5deg); }
+    94% { transform: translate(1.5px, -1px) rotate(1.5deg); }
+    96% { transform: translate(-1px, 0) rotate(-1deg); }
+}
+.sc-veins { animation: sc-vein 1.3s ease-in-out infinite; }
+@keyframes sc-vein { 0%, 100% { opacity: .55; } 40% { opacity: 1; } }
+.sc-thorns { animation: sc-vein 2.6s ease-in-out infinite; }
+.sc-pupil { transform-box: fill-box; transform-origin: center; animation: sc-dilate 3.4s ease-in-out infinite; }
+@keyframes sc-dilate { 0%, 100% { transform: scaleX(1); } 50% { transform: scaleX(1.9); } }
+.sc-lid {
+    fill: #050203;
+    transform-box: view-box;
+    transform-origin: 32px 0;
+    animation: sc-blink 5.2s ease-in-out infinite;
+}
+@keyframes sc-blink {
+    0%, 38%, 46%, 100% { transform: scaleY(.46); }
+    42%                 { transform: scaleY(1.02); }
+}
+.sc-iris-look { animation: sc-look 7s ease-in-out infinite; }
+@keyframes sc-look {
+    0%, 100% { transform: translateX(0); }
+    30%      { transform: translateX(-3px); }
+    65%      { transform: translateX(3px); }
+}
+.sc-tear {
+    fill: #c1121a;
+    opacity: 0;
+    transform-box: fill-box;
+    transform-origin: 50% 0;
+    animation: sc-tear 3.1s ease-in infinite;
+}
+.sc-tear--b { animation-duration: 4.2s; animation-delay: -1.4s; }
+.sc-tear--c { animation-duration: 3.6s; animation-delay: -2.3s; }
+@keyframes sc-tear {
+    0%, 12% { opacity: 0; transform: translateY(-3px) scale(.5, .3); }
+    28%     { opacity: .95; transform: translateY(0) scale(1, 1); }
+    90%     { opacity: .85; transform: translateY(9px) scale(1, 1.35); }
+    100%    { opacity: 0; transform: translateY(12px) scale(.9, 1.4); }
+}
+.sc-label {
+    font-family: var(--font-titulo);
+    font-size: .8rem;
+    letter-spacing: .28em;
+    text-transform: uppercase;
+    color: rgba(227,38,46,.85);
+    text-shadow: 0 1px 0 #000;
+}
+.scroll-cue:hover .sc-label { color: #fff; }
+@media (prefers-reduced-motion: reduce) {
+    .sc-eye, .sc-veins, .sc-thorns, .sc-pupil, .sc-lid, .sc-iris-look, .sc-tear { animation: none; }
+    .sc-lid { transform: scaleY(.46); }
+    .sc-tear { opacity: .9; }
+}
+body:not(.layer-open) .scroll-cue { display: none; }
+
+
+/* =========================================================
+   TABLEROS — el resto de bloques con la estética de mesa de cartas
+   Mismo lenguaje que "Avances & Proceso": mesa oscura con marco doble, esquinas, retícula de rombos y sello central;
+   las piezas que van encima (fichas, tarjetas, libros) son CARTAS con marco, brillo y número de carta.
+   Bloques: Sobre mí (escenario + contacto) · TabCuart (intro + libros) · Estudios (3 cartas + filosofía) · TabCuario (panel de cada pestaña).
+   CAMBIAR AQUÍ: el color de un tablero con --board (R,G,B) · el de una carta con --c (R,G,B).
+========================================================= */
+.layer {
+    --board-lattice: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='46' height='46' viewBox='0 0 46 46'%3E%3Cpath d='M23 0 L46 23 L23 46 L0 23 Z' fill='none' stroke='%23ffffff' stroke-opacity='.045' stroke-width='1'/%3E%3Ccircle cx='23' cy='23' r='1.2' fill='%23e3262e' fill-opacity='.22'/%3E%3C/svg%3E");
+    --board-sigil: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 400' fill='none' stroke='%23e3262e' stroke-width='1.4'%3E%3Ccircle cx='200' cy='200' r='190' stroke-opacity='.35'/%3E%3Ccircle cx='200' cy='200' r='176' stroke-opacity='.18' stroke-dasharray='3 9'/%3E%3Ccircle cx='200' cy='200' r='128' stroke-opacity='.28'/%3E%3Ccircle cx='200' cy='200' r='62' stroke-opacity='.3'/%3E%3Cpath d='M200 10 L226 174 L390 200 L226 226 L200 390 L174 226 L10 200 L174 174 Z' stroke-opacity='.3'/%3E%3Cpath d='M200 138 Q252 200 200 262 Q148 200 200 138Z' stroke-opacity='.4'/%3E%3Ccircle cx='200' cy='200' r='14' stroke-opacity='.5'/%3E%3C/svg%3E");
+}
+#layer-sobre .about-stage,
+#layer-sobre .about-contact,
+#layer-TabCuart .technique-intro,
+#layer-TabCuart .books-section,
+#layer-estudios .lab-3col,
+#layer-estudios .philosophy,
+#layer-contacto .aqua-panel.active {
+    --board: 227,38,46;
+    position: relative;
+    isolation: isolate;
+    padding: clamp(1.4rem, 3.2vw, 3rem) clamp(1rem, 3vw, 2.8rem);
+    border: 2px solid rgba(var(--board), .55);
+    border-radius: 20px;
+    outline: 1px solid rgba(255,255,255,.07);
+    outline-offset: -10px;
+    background:
+        linear-gradient(rgb(var(--board)), rgb(var(--board))) top 14px left 14px / 28px 2px no-repeat,
+        linear-gradient(rgb(var(--board)), rgb(var(--board))) top 14px left 14px / 2px 28px no-repeat,
+        linear-gradient(rgb(var(--board)), rgb(var(--board))) top 14px right 14px / 28px 2px no-repeat,
+        linear-gradient(rgb(var(--board)), rgb(var(--board))) top 14px right 14px / 2px 28px no-repeat,
+        linear-gradient(rgb(var(--board)), rgb(var(--board))) bottom 14px left 14px / 28px 2px no-repeat,
+        linear-gradient(rgb(var(--board)), rgb(var(--board))) bottom 14px left 14px / 2px 28px no-repeat,
+        linear-gradient(rgb(var(--board)), rgb(var(--board))) bottom 14px right 14px / 28px 2px no-repeat,
+        linear-gradient(rgb(var(--board)), rgb(var(--board))) bottom 14px right 14px / 2px 28px no-repeat,
+        radial-gradient(120% 90% at 50% 30%, rgba(var(--board), .14), transparent 62%),
+        var(--board-sigil) center 55% / min(72%, 820px) no-repeat,
+        var(--board-lattice),
+        #0a0708;
+    box-shadow:
+        0 36px 100px rgba(0,0,0,.7),
+        0 0 0 6px #070506,
+        0 0 0 7px rgba(255,255,255,.07),
+        0 0 36px rgba(var(--board), .2),
+        inset 0 0 110px rgba(0,0,0,.6);
+}
+/* variantes de color */
+#layer-contacto .aqua-panel.active { --board: 90,169,255; }
+#layer-estudios .lab-3col { --board: 255,145,0; }
+#layer-estudios .philosophy { --board: 180,77,255; }
+
+/* sellos de fondo en el color de cada tablero */
+#layer-contacto .aqua-panel.active { --board-sigil: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 400' fill='none' stroke='%235aa9ff' stroke-width='1.4'%3E%3Ccircle cx='200' cy='200' r='190' stroke-opacity='.35'/%3E%3Ccircle cx='200' cy='200' r='176' stroke-opacity='.18' stroke-dasharray='3 9'/%3E%3Ccircle cx='200' cy='200' r='128' stroke-opacity='.28'/%3E%3Ccircle cx='200' cy='200' r='62' stroke-opacity='.3'/%3E%3Cpath d='M200 10 L226 174 L390 200 L226 226 L200 390 L174 226 L10 200 L174 174 Z' stroke-opacity='.3'/%3E%3Cpath d='M200 138 Q252 200 200 262 Q148 200 200 138Z' stroke-opacity='.4'/%3E%3Ccircle cx='200' cy='200' r='14' stroke-opacity='.5'/%3E%3C/svg%3E"); }
+#layer-estudios .lab-3col { --board-sigil: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 400' fill='none' stroke='%23ff9100' stroke-width='1.4'%3E%3Ccircle cx='200' cy='200' r='190' stroke-opacity='.35'/%3E%3Ccircle cx='200' cy='200' r='176' stroke-opacity='.18' stroke-dasharray='3 9'/%3E%3Ccircle cx='200' cy='200' r='128' stroke-opacity='.28'/%3E%3Ccircle cx='200' cy='200' r='62' stroke-opacity='.3'/%3E%3Cpath d='M200 10 L226 174 L390 200 L226 226 L200 390 L174 226 L10 200 L174 174 Z' stroke-opacity='.3'/%3E%3Cpath d='M200 138 Q252 200 200 262 Q148 200 200 138Z' stroke-opacity='.4'/%3E%3Ccircle cx='200' cy='200' r='14' stroke-opacity='.5'/%3E%3C/svg%3E"); }
+#layer-estudios .philosophy { --board-sigil: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 400' fill='none' stroke='%23b44dff' stroke-width='1.4'%3E%3Ccircle cx='200' cy='200' r='190' stroke-opacity='.35'/%3E%3Ccircle cx='200' cy='200' r='176' stroke-opacity='.18' stroke-dasharray='3 9'/%3E%3Ccircle cx='200' cy='200' r='128' stroke-opacity='.28'/%3E%3Ccircle cx='200' cy='200' r='62' stroke-opacity='.3'/%3E%3Cpath d='M200 10 L226 174 L390 200 L226 226 L200 390 L174 226 L10 200 L174 174 Z' stroke-opacity='.3'/%3E%3Cpath d='M200 138 Q252 200 200 262 Q148 200 200 138Z' stroke-opacity='.4'/%3E%3Ccircle cx='200' cy='200' r='14' stroke-opacity='.5'/%3E%3C/svg%3E"); }
+
+/* Sobre mí: el contacto deja de ser un bloque suelto */
+#layer-sobre .about-contact { margin-top: 6rem; }
+#layer-sobre .about-contact .about-intro { margin-bottom: 2.4rem; }
+/* TabCuart: la intro y los libros no pierden su ancho de lectura */
+#layer-TabCuart .technique-intro { margin: 3rem 0 1rem; }
+#layer-TabCuart .books-section { margin: 7rem auto 0; max-width: 1400px; }
+/* Estudios */
+#layer-estudios .lab-3col { margin-top: 3.5rem; counter-reset: lab; }
+#layer-estudios .philosophy { margin-top: 4rem; }
+#layer-estudios .philosophy cite { color: rgb(var(--board)); text-shadow: 0 0 10px rgba(var(--board), .7); }
+
+/* ----- CARTAS DE ESTUDIOS: cada una con su neón y número romano ----- */
+#layer-estudios .lab-big-card {
+    --c: 255,145,0;
+    counter-increment: lab;
+    border: 2px solid rgba(var(--c), .65);
+    border-radius: 14px;
+    background:
+        linear-gradient(165deg, rgba(var(--c), .12), transparent 46%),
+        radial-gradient(120% 55% at 50% 0%, rgba(255,255,255,.05), transparent 60%),
+        #0c0a0b;
+    box-shadow:
+        0 22px 55px rgba(0,0,0,.65),
+        0 0 0 5px #0a0708,
+        0 0 0 6px rgba(255,255,255,.12),
+        0 0 30px rgba(var(--c), .3),
+        inset 0 0 40px rgba(0,0,0,.5);
+    transition: border-color .3s, box-shadow .35s, transform .35s;
+}
+#layer-estudios .lab-big-card:nth-child(2) { --c: 0,229,255; }
+#layer-estudios .lab-big-card:nth-child(3) { --c: 180,77,255; }
+#layer-estudios .lab-big-card::before { background: rgb(var(--c)); box-shadow: 0 0 12px rgba(var(--c), .9); }
+#layer-estudios .lab-big-card::after {
+    content: counter(lab, upper-roman);
+    position: absolute;
+    top: 1rem;
+    right: 1.2rem;
+    font-family: var(--font-titulo);
+    font-size: 1.5rem;
+    line-height: 1;
+    color: rgb(var(--c));
+    text-shadow: 0 0 10px rgba(var(--c), .9);
+    pointer-events: none;
+}
+#layer-estudios .lab-big-card:hover {
+    border-color: rgb(var(--c));
+    transform: translateY(-4px);
+    box-shadow:
+        0 28px 65px rgba(0,0,0,.7),
+        0 0 0 5px #0a0708,
+        0 0 0 6px rgba(var(--c), .55),
+        0 0 48px rgba(var(--c), .55),
+        inset 0 0 40px rgba(0,0,0,.5);
+}
+#layer-estudios .lab-big-tag { color: rgb(var(--c)); text-shadow: 0 0 8px rgba(var(--c), .7); }
+#layer-estudios .lab-big-icon { filter: drop-shadow(0 0 10px rgba(var(--c), .7)); opacity: .9; }
+
+/* ----- TABCUARIO: pestañas como mazo y fichas como cartas ----- */
+#layer-contacto .aqua-tabs {
+    --board: 90,169,255;
+    border: 2px solid rgba(var(--board), .55);
+    border-radius: 12px;
+    overflow: hidden;
+    background: rgba(0,0,0,.4);
+    box-shadow: 0 0 0 5px #070a0c, 0 0 0 6px rgba(255,255,255,.07), 0 0 28px rgba(var(--board), .22);
+}
+#layer-contacto .aqua-tab { border-right-color: rgba(var(--board), .25); }
+#layer-contacto .aqua-tab.active {
+    background: linear-gradient(180deg, rgba(var(--board), .22), rgba(var(--board), .06));
+    box-shadow: inset 0 0 22px rgba(var(--board), .3), 0 0 14px rgba(var(--board), .35);
+}
+#layer-contacto .fish-card,
+#layer-contacto .plant-card,
+#layer-contacto .curioso-card {
+    --c: 90,169,255;
+    border: 2px solid rgba(var(--c), .6);
+    border-radius: 12px;
+    box-shadow:
+        0 18px 45px rgba(0,0,0,.6),
+        0 0 0 5px #070a0c,
+        0 0 0 6px rgba(255,255,255,.1),
+        0 0 26px rgba(var(--c), .22);
+}
+#layer-contacto .fish-card:hover,
+#layer-contacto .plant-card:hover,
+#layer-contacto .curioso-card:hover {
+    border-color: rgb(var(--c));
+    box-shadow:
+        0 24px 55px rgba(0,0,0,.65),
+        0 0 0 5px #070a0c,
+        0 0 0 6px rgba(var(--c), .5),
+        0 0 44px rgba(var(--c), .5);
+}
+#layer-contacto .fish-grid, #layer-contacto .plant-grid, #layer-contacto .curiosos-grid { gap: 2rem; padding: .4rem; }
+/* libros de TabCuario: zona anidada dentro del tablero */
+#layer-contacto .books-section--aqua {
+    margin-top: 3rem;
+    padding: clamp(.9rem, 1.8vw, 1.5rem);
+    border: 1px dashed rgba(90,169,255,.45);
+    border-radius: 16px;
+    background: rgba(0,0,0,.3);
+    box-shadow: inset 0 0 36px rgba(0,0,0,.45);
+}
+
+@media (max-width: 860px) {
+    #layer-estudios .lab-3col { gap: 1.8rem; }
+}
+@media (max-width: 640px) {
+    #layer-sobre .about-stage,
+    #layer-sobre .about-contact,
+    #layer-TabCuart .technique-intro,
+    #layer-TabCuart .books-section,
+    #layer-estudios .lab-3col,
+    #layer-estudios .philosophy,
+    #layer-contacto .aqua-panel.active { padding: 1.1rem .8rem; border-radius: 16px; outline-offset: -8px; }
+}
+
+
+/* =========================================================
+   TABCUART — TODOS LOS BLOQUES AL MISMO ANCHO, DISTINGUIDOS POR TONOS DE ROJO
+   Antes: la intro y los libros medían el ancho de lectura (1400px) y "Avances & Proceso" se salía a 94vw (hasta 1900px).
+   Ahora los tres tableros miden exactamente lo mismo: el ancho de contenido de la capa (.layer-inner).
+   CAMBIAR AQUÍ:
+     · el ancho común  → --tc-w   (100% = ancho del contenido; ej. min(100%, 1200px) para uno más estrecho)
+     · cada tono de rojo → --board (R,G,B) de cada bloque, y el mismo color en hexadecimal en --tc-hex
+       (el hexadecimal solo se usa para el sello y la retícula de fondo).
+   Escala de tonos:  1 · Intro = rojo claro (255,110,110)  ·  2 · Proceso = rojo vivo (227,38,46)  ·  3 · Libros = carmesí profundo (160,18,30)
+========================================================= */
+#layer-TabCuart {
+    --tc-w: 100%;
+}
+#layer-TabCuart .technique-intro,
+#layer-TabCuart .technique-process,
+#layer-TabCuart .books-section {
+    width: var(--tc-w);
+    max-width: var(--tc-w);
+    margin-left: auto;
+    margin-right: auto;
+    box-sizing: border-box;
+}
+/* La intro dejaba de ser una caja de líneas: mismo marco que los demás, con su propio tono */
+#layer-TabCuart .technique-intro { margin-top: 3rem; margin-bottom: 1rem; }
+#layer-TabCuart .technique-process { margin-top: 7rem; margin-bottom: 3rem; }
+#layer-TabCuart .books-section { margin-top: 7rem; margin-bottom: 0; }
+
+/* 1 · INTRO — rojo claro */
+#layer-TabCuart .technique-intro {
+    --board: 255,110,110;
+    --board-lattice: none;
+    --board-sigil: none;
+}
+/* 2 · PROCESO — rojo vivo */
+#layer-TabCuart .technique-process {
+    --board: 227,38,46;
+    --board-lattice: none;
+    --board-sigil: none;
+}
+/* 3 · LIBROS — carmesí profundo (borde un poco más marcado para que no se pierda en el fondo oscuro) */
+#layer-TabCuart .books-section {
+    --board: 160,18,30;
+    --board-lattice: none;
+    --board-sigil: none;
+    border-color: rgba(var(--board), .9);
+    box-shadow:
+        0 36px 100px rgba(0,0,0,.7),
+        0 0 0 6px #070506,
+        0 0 0 7px rgba(255,255,255,.07),
+        0 0 36px rgba(var(--board), .38),
+        inset 0 0 110px rgba(0,0,0,.6);
+}
+
+/* Detalles internos de cada bloque siguen el tono de SU bloque (rayita y rótulo, libros) */
+#layer-TabCuart .technique-intro .accent-line span,
+#layer-TabCuart .books-section .accent-line span,
+#layer-TabCuart .books-section .book-card-kicker,
+#layer-TabCuart .books-section .book-kicker { color: rgb(var(--board)); }
+#layer-TabCuart .technique-intro .accent-line::before,
+#layer-TabCuart .books-section .accent-line::before { background: rgb(var(--board)); }
+#layer-TabCuart .books-section .book-card-cover { border-left-color: rgba(var(--board), .85); }
+#layer-TabCuart .books-section .book-card:hover .book-card-cover,
+#layer-TabCuart .books-section .book-card:focus-visible .book-card-cover,
+#layer-TabCuart .books-section .book-card.is-active .book-card-cover,
+#layer-TabCuart .books-section .book-card[aria-selected=true] .book-card-cover { border-left-color: rgb(var(--board)); }
+
+
+/* =========================================================
+   TABCUART — FONDO DE FUEGO SUTIL (reemplaza la retícula de rombos y el sello)
+   Cada tablero (intro, proceso, libros) lleva detrás un fuego muy suave: lenguas de llama que respiran
+   y brasas que suben despacio. Todo es CSS; el JS solo crea los elementos (bloque "FUEGO" al final de script.js).
+   El color del fuego sigue el tono --board de cada bloque, con un núcleo cálido.
+   CAMBIAR AQUÍ:
+     · intensidad de un bloque → --fire-i  (1 = normal, 0.5 = más tenue, 2 = más fuerte)
+     · velocidad              → --d en .tc-flame / .tc-ember (JS) o las duraciones de abajo
+     · apagarlo del todo      → .tc-fire { display: none; }
+========================================================= */
+@property --tc-ang { syntax: "<angle>"; inherits: false; initial-value: 0deg; }
+
+#layer-TabCuart .technique-process::after { display: none; }   /* el sello del fondo ya no existe */
+
+.tc-fire {
+    --fire-i: 1;
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    overflow: hidden;
+    border-radius: inherit;
+    pointer-events: none;
+    container-type: size;
+}
+.tc-fire--hot { --fire-i: 1.7; }
+
+/* resplandor de base que respira */
+.tc-fire::before {
+    content: "";
+    position: absolute;
+    inset: auto -10% -28% -10%;
+    height: 62%;
+    background: radial-gradient(ellipse 60% 70% at 50% 100%,
+        rgba(255, 96, 44, .26), rgba(var(--board), .16) 46%, transparent 74%);
+    opacity: min(1, calc(.85 * var(--fire-i)));
+    animation: tc-breathe 5.5s ease-in-out infinite alternate;
+}
+@keyframes tc-breathe {
+    from { transform: scaleY(.88); opacity: min(1, calc(.6 * var(--fire-i))); }
+    to   { transform: scaleY(1.12); opacity: min(1, calc(1 * var(--fire-i))); }
+}
+
+/* lenguas de llama: borrosas, lentas, muy transparentes */
+.tc-flames {
+    position: absolute;
+    inset: auto 0 0 0;
+    height: min(62%, 340px);
+    filter: blur(20px);
+    animation: tc-breathe-op 4.8s ease-in-out infinite alternate;
+}
+@keyframes tc-breathe-op { from { opacity: .7; } to { opacity: 1; } }
+.tc-flame {
+    position: absolute;
+    bottom: -16%;
+    left: var(--x);
+    width: var(--w);
+    height: var(--h);
+    margin-left: calc(var(--w) / -2);
+    border-radius: 50% 50% 46% 46% / 72% 72% 28% 28%;
+    background: radial-gradient(ellipse 52% 62% at 50% 78%,
+        rgba(255, 176, 90, .85) 0, rgba(255, 98, 48, .55) 34%,
+        rgba(var(--board), .32) 62%, rgba(var(--board), 0) 84%);
+    opacity: min(.7, calc(.36 * var(--fire-i)));
+    transform-origin: 50% 100%;
+    animation: tc-flick var(--d) ease-in-out var(--dl) infinite alternate;
+    will-change: transform;
+}
+@keyframes tc-flick {
+    0%   { transform: translateX(0) scale(.86, .78) skewX(-3deg); }
+    30%  { transform: translateX(calc(var(--w) * .06)) scale(1.04, 1.14) skewX(4deg); }
+    62%  { transform: translateX(calc(var(--w) * -.05)) scale(.94, .92) skewX(-5deg); }
+    100% { transform: translateX(calc(var(--w) * .03)) scale(1.1, 1.22) skewX(2deg); }
+}
+
+/* brasas que suben y se apagan */
+.tc-embers { position: absolute; inset: 0; }
+.tc-ember {
+    position: absolute;
+    bottom: -8px;
+    left: var(--x);
+    width: var(--s);
+    height: var(--s);
+    border-radius: 50%;
+    background: radial-gradient(circle, #ffe2b0 0, #ff8a3d 42%, rgba(255, 70, 30, 0) 72%);
+    box-shadow: 0 0 calc(var(--s) * 2.6) rgba(255, 110, 50, .65);
+    opacity: 0;
+    animation: tc-rise var(--d) linear var(--dl) infinite;
+    will-change: transform, opacity;
+}
+@keyframes tc-rise {
+    0%   { transform: translate(0, 0) scale(1); opacity: 0; }
+    10%  { opacity: min(.9, calc(.55 * var(--fire-i))); }
+    55%  { transform: translate(var(--dx), max(calc(var(--r) * -.55cqh), -380px)) scale(.8); }
+    100% { transform: translate(calc(var(--dx) * -.6), max(calc(var(--r) * -1cqh), -700px)) scale(.25); opacity: 0; }
+}
+
+/* sin gasto cuando la capa no se ve, y sin movimiento si el sistema lo pide */
+.layer:not(.active) .tc-fire,
+.layer:not(.active) .tc-fire *,
+.layer:not(.active) .tc-fire::before { animation-play-state: paused; }
+@media (prefers-reduced-motion: reduce) {
+    .tc-fire::before, .tc-flames, .tc-flame, .tc-ember { animation: none; }
+    .tc-embers { display: none; }
+}
+
+
+/* =========================================================
+   AVANCES & PROCESO — MARCOS QUE SE ADAPTAN A LA IMAGEN
+   Antes todos los marcos tenían una altura fija (--pv-h) y las fotos quedaban con franjas negras o muy chicas.
+   Ahora el JS (bloque "MARCOS" al final de script.js) mide la proporción de la imagen visible y ajusta --pv-h de cada lado;
+   si lo que sobra es poco, las franjas se rellenan con la misma imagen desenfocada. Los marcos cambian de altura con suavidad.
+   CAMBIAR AQUÍ: la altura mínima/máxima en script.js (hFor) · la suavidad en la transición de abajo.
+========================================================= */
+#layer-TabCuart .pv-viewport,
+#layer-TabCuart .pv-frame--video {
+    transition: height .5s cubic-bezier(.2, .7, .2, 1), border-color .25s, box-shadow .35s;
+}
+/* videos de proceso: fondo oscuro cálido en vez de negro puro */
+#layer-TabCuart .pv-slide .pv-vid { background: radial-gradient(ellipse at 50% 40%, #1c0d10, #09090a 75%); }
+/* el resultado final también rellena con su propia imagen desenfocada (la crea el JS) */
+.pv-frame--video .pv-bg {
+    position: absolute;
+    z-index: 0;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transform: scale(1.25);
+    filter: blur(30px) saturate(1.3) brightness(.5);
+    pointer-events: none;
+}
+.pv-frame--video:not(.is-image) .pv-bg { display: none; }
+
+
+/* =========================================================
+   RESULTADO FINAL (ETAPA FINAL) — LA PIEZA ESTRELLA
+   Más grande que el lado del proceso, con borde de brasa que gira, resplandor que late, insignia ♛ y título de fuego.
+   CAMBIAR AQUÍ: el ancho relativo → grid-template-columns de .pv-duo (1fr / 1.12fr) · los colores de la brasa en el conic-gradient.
+========================================================= */
+#layer-TabCuart .technique-process .pv-duo { grid-template-columns: minmax(0, 1fr) minmax(0, 1.12fr); }
+#layer-TabCuart .technique-process .pv-duo.is-empty { grid-template-columns: minmax(0, 1fr); }
+#layer-TabCuart .technique-process .pv-duo::before,
+#layer-TabCuart .technique-process .pv-duo::after {
+    left: calc((100% - var(--duo-gap)) / 2.12 + var(--duo-gap) / 2);
+}
+@media (max-width: 430px) {
+    #layer-TabCuart .technique-process .pv-duo { grid-template-columns: minmax(0, 1fr); }
+}
+
+/* la zona: borde continuo cálido y luz de brasa arriba */
+#layer-TabCuart .technique-process .pv .pv-final {
+    isolation: isolate;
+    border: 1px solid rgba(255, 120, 76, .6);
+    background:
+        radial-gradient(120% 70% at 50% 0%, rgba(255, 96, 52, .18), transparent 65%),
+        rgba(0, 0, 0, .34);
+    box-shadow: inset 0 0 50px rgba(0, 0, 0, .5), 0 0 44px rgba(255, 70, 40, .16);
+}
+#layer-TabCuart .pv-final .pv-bar-kicker {
+    color: #ffe6da;
+    font-size: .95rem;
+    text-shadow: 0 0 14px rgba(255, 100, 60, .85);
+}
+#layer-TabCuart .technique-process .pv-final .pv-bar-kicker::before { color: #ff8a4d; }
+#layer-TabCuart .pv-final .pv-bar-count {
+    padding: .38rem .8rem;
+    border: 1px solid rgba(255, 140, 90, .7);
+    border-radius: 4px;
+    background: linear-gradient(135deg, rgba(227, 38, 46, .38), rgba(255, 110, 60, .26));
+    color: #fff;
+    text-shadow: 0 0 10px rgba(255, 120, 70, .9);
+    box-shadow: 0 0 16px rgba(255, 90, 50, .4);
+}
+
+/* el marco: borde de brasa que gira + resplandor que late */
+#layer-TabCuart .pv-final .pv-frame--video {
+    border: 3px solid transparent;
+    background:
+        linear-gradient(#0a0708, #0a0708) padding-box,
+        conic-gradient(from var(--tc-ang), #ff2a2a, #ff7a3d, #ffd08a, #ff7a3d, #e3262e, #6e0a12, #ff2a2a) border-box;
+    animation: tc-spin 7s linear infinite, tc-glow 3.2s ease-in-out infinite alternate;
+}
+@keyframes tc-spin { to { --tc-ang: 360deg; } }
+@keyframes tc-glow {
+    from { box-shadow: 0 22px 55px rgba(0,0,0,.7), 0 0 0 5px #0a0708, 0 0 0 6px rgba(255,255,255,.14), 0 0 34px rgba(255,70,40,.35), 0 0 70px rgba(227,38,46,.2); }
+    to   { box-shadow: 0 22px 55px rgba(0,0,0,.7), 0 0 0 5px #0a0708, 0 0 0 6px rgba(255,140,80,.38), 0 0 58px rgba(255,100,50,.62), 0 0 120px rgba(227,38,46,.38); }
+}
+/* insignia */
+#layer-TabCuart .pv-final .pv-chip {
+    border-color: rgba(255, 176, 138, .8);
+    background: linear-gradient(135deg, #e3262e, #ff6a3d);
+    color: #fff;
+    box-shadow: 0 0 18px rgba(255, 90, 50, .7);
+}
+#layer-TabCuart .pv-final .pv-chip::before { content: "\265B"; margin-right: .55em; }
+#layer-TabCuart .pv-final .pv-chip b { color: #fff; }
+
+/* título y texto de la etapa final */
+#layer-TabCuart .technique-process .pv-final .pv-caption {
+    border-left: 4px solid;
+    border-image: linear-gradient(180deg, #ffb36b, #ff3b30, #8a0f18) 1;
+    background: linear-gradient(90deg, rgba(255, 90, 50, .18), transparent 80%);
+    box-shadow: none;
+}
+#layer-TabCuart .pv-final .pv-stage-name { font-size: clamp(2.1rem, 3.6vw, 3.4rem); }
+#layer-TabCuart .pv-final .pv-stage-name b { color: #ff6a3d; text-shadow: 0 0 14px rgba(255, 90, 50, .9); }
+#layer-TabCuart .pv-final .pv-stage-name span {
+    background: linear-gradient(90deg, #fff 0%, #ffd6bd 45%, #ff6a3d 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    filter: drop-shadow(0 0 14px rgba(255, 90, 50, .5));
+}
+@media (prefers-reduced-motion: reduce) {
+    #layer-TabCuart .pv-final .pv-frame--video { animation: none; }
+}
+
+
+/* =========================================================
+   TABCUART — BLOQUES MÁS ANCHOS (imágenes de proceso y resultado más grandes)
+   Los tres tableros siguen midiendo EXACTAMENTE lo mismo entre sí, pero ahora se salen un poco del ancho de lectura
+   (como lo hacía antes "Avances & Proceso") para que cada marco de imagen tenga más espacio.
+   CAMBIAR AQUÍ: el ancho común → --tc-w  (min(94vw, 1680px); sube el 1680px para aún más grande, o pon 100% para volver al ancho de lectura).
+========================================================= */
+#layer-TabCuart { --tc-w: min(94vw, 1680px); }
+#layer-TabCuart .technique-intro,
+#layer-TabCuart .technique-process,
+#layer-TabCuart .books-section {
+    margin-left: calc(50% - var(--tc-w) / 2);
+    margin-right: 0;
+}
+/* menos relleno interno en Avances & Proceso: más espacio para las imágenes */
+#layer-TabCuart .technique-process {
+    --duo-gap: clamp(1rem, 2vw, 2rem);
+    padding-left: clamp(.8rem, 2vw, 1.8rem);
+    padding-right: clamp(.8rem, 2vw, 1.8rem);
+}
+#layer-TabCuart .technique-process .pv .pv-explore,
+#layer-TabCuart .technique-process .pv .pv-final { padding: clamp(.6rem, 1.1vw, 1rem); }
+/* en pantallas chicas vuelven al ancho normal */
+@media (max-width: 640px) {
+    #layer-TabCuart { --tc-w: 100%; }
+    #layer-TabCuart .technique-intro,
+    #layer-TabCuart .technique-process,
+    #layer-TabCuart .books-section { margin-left: 0; }
+}
+
+
+/* =========================================================
+   AVANCES & PROCESO — DISEÑO APILADO PARA IMÁGENES HORIZONTALES
+   El JS (initFit en script.js) añade .is-stacked al dúo cuando el proceso o el resultado son horizontales:
+   proceso arriba y resultado final debajo, cada uno a todo el ancho del bloque (se ven mucho más grandes).
+========================================================= */
+#layer-TabCuart .technique-process .pv-duo.is-stacked {
+    grid-template-columns: minmax(0, 1fr);
+    gap: clamp(1.6rem, 3vw, 2.6rem);
+}
+#layer-TabCuart .technique-process .pv-duo.is-stacked::before,
+#layer-TabCuart .technique-process .pv-duo.is-stacked::after { display: none; }
+
+
+/* =========================================================
+   FONDO DE FUEGO EN TODOS LOS TABLEROS
+   Sobre mí (escenario + contacto) · Estudios (3 cartas + filosofía) · TabCuario (cada panel).
+   Se quita la retícula de rombos y el sello central; el JS (initFire) añade las llamas y brasas (.tc-fire).
+   El fuego toma el color --board de cada tablero (rojo, naranja, violeta, azul). Intensidad: --fire-i.
+========================================================= */
+#layer-sobre .about-stage,
+#layer-sobre .about-contact,
+#layer-estudios .lab-3col,
+#layer-estudios .philosophy,
+#layer-contacto .aqua-panel {
+    --board-lattice: none;
+    --board-sigil: none;
+    --fire-i: 1.15;
+}
+#layer-contacto .aqua-panel { position: relative; isolation: isolate; }
+
+
+/* =========================================================
+   SOBRE MÍ — DISPOSICIÓN: [ foto | Sobre mí ] arriba y las 4 cartas debajo, de 2 en 2
+   (Arsenal · Afinidades / Saber · Misiones). Solo en pantallas grandes; en pequeñas se apila como antes.
+   CAMBIAR AQUÍ: el ancho máximo de la foto → max-width de .about-photo-column.
+========================================================= */
+@media (min-width: 901px) {
+    #layer-sobre .about-stage {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: clamp(1.2rem, 2.4vw, 2.2rem);
+        align-items: stretch;
+    }
+    #layer-sobre .about-side,
+    #layer-sobre .about-side > .ab-deck { display: contents; }
+    #layer-sobre .about-photo-column {
+        position: static;
+        grid-column: 1; grid-row: 1;
+        max-width: 460px; width: 100%; justify-self: center;
+    }
+    #layer-sobre .ab-id { grid-column: 2; grid-row: 1; }
+    #layer-sobre .ab-tools,
+    #layer-sobre .ab-int,
+    #layer-sobre .ab-form,
+    #layer-sobre .ab-proj { grid-column: auto; }
+}
+
+
+/* =========================================================
+   FLECHA "HAY MÁS" (reemplaza el texto): doble chevrón rojo que baja y se desvanece
+========================================================= */
+.sc-arrow {
+    width: 22px; height: 22px; margin-top: .1rem;
+    fill: none; stroke: #e3262e; stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round;
+    filter: drop-shadow(0 0 5px rgba(255,60,40,.85));
+    animation: sc-bob 1.5s ease-in-out infinite;
+}
+.sc-arrow path:first-child  { animation: sc-chev 1.5s ease-in-out infinite; }
+.sc-arrow path:last-child   { animation: sc-chev 1.5s ease-in-out .25s infinite; }
+@keyframes sc-bob  { 0%, 100% { transform: translateY(-2px); } 50% { transform: translateY(4px); } }
+@keyframes sc-chev { 0%, 100% { opacity: .25; } 50% { opacity: 1; } }
+.scroll-cue:hover .sc-arrow { stroke: #fff; }
+@media (prefers-reduced-motion: reduce) { .sc-arrow, .sc-arrow path { animation: none; } }
+
+/* =========================================================
+   BOTÓN VOLVER — esquinas cortadas, flecha en rombo, brasa que recorre el borde y fuego al pasar el cursor
+========================================================= */
+.btn-back {
+    --bb: 227, 38, 46;
+    display: none;
+    align-items: center;
+    gap: .75rem;
+    isolation: isolate;
+    overflow: hidden;
+    padding: .62rem 1.35rem .62rem .7rem;
+    border: 1px solid rgba(var(--bb), .55);
+    border-radius: 0;
+    clip-path: polygon(12px 0, 100% 0, 100% calc(100% - 12px), calc(100% - 12px) 100%, 0 100%, 0 12px);
+    background:
+        linear-gradient(100deg, rgba(var(--bb), .22), rgba(8,4,5,.88) 55%),
+        #0a0506;
+    color: #f1dcd8;
+    font-size: .8rem;
+    letter-spacing: .26em;
+    text-shadow: 0 0 10px rgba(var(--bb), .6);
+    box-shadow: 0 0 0 1px rgba(0,0,0,.6), 0 8px 24px rgba(0,0,0,.55), 0 0 22px rgba(var(--bb), .28);
+    transition: color .3s, box-shadow .3s, border-color .3s, letter-spacing .3s;
+}
+body.layer-open .btn-back { display: inline-flex; }
+/* borde de brasa que gira */
+.btn-back::before {
+    content: ""; position: absolute; inset: -60%; z-index: -2;
+    background: conic-gradient(from 0deg, transparent 0 62%, rgba(255,120,50,.9) 78%, rgba(255,210,120,.95) 84%, transparent 92%);
+    animation: bb-spin 3.6s linear infinite;
+}
+.btn-back::after {
+    content: ""; position: absolute; inset: 1.5px; z-index: -1;
+    clip-path: polygon(11px 0, 100% 0, 100% calc(100% - 11px), calc(100% - 11px) 100%, 0 100%, 0 11px);
+    background:
+        radial-gradient(120% 140% at 50% 130%, rgba(255,110,40,.0), transparent 60%),
+        linear-gradient(100deg, rgba(60,8,12,.96), rgba(10,4,6,.97) 60%);
+    transition: background .35s;
+}
+@keyframes bb-spin { to { transform: rotate(360deg); } }
+.bb-arrow {
+    position: relative; z-index: 1; isolation: isolate;
+    display: grid; place-items: center;
+    width: 2rem; height: 2rem;
+    font: 700 1.25rem/1 var(--font-texto, sans-serif); letter-spacing: 0;
+    color: #fff;
+    text-shadow: 0 0 8px rgba(255,150,90,.9);
+}
+/* el rombo va aparte, así la flecha queda derecha */
+.bb-arrow::before {
+    content: ""; position: absolute; inset: 3px; z-index: -1; rotate: 45deg;
+    border: 1px solid rgba(var(--bb), .85);
+    background: rgba(var(--bb), .32);
+    box-shadow: 0 0 14px rgba(var(--bb), .55), inset 0 0 8px rgba(255,120,60,.35);
+    transition: background .3s, box-shadow .3s;
+}
+.btn-back:hover {
+    border-color: #ff7a45;
+    color: #fff;
+    letter-spacing: .32em;
+    box-shadow: 0 0 0 1px rgba(0,0,0,.6), 0 10px 28px rgba(0,0,0,.6), 0 0 34px rgba(255,90,50,.6);
+}
+.btn-back:hover::after {
+    background:
+        radial-gradient(120% 160% at 50% 135%, rgba(255,140,50,.55), rgba(227,38,46,.28) 45%, transparent 70%),
+        linear-gradient(100deg, rgba(90,12,16,.96), rgba(14,5,7,.97) 60%);
+    animation: bb-fire 1.1s ease-in-out infinite alternate;
+}
+@keyframes bb-fire { from { filter: brightness(.9); } to { filter: brightness(1.3); } }
+.btn-back:hover .bb-arrow::before { background: rgba(255,110,50,.55); box-shadow: 0 0 20px rgba(255,110,50,.9); }
+.btn-back:hover .bb-arrow { animation: bb-nudge .7s ease-in-out infinite alternate; }
+@keyframes bb-nudge { from { translate: 0 0; } to { translate: -3px 0; } }
+@media (prefers-reduced-motion: reduce) { .btn-back::before, .btn-back:hover::after, .btn-back:hover .bb-arrow { animation: none; } }
+
+/* =========================================================
+   SOBRE MÍ — "Escribirme" y "Ver mi trabajo" centrados en el bloque
+========================================================= */
+.about-cta { justify-content: center; }
+#layer-sobre .about-stage > .about-cta,
+#layer-sobre .about-side > .about-cta { grid-column: 1 / -1; width: 100%; justify-content: center; margin-top: 1.4rem; }
+
+/* =========================================================
+   FILTROS DE TÉCNICAS — una sola fila, esquinas cortadas, brasa que sube al pasar y el activo arde
+   (si no caben en pantallas pequeñas, la fila se desliza en horizontal)
+========================================================= */
+.gallery-filter {
+    flex-wrap: nowrap;
+    gap: .6rem;
+    padding: .5rem .3rem 1rem;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(227,38,46,.5) transparent;
+}
+.gallery-filter::-webkit-scrollbar { height: 5px; }
+.gallery-filter::-webkit-scrollbar-thumb { background: rgba(227,38,46,.5); border-radius: 4px; }
+.filter-btn {
+    flex: 1 1 auto; min-width: min-content;
+    display: inline-flex; align-items: center; justify-content: center; gap: .4rem;
+    white-space: nowrap;
+    isolation: isolate; overflow: hidden;
+    padding: .9rem .8rem;
+    font-size: .78rem !important; letter-spacing: .08em !important;
+    border: 1px solid rgba(227,38,46,.32);
+    border-radius: 0;
+    clip-path: polygon(10px 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 10px);
+    background: linear-gradient(180deg, rgba(255,255,255,.03), rgba(10,5,6,.9));
+    color: #cdbdb9;
+    transition: color .3s, border-color .3s, transform .3s, text-shadow .3s;
+}
+/* rombo que gira al activarse */
+.filter-btn::before {
+    content: ""; flex: none; width: 7px; height: 7px; rotate: 45deg;
+    border: 1px solid rgba(227,38,46,.75); background: transparent;
+    transition: background .3s, box-shadow .3s, rotate .5s;
+}
+/* brasa que sube desde abajo */
+.filter-btn::after {
+    content: ""; position: absolute; inset: 0; z-index: -1;
+    background:
+        radial-gradient(90% 120% at 50% 130%, rgba(255,150,60,.75), rgba(227,38,46,.45) 45%, transparent 72%);
+    transform: translateY(100%);
+    transition: transform .4s cubic-bezier(.2,.8,.2,1);
+}
+.filter-btn:hover { color: #fff; border-color: #ff7a45; transform: translateY(-3px); text-shadow: 0 0 10px rgba(255,120,60,.8); }
+.filter-btn:hover::after { transform: translateY(35%); }
+.filter-btn:hover::before { rotate: 225deg; background: #ff7a45; box-shadow: 0 0 10px rgba(255,120,60,.9); }
+.filter-btn.active {
+    color: #fff;
+    border-color: #ff8a55;
+    background: linear-gradient(100deg, #8f0f18, #e3262e 45%, #ff6a3d 100%);
+    background-size: 220% 100%;
+    text-shadow: 0 0 10px rgba(255,200,150,.9);
+    animation: fb-flow 3.2s ease-in-out infinite alternate, fb-glow 1.6s ease-in-out infinite alternate;
+}
+.filter-btn.active::before { background: #fff; border-color: #fff; box-shadow: 0 0 10px #ffd0a0; animation: fb-spin 3s linear infinite; }
+.filter-btn.active::after { transform: translateY(0); opacity: .55; animation: fb-flicker 1.2s ease-in-out infinite alternate; }
+@keyframes fb-flow { from { background-position: 0% 0; } to { background-position: 100% 0; } }
+@keyframes fb-glow { from { filter: drop-shadow(0 0 4px rgba(255,80,40,.55)); } to { filter: drop-shadow(0 0 12px rgba(255,120,60,.95)); } }
+@keyframes fb-spin { to { rotate: 405deg; } }
+@keyframes fb-flicker { from { opacity: .3; } to { opacity: .7; } }
+@media (prefers-reduced-motion: reduce) { .filter-btn.active, .filter-btn.active::before, .filter-btn.active::after { animation: none; } }
+@media (max-width: 900px) { .filter-btn { flex: 0 0 auto; padding: .7rem 1rem; } }
+
+
+/* AVANCES & PROCESO — los nombres de los trabajos con proceso aparecen uno a uno (y la fila se oculta si no hay ninguno) */
+.pv-works[hidden] { display: none; }
+.pv-work.has-process { animation: pvw-in .55s cubic-bezier(.2,.8,.2,1) both; animation-delay: calc(var(--n, 0) * 90ms); }
+@keyframes pvw-in { from { opacity: 0; transform: translateY(8px) scale(.92); filter: blur(3px); } to { opacity: 1; transform: none; filter: none; } }
+@media (prefers-reduced-motion: reduce) { .pv-work.has-process { animation: none; } }
+
+/* =========================================================
+   NOMBRES DE SECCIÓN CON MÁS PROTAGONISMO (misma tipografía: Cinzel en mayúsculas y con espaciado)
+   "— EL ARTISTA", "— CONTACTO", "— AVANCES & PROCESO", "— LIBROS & CÓMICS", "— TABLAB", "— TABCUARIO"…
+   Más grandes, con brillo del color de la sección, línea más larga con remate en rombo y un destello lento.
+   CAMBIAR AQUÍ: tamaño → font-size · intensidad del brillo → los 0.5 del text-shadow.
+========================================================= */
+.layer .accent-line { gap: clamp(.9rem, 1.6vw, 1.5rem); margin-bottom: 1.2rem; }
+.layer .accent-line::before {
+    width: clamp(46px, 6vw, 96px);
+    height: 2px;
+    box-shadow: 0 0 12px var(--accent), 0 0 26px rgba(227,38,46,.35);
+}
+.layer .accent-line span {
+    font-size: clamp(1.9rem, 3.6vw, 3.1rem);
+    font-weight: 700;
+    letter-spacing: .22em;
+    line-height: 1.15;
+    text-shadow: 0 0 .55em color-mix(in srgb, currentColor 50%, transparent), 0 2px 0 rgba(0,0,0,.65);
+    animation: sec-name-glow 4.2s ease-in-out infinite alternate;
+}
+.layer .accent-line::after {          /* remate en rombo */
+    content: "";
+    flex: none;
+    width: 10px; height: 10px; rotate: 45deg;
+    background: var(--accent);
+    box-shadow: 0 0 14px var(--accent);
+}
+.books-section--aqua .accent-line::after { background: var(--aqua-light); box-shadow: 0 0 14px var(--aqua-light); }
+.books-section--aqua .accent-line::before { box-shadow: 0 0 12px var(--aqua-light); }
+@keyframes sec-name-glow {
+    from { text-shadow: 0 0 .4em color-mix(in srgb, currentColor 35%, transparent), 0 2px 0 rgba(0,0,0,.65); }
+    to   { text-shadow: 0 0 .8em color-mix(in srgb, currentColor 75%, transparent), 0 2px 0 rgba(0,0,0,.65); }
+}
+.about-contact .accent-line::before, .about-contact .accent-line::after { flex: none; }
+
+/* índice "01 / IDENTIDAD" y "02 / CONTACTO" */
+.about-index {
+    font-size: clamp(1rem, 1.5vw, 1.3rem);
+    letter-spacing: .26em;
+    color: rgba(255,255,255,.72);
+    padding-top: .9rem;
+    text-shadow: 0 0 14px rgba(227,38,46,.45);
+}
+.about-intro { grid-template-columns: clamp(200px, 22vw, 300px) 1fr; }
+.about-contact .about-intro { grid-template-columns: minmax(0, 1fr); }
+@media (max-width: 900px) { .about-intro { grid-template-columns: 1fr; } .layer .accent-line span { letter-spacing: .14em; } }
+@media (prefers-reduced-motion: reduce) { .layer .accent-line span { animation: none; } }
+
+/* donde la sección ya tiene un título grande debajo, el nombre queda un escalón por encima de la etiqueta pero por debajo del título */
+.layer .books-heading .accent-line span,
+.layer .technique-process .accent-line span,
+.layer .technique-intro .accent-line span { font-size: clamp(1.35rem, 2.3vw, 2rem); }
+
+
+/* "01 / IDENTIDAD — EL ARTISTA" dentro del bloque (primera fila del tablero de Sobre mí) */
+#layer-sobre .about-stage > .about-intro { grid-column: 1 / -1; grid-row: 1; margin: 0 0 .4rem; }
+@media (min-width: 901px) {
+    #layer-sobre .about-photo-column,
+    #layer-sobre .ab-id { grid-row: 2; }
+}
+
+
+/* =========================================================
+   AJUSTES 9 NOV
+   1) Programas con porcentaje de dominio (1–100)
+   2) TabCuart: solo la animación (sin marco ni fondo), más grande
+   3) Títulos de las tarjetas de la galería y de la carta abierta, más grandes
+   Para cambiar un porcentaje: edita el número en index.html
+   (style="--lv:85%", data-level="85", aria-valuenow="85" y el texto "85%").
+========================================================= */
+
+/* 1) Programas */
+.ab-tools .tool-card { align-items: center; }
+.tool-info { min-width: 0; display: grid; gap: .45rem; }
+.tool-row { display: flex; align-items: baseline; justify-content: space-between; gap: .8rem; }
+.tool-pct {
+  font-family: var(--font-subtitulo);
+  font-size: 1rem;
+  letter-spacing: .06em;
+  color: var(--t, var(--accent-2));
+  text-shadow: 0 0 10px color-mix(in srgb, var(--t, var(--accent-2)) 55%, transparent);
+  font-variant-numeric: tabular-nums;
+}
+.tool-bar { height: 6px; border-radius: 99px; background: rgba(255,255,255,.08); overflow: hidden; }
+.tool-bar i {
+  display: block; height: 100%; width: var(--lv, 0%); border-radius: inherit;
+  background: linear-gradient(90deg, color-mix(in srgb, var(--t, var(--accent-2)) 55%, #000), var(--t, var(--accent-2)));
+  box-shadow: 0 0 10px color-mix(in srgb, var(--t, var(--accent-2)) 60%, transparent);
+  transform-origin: left center;
+  animation: toolFill 1.1s cubic-bezier(.2,.8,.2,1) both .3s;
+}
+@keyframes toolFill { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+.ab-tools .tool-card:nth-child(4) { --t: #ea7600; }
+@media (prefers-reduced-motion: reduce) { .tool-bar i { animation: none; } }
+
+/* 2) TabCuart: solo el GIF/animación, sin fondo ni marco, protagonista */
+#layer-TabCuart .section-header--media { grid-template-columns: minmax(0, 1fr) minmax(0, 1.25fr); }
+#layer-TabCuart .video-slot {
+  width: 100%;
+  max-width: 760px;
+  justify-self: center;
+  aspect-ratio: auto;
+  border: 0;
+  background: none;
+  box-shadow: none;
+  overflow: visible;
+}
+#layer-TabCuart .video-slot::before,
+#layer-TabCuart .video-slot::after { display: none; }
+#layer-TabCuart .video-slot-media {
+  position: static;
+  transform: none;
+  width: 100%;
+  height: auto;
+  min-width: 0;
+  min-height: 0;
+  max-height: 78vh;
+  object-fit: contain;
+  background: none;
+}
+#layer-TabCuart .video-slot-media[hidden] { display: none; }
+#layer-TabCuart .video-slot:not(.has-video) { aspect-ratio: 16 / 11; }   /* mientras no hay animación se conserva el espacio */
+@media (max-width: 900px) {
+  #layer-TabCuart .section-header--media { grid-template-columns: minmax(0, 1fr); }
+  #layer-TabCuart .video-slot { max-width: 100%; }
+}
+
+/* 3) Títulos de tarjetas (galería) y de la carta abierta */
+.gallery-overlay h4 { font-size: clamp(1.6rem, 2.2vw, 2.1rem); line-height: 1.1; overflow-wrap: anywhere; }
+.gallery-overlay p { font-size: 1rem; }
+@media (max-width: 600px) {
+  .gallery-overlay h4 { font-size: 1.35rem; }
+  .gallery-overlay p { font-size: .82rem; }
+}
+.img-modal-title { font-size: clamp(2.1rem, 5vh, 3.4rem); line-height: 1.1; padding: .7rem 1rem; }
+@media (max-width: 640px) { .img-modal-title { font-size: clamp(1.8rem, 8vw, 2.4rem); } }
+@media (max-height: 560px) and (orientation: landscape) { .img-modal-title { font-size: 1.7rem; } }
+
+
+/* =========================================================
+   INICIO: todo cabe en una sola pantalla (sin tener que bajar/subir)
+   El corazón se dimensiona según el ALTO disponible además del ancho,
+   y la cabecera escala con el alto de la ventana.
+   Para un corazón más grande/pequeño, ajusta los 24rem de .heart-wrap.
+========================================================= */
+#heartStage {
+  min-height: calc(100vh - 3.6rem);
+  min-height: calc(100dvh - 3.6rem);   /* deja visible la franja de habilidades abajo */
+  padding: clamp(1.2rem, 4vh, 3.5rem) 2rem .8rem;
+  justify-content: center;
+}
+.stage-eyebrow { font-size: clamp(.85rem, min(1.7vw, 2.4vh), 1.55rem); margin-bottom: clamp(.3rem, 1vh, 1rem); }
+.stage-name    { font-size: clamp(2.6rem, min(10.5vw, 12.5vh), 8.8rem); }
+.stage-role    { font-size: clamp(.85rem, min(1.8vw, 2.3vh), 1.5rem); margin-top: clamp(.4rem, 1.2vh, 1.2rem); }
+.heart-wrap {
+  width: min(860px, 88vw, calc(100vh - 23rem));
+  width: min(860px, 88vw, calc(100dvh - 23rem));
+  min-width: 260px;
+  margin: clamp(.6rem, 2vh, 1.6rem) auto clamp(.6rem, 2vh, 1.6rem);
+}
+
+
+/* =========================================================
+   TABCUART — cabecera como BLOQUE con diseño (mismo lenguaje que las cartas de Sobre mí)
+   Marco rojo con esquinas, fondo en degradado y brillo detrás de la animación.
+   La animación (GIF/WebP/WebM con fondo transparente) se ve sola sobre el bloque.
+========================================================= */
+#layer-TabCuart .section-header--media {
+  position: relative;
+  isolation: isolate;
+  padding: clamp(1.6rem, 3.4vw, 3rem);
+  border: 1px solid rgba(227, 38, 46, .45);
+  border-radius: 18px;
+  background:
+    radial-gradient(ellipse 55% 85% at 76% 50%, rgba(227, 38, 46, .20), transparent 70%),
+    radial-gradient(ellipse 60% 70% at 8% 0%, rgba(181, 22, 32, .14), transparent 70%),
+    linear-gradient(160deg, rgba(34, 8, 12, .92) 0%, rgba(12, 10, 11, .96) 60%, rgba(8, 8, 9, .98) 100%);
+  box-shadow:
+    0 28px 70px rgba(0, 0, 0, .55),
+    0 0 46px rgba(181, 22, 32, .16),
+    inset 0 0 0 5px rgba(8, 8, 9, .55),
+    inset 0 0 0 6px rgba(227, 38, 46, .18),
+    inset 0 0 60px rgba(181, 22, 32, .10);
+  overflow: hidden;
+}
+/* esquinas decorativas */
+#layer-TabCuart .section-header--media::before,
+#layer-TabCuart .section-header--media::after {
+  content: '';
+  position: absolute;
+  width: 38px;
+  height: 38px;
+  border: 0 solid rgba(227, 38, 46, .85);
+  pointer-events: none;
+  z-index: 3;
+}
+#layer-TabCuart .section-header--media::before { left: 14px; top: 14px; border-width: 2px 0 0 2px; border-top-left-radius: 8px; }
+#layer-TabCuart .section-header--media::after  { right: 14px; bottom: 14px; border-width: 0 2px 2px 0; border-bottom-right-radius: 8px; }
+
+/* separador vertical suave entre el texto y la animación (solo escritorio) */
+@media (min-width: 901px) {
+  #layer-TabCuart .section-header-text { position: relative; }
+  #layer-TabCuart .section-header-text::after {
+    content: '';
+    position: absolute;
+    right: calc(clamp(2rem, 5vw, 5rem) / -2);
+    top: 6%;
+    bottom: 6%;
+    width: 1px;
+    background: linear-gradient(to bottom, transparent, rgba(227, 38, 46, .45), transparent);
+  }
+}
+/* la animación flota sobre el bloque: sin caja propia, con un halo sutil */
+#layer-TabCuart .video-slot { position: relative; z-index: 1; }
+#layer-TabCuart .video-slot-media { filter: drop-shadow(0 12px 30px rgba(227, 38, 46, .28)); }
+@media (max-width: 900px) {
+  #layer-TabCuart .section-header--media { border-radius: 14px; padding: 1.4rem 1.2rem 1.6rem; }
+}
+
+
+/* =========================================================
+   AJUSTES (ronda 3)
+   1) La cabecera de TabCuart tiene el mismo ancho que los demás bloques
+   2) Herramientas / Materiales va en la columna derecha, debajo de "Resultado final"
+   3) "01 / IDENTIDAD — El Artista" más pequeño
+========================================================= */
+
+/* 1) mismo ancho que el resto de bloques */
+#layer-TabCuart .section-header--media {
+  width: 100%;
+  max-width: none;
+  box-sizing: border-box;
+  margin-inline: 0;
+  align-self: stretch;
+}
+
+/* 2) columna derecha: Resultado final + Herramientas */
+.pv-right { display: grid; gap: clamp(1rem, 2vw, 1.6rem); min-width: 0; align-content: start; }
+.pv-right .technique-extra { display: block; margin: 0; }
+.pv-right .technique-extra-box { padding: 1.2rem 1.4rem; }
+
+/* 3) Sobre mí: encabezado más discreto */
+#layer-sobre .about-stage > .about-intro .about-index {
+  font-size: clamp(.78rem, .95vw, .92rem);
+  letter-spacing: .22em;
+  padding-top: .55rem;
+}
+#layer-sobre .about-stage > .about-intro .accent-line span {
+  font-size: clamp(1.05rem, 1.6vw, 1.45rem);
+  letter-spacing: .2em;
+}
+
+
+/* =========================================================
+   AJUSTES (ronda 4)
+   1) Programas: puntos de poder del 1 al 10 (cada punto = 10 %)
+   2) Sobre mí: "El Artista" debajo de "01 / IDENTIDAD"; "Contacto" del mismo tamaño
+   3) Cabecera de TabCuart: mismo ancho que los demás bloques (--tc-w)
+   Para cambiar un nivel: en index.html deja la clase "on" en tantos <i> como puntos quieras
+   y actualiza el texto "8/10" y el aria-label.
+========================================================= */
+
+/* 1) puntos de poder */
+.tool-bar { display: none; }
+.tool-pct { letter-spacing: .08em; }
+.tool-pips { display: grid; grid-template-columns: repeat(10, 1fr); gap: 4px; }
+.tool-pips i {
+  display: block;
+  height: 9px;
+  border-radius: 2px;
+  transform: skewX(-18deg);
+  background: rgba(255, 255, 255, .09);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .05);
+}
+.tool-pips i.on {
+  background: linear-gradient(180deg, color-mix(in srgb, var(--t, var(--accent-2)) 85%, #fff), var(--t, var(--accent-2)));
+  box-shadow: 0 0 8px color-mix(in srgb, var(--t, var(--accent-2)) 65%, transparent);
+  animation: pipOn .35s ease both;
+}
+.tool-pips i.on:nth-child(1) { animation-delay: .25s; } .tool-pips i.on:nth-child(2) { animation-delay: .32s; }
+.tool-pips i.on:nth-child(3) { animation-delay: .39s; } .tool-pips i.on:nth-child(4) { animation-delay: .46s; }
+.tool-pips i.on:nth-child(5) { animation-delay: .53s; } .tool-pips i.on:nth-child(6) { animation-delay: .60s; }
+.tool-pips i.on:nth-child(7) { animation-delay: .67s; } .tool-pips i.on:nth-child(8) { animation-delay: .74s; }
+.tool-pips i.on:nth-child(9) { animation-delay: .81s; } .tool-pips i.on:nth-child(10) { animation-delay: .88s; }
+@keyframes pipOn { from { opacity: 0; transform: skewX(-18deg) scaleY(.2); } to { opacity: 1; transform: skewX(-18deg) scaleY(1); } }
+@media (prefers-reduced-motion: reduce) { .tool-pips i.on { animation: none; } }
+
+/* 2) Sobre mí: encabezados apilados y del mismo tamaño */
+#layer-sobre .about-stage > .about-intro { grid-template-columns: minmax(0, 1fr); gap: .5rem; }
+#layer-sobre .about-stage > .about-intro .about-index { padding-top: 0; }
+#layer-sobre .about-contact .about-intro .about-index {
+  font-size: clamp(.78rem, .95vw, .92rem);
+  letter-spacing: .22em;
+  padding-top: 0;
+}
+#layer-sobre .about-contact .about-intro .accent-line span {
+  font-size: clamp(1.05rem, 1.6vw, 1.45rem);
+  letter-spacing: .2em;
+}
+
+/* 3) cabecera de TabCuart = mismo ancho que intro / proceso / libros */
+#layer-TabCuart .section-header--media {
+  width: var(--tc-w);
+  max-width: var(--tc-w);
+  margin-left: calc(50% - var(--tc-w) / 2);
+  margin-right: 0;
+  align-self: auto;
+}
+@media (max-width: 640px) { #layer-TabCuart .section-header--media { margin-left: 0; } }
+
+
+/* =========================================================
+   AJUSTES (ronda 5)
+   1) "02 / Contacto" + "Contacto": alineados a la izquierda, como "01 / IDENTIDAD" + "El Artista"
+   2) Programas: banner de progreso estilo juego de terror (sin números)
+========================================================= */
+
+/* 1) Contacto a la izquierda */
+#layer-sobre .about-contact .about-intro { justify-items: start; text-align: left; gap: .5rem; }
+#layer-sobre .about-contact .about-intro-main { width: 100%; }
+#layer-sobre .about-contact .accent-line { justify-content: flex-start; }
+#layer-sobre .about-contact .section-divider { margin-inline: 0; }
+
+/* 2) Barra de vida / cordura: marco oscuro, tramos de sangre, goteo en la punta */
+.tool-pct { display: none; }
+.ab-tools .tool-card { padding-bottom: .85rem; }
+.tool-info { gap: .35rem; }
+.tool-pips {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(10, 1fr);
+  gap: 3px;
+  padding: 4px 6px;
+  margin: 0 8px 7px;                       /* margen inferior = espacio para el goteo */
+  border-radius: 3px;
+  background:
+    repeating-linear-gradient(90deg, rgba(0,0,0,.0) 0 18px, rgba(0,0,0,.35) 18px 19px),
+    linear-gradient(180deg, #060202, #120505);
+  border: 1px solid color-mix(in srgb, var(--t, #b51620) 40%, #1a0a0a);
+  box-shadow:
+    inset 0 2px 6px rgba(0,0,0,.9),
+    0 0 0 1px rgba(0,0,0,.8),
+    0 0 14px color-mix(in srgb, var(--t, #b51620) 18%, transparent);
+}
+/* remates en rombo a los extremos, como un marco de HUD */
+.tool-pips::before,
+.tool-pips::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  width: 9px; height: 9px;
+  rotate: 45deg;
+  translate: 0 -50%;
+  background: #120505;
+  border: 1px solid color-mix(in srgb, var(--t, #b51620) 75%, #000);
+  box-shadow: 0 0 8px color-mix(in srgb, var(--t, #b51620) 55%, transparent);
+}
+.tool-pips::before { left: -8px; }
+.tool-pips::after  { right: -8px; }
+
+.tool-pips i {
+  position: relative;
+  height: 10px;
+  border-radius: 1px;
+  transform: none;
+  background: rgba(120, 20, 24, .14);
+  box-shadow: inset 0 0 0 1px rgba(255,255,255,.03);
+}
+.tool-pips i.on {
+  background:
+    linear-gradient(180deg, rgba(255,255,255,.28) 0 28%, transparent 30%),
+    repeating-linear-gradient(115deg, rgba(0,0,0,.18) 0 2px, transparent 2px 5px),
+    linear-gradient(180deg, color-mix(in srgb, var(--t, #b51620) 80%, #fff), color-mix(in srgb, var(--t, #b51620) 70%, #000));
+  box-shadow: 0 0 9px color-mix(in srgb, var(--t, #b51620) 70%, transparent), inset 0 -2px 3px rgba(0,0,0,.45);
+  animation: pipBlood .45s ease both;
+}
+@keyframes pipBlood { from { opacity: 0; filter: brightness(2.2); } to { opacity: 1; filter: none; } }
+
+/* gota que cuelga del último tramo lleno */
+.tool-pips i.on:not(:has(+ i.on))::after {
+  content: '';
+  position: absolute;
+  left: 50%; top: 100%;
+  width: 4px; height: 9px;
+  margin-left: -2px;
+  border-radius: 0 0 4px 4px / 0 0 6px 6px;
+  background: linear-gradient(180deg, color-mix(in srgb, var(--t, #b51620) 70%, #000), var(--t, #b51620));
+  transform-origin: top center;
+  animation: bloodDrip 2.8s ease-in-out infinite;
+}
+@keyframes bloodDrip {
+  0%, 20% { transform: scaleY(.35); opacity: .9; }
+  70%     { transform: scaleY(1);   opacity: 1; }
+  100%    { transform: scaleY(1.25) translateY(3px); opacity: 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .tool-pips i.on, .tool-pips i.on::after { animation: none !important; }
+}
+
+
+/* Contacto: solo "Hablemos de tu proyecto" (y su línea) centrado; el resto del encabezado queda a la izquierda */
+#layer-sobre .about-contact .about-intro-main .section-title { text-align: center; width: 100%; }
+#layer-sobre .about-contact .about-intro-main .section-title em { display: block; }
+#layer-sobre .about-contact .about-intro-main .section-divider { margin-inline: auto; }
+
+/* Contacto: el título se centra respecto a TODO el bloque (antes solo respecto a una columna de 900px) */
+#layer-sobre .about-contact .about-intro,
+#layer-sobre .about-contact .about-intro-main { width: 100%; max-width: none; justify-self: stretch; }
+#layer-sobre .about-contact .about-intro-main .section-title {
+  display: block;
+  margin-inline: 0;
+  padding-inline: .08em 0;          /* compensa el espaciado entre letras para un centrado óptico */
+  text-align: center;
+}
+#layer-sobre .about-contact .about-intro-main .section-title em {
+  display: block;
+  margin-left: 0;
+  text-align: center;
+}
+
+/* Contacto: "Hablemos de tu proyecto" en UNA sola línea */
+#layer-sobre .about-contact .about-intro-main .section-title {
+  white-space: nowrap;
+  font-size: clamp(2.2rem, 4.2vw, 4.2rem);
+  line-height: 1.15;
+}
+#layer-sobre .about-contact .about-intro-main .section-title em {
+  display: inline;
+  margin-left: .3em;
+}
+@media (max-width: 640px) {
+  #layer-sobre .about-contact .about-intro-main .section-title { white-space: normal; font-size: clamp(1.9rem, 9vw, 2.6rem); }
+}
+
+
+/* =========================================================
+   CARRUSEL 3D: menos alto vacío
+   El círculo mide ahora casi lo mismo que las tarjetas, así que ya no sobran ~400 px negros
+   arriba y abajo. El centro (--wheel-cy) queda a la mitad exacta del espacio.
+   CAMBIAR AQUÍ: la altura de cada tamaño de pantalla (height / min-height).
+========================================================= */
+.works-wheel { height: 700px; min-height: 660px; margin: .5rem 0 3rem; }
+@media (max-width: 1100px) { .works-wheel { height: 600px; min-height: 580px; } }
+@media (max-width: 900px)  { .works-wheel { height: 560px; min-height: 540px; } }
+@media (max-width: 600px)  { .works-wheel { height: 470px; min-height: 450px; } }

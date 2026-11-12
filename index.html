@@ -33,7 +33,8 @@
 >
 
 <!-- Hoja de estilos principal -->
-<link rel="stylesheet" href="styles.css?v=20261105b">
+<link rel="preload" as="image" href="./assets/heart/S1.png" fetchpriority="high">
+<link rel="stylesheet" href="styles.css?v=20261112a">
 
 </head>
 
@@ -58,9 +59,56 @@
 <div class="cursor" id="cursor"></div>
 <div class="cursor-ring" id="cursorRing"></div>
 
+<!-- Señal "hay más abajo" (grotesca). Aparece solo cuando la capa abierta tiene contenido por debajo.
+     CSS: .scroll-cue (styles.css, "SEÑAL DE SCROLL")  |  JS: IIFE "SEÑAL DE SCROLL" al final de script.js -->
+<button type="button" class="scroll-cue" id="scrollCue" aria-label="Hay más contenido: desplazarse hacia abajo" tabindex="-1">
+  <svg class="sc-eye" viewBox="0 0 64 64" aria-hidden="true" focusable="false">
+    <defs>
+      <radialGradient id="scSclera" cx="50%" cy="50%" r="60%">
+        <stop offset="0" stop-color="#4a1410"/><stop offset=".6" stop-color="#1b0607"/><stop offset="1" stop-color="#050102"/>
+      </radialGradient>
+      <radialGradient id="scIris" cx="50%" cy="50%" r="55%">
+        <stop offset="0" stop-color="#ffd23a"/><stop offset=".35" stop-color="#ff5a14"/><stop offset=".75" stop-color="#a30d12"/><stop offset="1" stop-color="#1a0204"/>
+      </radialGradient>
+      <clipPath id="scEyeClip"><path d="M1 22 Q32 -8 63 22 Q32 52 1 22Z"/></clipPath>
+    </defs>
+    <!-- espinas alrededor del párpado -->
+    <g fill="#e3262e" fill-opacity=".85" class="sc-thorns">
+      <path d="M12 12 L8 4 L17 9Z M22 7.5 L19 -1 L27 5.5Z M32 5 L32 -4 L36 4.5Z M42 7.5 L45 -1 L38 5.5Z M52 12 L56 4 L47 9Z"/>
+      <path d="M12 33 L8 41 L17 36Z M23 38 L21 46 L28 40Z M41 38 L43 46 L36 40Z M52 33 L56 41 L47 36Z"/>
+    </g>
+    <path d="M1 22 Q32 -8 63 22 Q32 52 1 22Z" fill="url(#scSclera)" stroke="#e3262e" stroke-width="1.8" stroke-linejoin="round"/>
+    <g clip-path="url(#scEyeClip)">
+      <!-- venas inyectadas: laten -->
+      <g class="sc-veins" fill="none" stroke="#ff2a2a" stroke-linecap="round">
+        <path stroke-width="1.1" d="M1 22 L14 20 L22 22 M7 21.5 L11 14 M10 21 L13 29 M14 20 L19 12 M16 21 L18 30"/>
+        <path stroke-width="1.1" d="M63 22 L50 20 L42 22 M57 21.5 L53 14 M54 21 L51 29 M50 20 L45 12 M48 21 L46 30"/>
+        <path stroke-width=".7" d="M20 22 L23 17 L26 19 M44 22 L41 17 L38 19 M22 22 L25 27 M42 22 L39 27 M30 9 L31 14 M35 9 L34 14 M29 36 L31 31 M36 36 L34 31"/>
+      </g>
+      <g class="sc-iris-look">
+        <circle cx="32" cy="22" r="11.5" fill="url(#scIris)"/>
+        <!-- fibras del iris -->
+        <g stroke="#2a0204" stroke-opacity=".7" stroke-width=".6" stroke-linecap="round">
+          <path d="M32 22 L32 11 M32 22 L40 14 M32 22 L43 22 M32 22 L40 30 M32 22 L32 33 M32 22 L24 30 M32 22 L21 22 M32 22 L24 14"/>
+        </g>
+        <circle cx="32" cy="22" r="11.5" fill="none" stroke="#050102" stroke-width="1.6"/>
+        <ellipse class="sc-pupil" cx="32" cy="22" rx="2.3" ry="10" fill="#000"/>
+        <circle cx="36" cy="16.5" r="1.5" fill="#fff" fill-opacity=".75"/>
+      </g>
+    </g>
+    <path class="sc-lid" clip-path="url(#scEyeClip)" d="M0 -4 H64 V22 Q32 30 0 22Z"/>
+    <path d="M1 22 Q32 -8 63 22" fill="none" stroke="#ff4a3a" stroke-width=".8" stroke-opacity=".6"/>
+    <!-- sangre que gotea -->
+    <path class="sc-tear" d="M23 40 C21 44 20 46.5 23 49 C26 46.5 25 44 23 40Z"/>
+    <path class="sc-tear sc-tear--b" d="M32 44 C30 49 29 52 32 55 C35 52 34 49 32 44Z"/>
+    <path class="sc-tear sc-tear--c" d="M42 39 C40.5 42.5 39.5 44.5 42 46.5 C44.5 44.5 43.5 42.5 42 39Z"/>
+  </svg>
+  <svg class="sc-arrow" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 5 L12 12 L19 5"/><path d="M5 12 L12 19 L19 12"/></svg>
+</button>
+
 <!-- Botón para cerrar la capa abierta. CSS: .btn-back  |  JS: closeLayer() -->
-<button class="btn-back" id="backBtn" onclick="closeLayer()">
-  ← Volver
+<button type="button" class="btn-back" id="backBtn" onclick="closeLayer()">
+  <span class="bb-arrow" aria-hidden="true">←</span><span class="bb-txt">Volver</span>
 </button>
 
 
@@ -72,6 +120,12 @@
 <main id="heartStage">
     <!-- Burbujas decorativas. CSS: .bubble-field span -->
     <div class="bubble-field" aria-hidden="true">
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
       <span></span>
       <span></span>
       <span></span>
@@ -127,7 +181,7 @@
 
     <!-- EL CORAZÓN (JS: #heartAnim y #heartFrame) -->
     <div class="heart-anim" id="heartAnim" role="button" tabindex="0" aria-label="Sobre mí — abrir" data-zone="sobre">
-      <img id="heartFrame" class="heart-frame-img" src="./assets/heart/S1.png" alt="">
+      <img id="heartFrame" class="heart-frame-img" src="./assets/heart/S1.png" alt="" fetchpriority="high" decoding="async">
       <video id="heartVideo" class="heart-video" muted loop playsinline style="display:none;"></video>
       <div class="heart-fallback" id="heartFallback">
         <!-- Corazón de respaldo. JS lo oculta al iniciar (initHeart) -->
@@ -142,26 +196,26 @@
         </svg>
       </div>
       <!-- ÚNICO "Sobre mí" de la página principal (siempre visible sobre el corazón) -->
-      <span class="heart-center-label">Sobre mí</span>
+      <span class="heart-center-label">¡Sobre mí!</span>
     </div>
 
     <!-- HOTSPOTS = etiquetas anatómicas. JS: lee data-zone para abrir layer-<zona> y dibuja la línea desde el corazón hasta .hotspot-dot (layoutAnatomy) -->
-    <button class="hotspot zone-TabCuart" data-side="left" data-zone="TabCuart" aria-label="TabCuart — galería de ilustración">
+    <button type="button" class="hotspot zone-TabCuart" data-side="left" data-zone="TabCuart" aria-label="TabCuart — galería de ilustración">
       <span class="hotspot-dot"></span>
       <span class="hotspot-label">TabCuart</span>
       <span class="hotspot-desc">Portafolio y galería de ilustración por técnicas.</span>
     </button>
-    <button class="hotspot zone-estudios" data-side="right" data-zone="estudios" aria-label="TabLab — formación y talleres">
+    <button type="button" class="hotspot zone-estudios" data-side="right" data-zone="estudios" aria-label="TabLab — formación y talleres">
       <span class="hotspot-dot"></span>
       <span class="hotspot-label">TabLab</span>
       <span class="hotspot-desc">Formación, talleres y proceso pedagógico.</span>
     </button>
-    <button class="hotspot zone-proyectos" data-side="left" data-zone="proyectos" aria-label="TabGame — Gehenna, juego de cartas">
+    <button type="button" class="hotspot zone-proyectos" data-side="left" data-zone="proyectos" aria-label="TabGame — Gehenna, juego de cartas">
       <span class="hotspot-dot"></span>
       <span class="hotspot-label">TabGame</span>
       <span class="hotspot-desc">Gehenna: La Corte del Juicio.</span>
     </button>
-    <button class="hotspot zone-contacto" data-side="right" data-zone="contacto" aria-label="TabCuario — peces, plantas y ecosistemas">
+    <button type="button" class="hotspot zone-contacto" data-side="right" data-zone="contacto" aria-label="TabCuario — peces, plantas y ecosistemas">
       <span class="hotspot-dot"></span>
       <span class="hotspot-label">TabCuario</span>
       <span class="hotspot-desc">Peces, plantas y ecosistemas acuáticos.</span>
@@ -205,7 +259,9 @@
 <section class="layer" id="layer-sobre" data-zone="sobre" aria-hidden="true">
   <div class="layer-inner">
 
-    <div class="about-intro reveal">
+    <div class="about-stage reveal">
+
+    <div class="about-intro">
       <div class="about-index">01 / IDENTIDAD</div>
       <div class="about-intro-main">
         <div class="accent-line"><span>El Artista</span></div>
@@ -214,7 +270,7 @@
       </div>
     </div>
 
-    <div class="about-stage reveal">
+
 
       <div class="about-photo-column">
         <div class="about-photo-card">
@@ -250,11 +306,7 @@
     <div>Sobre <span class="about-red">mí</span></div>
 
     <p class="about-text">
-      Ilustrador y creador multidisciplinario. Mi trabajo combina
-      ilustración, personajes, naturaleza, experimentación gráfica
-      y diferentes técnicas. Me interesa explorar lo orgánico,
-      las texturas, las formas y la fantasía para desarrollar
-      imágenes, personajes y universos propios.
+      Hola, soy Tabcuar, ilustrador y creador multidisciplinario. Mi trabajo combina ilustración, naturaleza, experimentación gráfica y diversas técnicas. Me interesa explorar lo orgánico, las texturas, las formas y la fantasía para desarrollar imágenes, personajes y universos propios.
     </p>
   </div>
 
@@ -269,26 +321,51 @@
         <div class="tool-card">
           <span class="tool-number">01</span>
           <div class="tool-icon">Ps</div>
-          <div>
-            <strong>Adobe Photoshop</strong>
+          <div class="tool-info">
+            <div class="tool-row">
+              <strong>Adobe Photoshop</strong>
+              <span class="tool-pct" data-level="8">8/10</span>
+            </div>
+            <div class="tool-pips" role="img" aria-label="Nivel 8 de 10 en Adobe Photoshop"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i></i><i></i></div>
           </div>
         </div>
 
         <div class="tool-card">
           <span class="tool-number">02</span>
           <div class="tool-icon">Ae</div>
-          <div>
-            <strong>Adobe After Effects</strong>
+          <div class="tool-info">
+            <div class="tool-row">
+              <strong>Adobe After Effects</strong>
+              <span class="tool-pct" data-level="6">6/10</span>
+            </div>
+            <div class="tool-pips" role="img" aria-label="Nivel 6 de 10 en Adobe After Effects"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i></i><i></i><i></i><i></i></div>
           </div>
         </div>
 
         <div class="tool-card">
           <span class="tool-number">03</span>
-          <div class="tool-icon">Bl</div>
-          <div>
-            <strong>Blender</strong>
+          <div class="tool-icon">Pr</div>
+          <div class="tool-info">
+            <div class="tool-row">
+              <strong>Adobe Premiere</strong>
+              <span class="tool-pct" data-level="7">7/10</span>
+            </div>
+            <div class="tool-pips" role="img" aria-label="Nivel 7 de 10 en Adobe Premiere"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i></i><i></i><i></i></div>
           </div>
         </div>
+
+        <div class="tool-card">
+          <span class="tool-number">04</span>
+          <div class="tool-icon">Bl</div>
+          <div class="tool-info">
+            <div class="tool-row">
+              <strong>Blender</strong>
+              <span class="tool-pct" data-level="5">5/10</span>
+            </div>
+            <div class="tool-pips" role="img" aria-label="Nivel 5 de 10 en Blender"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i></i><i></i><i></i><i></i><i></i></div>
+          </div>
+        </div>
+
       </div>
     </div>
 
@@ -385,7 +462,7 @@
     </div>
 
     <!-- =====================================================
-         02 / CONTACTO  (movido desde la antigua capa layer-contacto)
+         02 / CONTACTO
          JS: openContact() abre "Sobre mí" y desplaza hasta #sobreContacto
     ====================================================== -->
     <div class="about-contact" id="sobreContacto">
@@ -430,9 +507,7 @@
     </footer>
   </div>
 </section>
-<!-- =========================================
-     6. CAPA: PORTAFOLIO TabCuart  |  id="layer-TabCuart"
-========================================= -->
+
 <!-- =========================================
      6. CAPA: PORTAFOLIO TabCuart
 ========================================= -->
@@ -458,7 +533,7 @@
 
         <p class="section-desc">
           Un recorrido por las distintas técnicas, procesos y formas de experimentación
-          que hacen parte de mi trabajo como ilustrador y creador.
+          que hacen parte de mi trabajo como ilustrador y creador visual.
         </p>
 
       </div>
@@ -517,7 +592,7 @@
           <span class="technique-info-label">ENFOQUE</span>
 
           <strong id="techniqueFocus">
-            Ilustración multidisciplinaria
+            Ilustración y distintas técnicas
           </strong>
 
         </div>
@@ -544,42 +619,42 @@
 
     <div class="gallery-filter reveal">
 
-      <button class="filter-btn active"
+      <button type="button" class="filter-btn active"
               onclick="filterGallery('all', this)">
         Todas
       </button>
 
-      <button class="filter-btn"
+      <button type="button" class="filter-btn"
               onclick="filterGallery('digital', this)">
         Ilustración Digital
       </button>
 
-      <button class="filter-btn"
+      <button type="button" class="filter-btn"
               onclick="filterGallery('tradicional', this)">
         Ilustración Análoga
       </button>
 
-      <button class="filter-btn"
+      <button type="button" class="filter-btn"
               onclick="filterGallery('lino', this)">
         Grabado
       </button>
 
-      <button class="filter-btn"
+      <button type="button" class="filter-btn"
               onclick="filterGallery('escultura', this)">
         Escultura
       </button>
 
-      <button class="filter-btn"
+      <button type="button" class="filter-btn"
               onclick="filterGallery('animacion', this)">
         Animación
       </button>
 
-      <button class="filter-btn"
+      <button type="button" class="filter-btn"
               onclick="filterGallery('3d', this)">
         3D
       </button>
 
-      <button class="filter-btn"
+      <button type="button" class="filter-btn"
               onclick="filterGallery('tattoo', this)">
         Tattoo
       </button>
@@ -635,7 +710,7 @@
            data-title="Ilustración Digital"
            data-year="2026">
 
-        <img src="Img/Dj1.png"
+        <img src="Img/Digital/Desprendimiento.png"
              class="uploaded click-img"
              alt="Ilustración digital 01">
 
@@ -656,15 +731,15 @@
       <div class="gallery-item"
            data-cat="digital"
            data-title="Ilustración Digital"
-           data-year="2026">
+           data-year="2024">
 
-        <img src="Img/Dj2.png"
+        <img src="Img/Digital/Melancolia.png"
              class="uploaded click-img"
-             alt="Ilustración digital 02">
+             alt="Ilustración digital 09">
 
         <div class="gallery-overlay">
 
-          <span class="gallery-number">02</span>
+          <span class="gallery-number">09</span>
 
           <div>
             <h4>Melancolía</h4>
@@ -681,7 +756,120 @@
            data-title="Ilustración Digital"
            data-year="2026">
 
-        <img src="Img/Dj3.png"
+        <img src="Img/Digital/Deus.png"
+             class="uploaded click-img"
+             alt="Ilustración digital 08">
+
+        <div class="gallery-overlay">
+
+          <span class="gallery-number">08</span>
+
+          <div>
+            <h4>Deus</h4>
+            <p>Obra · 2026</p>
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <div class="gallery-item"
+           data-cat="digital"
+           data-title="Ilustración Digital"
+           data-year="2026">
+
+        <img src="Img/Digital/Transformación.png"
+             class="uploaded click-img"
+             alt="Ilustración digital 07">
+
+        <div class="gallery-overlay">
+
+          <span class="gallery-number">07</span>
+
+          <div>
+            <h4>Transformación</h4>
+            <p>Obra · 2026</p>
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <div class="gallery-item"
+           data-cat="digital"
+           data-title="Ilustración Digital"
+           data-year="2026">
+
+        <img src="Img/Digital/Amor entre redes.jpg"
+             class="uploaded click-img"
+             alt="Ilustración digital 06">
+
+        <div class="gallery-overlay">
+
+          <span class="gallery-number">06</span>
+
+          <div>
+            <h4>Amor entre redes</h4>
+            <p>Obra · 2025</p>
+          </div>
+
+        </div>
+
+      </div>
+    
+      <div class="gallery-item"
+           data-cat="digital"
+           data-title="Ilustración Digital"
+           data-year="2026">
+
+        <img src="Img/Digital/Dios y patria.png"
+             class="uploaded click-img"
+             alt="Ilustración digital 05">
+
+        <div class="gallery-overlay">
+
+          <span class="gallery-number">05</span>
+
+          <div>
+            <h4>Dios Y Patria?</h4>
+            <p>Obra · 2026</p>
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <div class="gallery-item"
+           data-cat="digital"
+           data-title="Ilustración Digital"
+           data-year="2026">
+
+        <img src="Img/Digital/El fin.jpg"
+             class="uploaded click-img"
+             alt="Ilustración digital 04">
+
+        <div class="gallery-overlay">
+
+          <span class="gallery-number">04</span>
+
+          <div>
+            <h4>El Fin</h4>
+            <p>Obra · 2024</p>
+          </div>
+
+        </div>
+
+      </div>
+
+      <div class="gallery-item"
+           data-cat="digital"
+           data-title="Ilustración Digital"
+           data-year="2026">
+
+        <img src="Img/Digital/Redención.png"
              class="uploaded click-img"
              alt="Ilustración digital 03">
 
@@ -690,15 +878,35 @@
           <span class="gallery-number">03</span>
 
           <div>
-            <h4>Ilustración Digital</h4>
-            <p>Obra · 2026</p>
+            <h4>Redención</h4>
+            <p>Obra · 2024</p>
           </div>
 
         </div>
 
       </div>
 
-    
+      <div class="gallery-item"
+           data-cat="digital"
+           data-title="Ilustración Digital"
+           data-year="2026">
+
+        <img src="Img/Digital/Fe.png"
+             class="uploaded click-img"
+             alt="Ilustración digital 02">
+
+        <div class="gallery-overlay">
+
+          <span class="gallery-number">02</span>
+
+          <div>
+            <h4>Fe</h4>
+            <p>Obra · 2026</p>
+          </div>
+
+        </div>
+
+      </div>
 
       <!-- =====================================
            ANÁLOGA
@@ -709,7 +917,29 @@
            data-title="Ilustración Análoga"
            data-year="2024">
 
-        <img src="Img/Arbol.png"
+        <img src="Img/Analogo/Gato.jpg"
+             class="uploaded click-img"
+             alt="Ilustración análoga 05">
+
+        <div class="gallery-overlay">
+
+          <span class="gallery-number">05</span>
+
+          <div>
+            <h4>Gato</h4>
+            <p>Obra · 2021</p>
+          </div>
+
+        </div>
+
+      </div>
+      
+      <div class="gallery-item"
+           data-cat="tradicional"
+           data-title="Ilustración Análoga"
+           data-year="2026">
+
+        <img src="Img/Analogo/Arbol.png"
              class="uploaded click-img"
              alt="Ilustración análoga 01">
 
@@ -718,7 +948,7 @@
           <span class="gallery-number">01</span>
 
           <div>
-            <h4>Ilustración Análoga</h4>
+            <h4>Arbol</h4>
             <p>Obra · 2026</p>
           </div>
 
@@ -732,30 +962,7 @@
            data-title="Ilustración Análoga"
            data-year="2024">
 
-        <img src="Img/Pt2.jpg"
-             class="uploaded click-img"
-             alt="Ilustración análoga 02">
-
-        <div class="gallery-overlay">
-
-          <span class="gallery-number">02</span>
-
-          <div>
-            <h4>Ilustración Análoga</h4>
-            <p>Obra · 2024</p>
-          </div>
-
-        </div>
-
-      </div>
-
-
-      <div class="gallery-item"
-           data-cat="tradicional"
-           data-title="Ilustración Análoga"
-           data-year="2024">
-
-        <img src="Img/Pt1.jpg"
+        <img src="Img/Analogo/Niño.jpg"
              class="uploaded click-img"
              alt="Ilustración análoga 03">
 
@@ -764,7 +971,7 @@
           <span class="gallery-number">03</span>
 
           <div>
-            <h4>Ilustración Análoga</h4>
+            <h4>Agapornis</h4>
             <p>Obra · 2024</p>
           </div>
 
@@ -777,17 +984,240 @@
            data-title="Ilustración Análoga"
            data-year="2024">
 
-        <img src="Img/Pt3.jpg"
+        <img src="Img/Analogo/Planta.jpg"
              class="uploaded click-img"
-             alt="Ilustración análoga 03">
+             alt="Ilustración análoga 04">
 
         <div class="gallery-overlay">
 
-          <span class="gallery-number">03</span>
+          <span class="gallery-number">04</span>
 
           <div>
-            <h4>Ilustración Análoga</h4>
+            <h4>Planta</h4>
             <p>Obra · 2024</p>
+          </div>
+
+        </div>
+
+      </div>
+
+      <div class="gallery-item"
+           data-cat="tradicional"
+           data-title="Ilustración Análoga"
+           data-year="2024">
+
+        <img src="Img/Analogo/Aura.jpg"
+             class="uploaded click-img"
+             alt="Ilustración análoga 05">
+
+        <div class="gallery-overlay">
+
+          <span class="gallery-number">05</span>
+
+          <div>
+            <h4>Aura</h4>
+            <p>Obra · 2024</p>
+          </div>
+
+        </div>
+
+      </div>
+
+      <div class="gallery-item"
+           data-cat="tradicional"
+           data-title="Ilustración Análoga"
+           data-year="2024">
+
+        <img src="Img/Analogo/Tb1.png"
+             class="uploaded click-img"
+             alt="Ilustración análoga 05">
+
+        <div class="gallery-overlay">
+
+          <span class="gallery-number">05</span>
+
+          <div>
+            <h4>TBC1</h4>
+            <p>Obra · 2020</p>
+          </div>
+
+        </div>
+
+      </div>
+
+            <div class="gallery-item"
+           data-cat="tradicional"
+           data-title="Ilustración Análoga"
+           data-year="2024">
+
+        <img src="Img/Analogo/She.jpg"
+             class="uploaded click-img"
+             alt="Ilustración análoga 02">
+
+        <div class="gallery-overlay">
+
+          <span class="gallery-number">02</span>
+
+          <div>
+            <h4>She</h4>
+            <p>Obra · 2023</p>
+          </div>
+
+        </div>
+
+      </div>
+
+       <div class="gallery-item"
+           data-cat="tradicional"
+           data-title="Ilustración Análoga"
+           data-year="2024">
+
+        <img src="Img/Analogo/Autoconsumo.jpg"
+             class="uploaded click-img"
+             alt="Ilustración análoga 02">
+
+        <div class="gallery-overlay">
+
+          <span class="gallery-number">02</span>
+
+          <div>
+            <h4>Autoconsumo</h4>
+            <p>Obra · 2024</p>
+          </div>
+
+        </div>
+
+      </div>
+
+      <div class="gallery-item"
+           data-cat="tradicional"
+           data-title="Ilustración Análoga"
+           data-year="2024">
+
+        <img src="Img/Analogo/Tb2.png"
+             class="uploaded click-img"
+             alt="Ilustración análoga 05">
+
+        <div class="gallery-overlay">
+
+          <span class="gallery-number">05</span>
+
+          <div>
+            <h4>TBC2</h4>
+            <p>Obra · 2020</p>
+          </div>
+
+        </div>
+
+      </div>
+
+      <div class="gallery-item"
+           data-cat="tradicional"
+           data-title="Ilustración Análoga"
+           data-year="2024">
+
+        <img src="Img/Analogo/Betta.jpg"
+             class="uploaded click-img"
+             alt="Ilustración análoga 05">
+
+        <div class="gallery-overlay">
+
+          <span class="gallery-number">05</span>
+
+          <div>
+            <h4>Betta</h4>
+            <p>Obra · 2024</p>
+          </div>
+
+        </div>
+
+      </div>
+
+         <div class="gallery-item"
+           data-cat="tradicional"
+           data-title="Ilustración Análoga"
+           data-year="2024">
+
+        <img src="Img/Analogo/Flor.jpg"
+             class="uploaded click-img"
+             alt="Ilustración análoga 05">
+
+        <div class="gallery-overlay">
+
+          <span class="gallery-number">05</span>
+
+          <div>
+            <h4>Rosa</h4>
+            <p>Obra · 2020</p>
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <div class="gallery-item"
+           data-cat="tradicional"
+           data-title="Ilustración Análoga"
+           data-year="2024">
+
+        <img src="Img/Analogo/Libelula.jpg"
+             class="uploaded click-img"
+             alt="Ilustración análoga 05">
+
+        <div class="gallery-overlay">
+
+          <span class="gallery-number">05</span>
+
+          <div>
+            <h4>Llibélula</h4>
+            <p>Obra · 2020</p>
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <div class="gallery-item"
+           data-cat="tradicional"
+           data-title="Ilustración Análoga"
+           data-year="2024">
+
+        <img src="Img/Analogo/Tortuga.jpg"
+             class="uploaded click-img"
+             alt="Ilustración análoga 05">
+
+        <div class="gallery-overlay">
+
+          <span class="gallery-number">05</span>
+
+          <div>
+            <h4>Morrocoy</h4>
+            <p>Obra · 2024</p>
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <div class="gallery-item"
+           data-cat="tradicional"
+           data-title="Ilustración Análoga"
+           data-year="2024">
+
+        <img src="Img/Analogo/Escarabajo.jpg"
+             class="uploaded click-img"
+             alt="Ilustración análoga 05">
+
+        <div class="gallery-overlay">
+
+          <span class="gallery-number">05</span>
+
+          <div>
+            <h4>Betta</h4>
+            <p>Obra · 2020</p>
           </div>
 
         </div>
@@ -803,7 +1233,7 @@
            data-title="Grabado"
            data-year="2025">
 
-        <img src="Img/lino1.jpg"
+        <img src="Img/Lino/Corazon.jpg"
              class="uploaded click-img"
              alt="Grabado 01">
 
@@ -812,8 +1242,8 @@
           <span class="gallery-number">01</span>
 
           <div>
-            <h4>Grabado</h4>
-            <p>Obra · 2025</p>
+            <h4>Corazon</h4>
+            <p>Obra · 2026</p>
           </div>
 
         </div>
@@ -996,8 +1426,57 @@
 
 </div>
 
+<div class="gallery-item"
+     data-cat="animacion"
+     data-title="Animación"
+     data-year="2026">
 
+  <video class="uploaded click-video"
+         src="Video/AnmC.mp4"
+         muted
+         loop
+         playsinline
+         preload="metadata">
+  </video>
 
+  <div class="gallery-overlay">
+
+    <span class="gallery-number">02</span>
+
+    <div>
+      <h4>Animación</h4>
+      <p>Obra · 2026</p>
+    </div>
+
+  </div>
+
+</div>
+
+<div class="gallery-item"
+     data-cat="animacion"
+     data-title="Animación"
+     data-year="2026">
+
+  <video class="uploaded click-video"
+         src="Video/Flor.mp4"
+         muted
+         loop
+         playsinline
+         preload="metadata">
+  </video>
+
+  <div class="gallery-overlay">
+
+    <span class="gallery-number">02</span>
+
+    <div>
+      <h4>Animación</h4>
+      <p>Obra · 2026</p>
+    </div>
+
+  </div>
+
+</div>
 
       <!-- =====================================
            3D
@@ -1086,7 +1565,7 @@
            data-title="Tattoo"
            data-year="2025">
 
-        <img src="Img/concept1.jpg"
+        <img src="Img/Tattoo/Mujermar.jpg"
              class="uploaded click-img"
              alt="Tattoo 01">
 
@@ -1096,7 +1575,7 @@
 
           <div>
             <h4>Tattoo</h4>
-            <p>Obra · 2025</p>
+            <p>Obra · 2023</p>
           </div>
 
         </div>
@@ -1109,7 +1588,7 @@
            data-title="Tattoo"
            data-year="2025">
 
-        <img src="Img/concept2.jpg"
+        <img src="Img/Tattoo/Universo.png"
              class="uploaded click-img"
              alt="Tattoo 02">
 
@@ -1119,7 +1598,73 @@
 
           <div>
             <h4>Tattoo</h4>
-            <p>Obra · 2025</p>
+            <p>Obra · 2021</p>
+          </div>
+
+        </div>
+
+      </div>
+
+      <div class="gallery-item"
+           data-cat="tattoo"
+           data-title="Tattoo"
+           data-year="2025">
+
+        <img src="Img/Tattoo/Omega.jpg"
+             class="uploaded click-img"
+             alt="Tattoo 02">
+
+        <div class="gallery-overlay">
+
+          <span class="gallery-number">02</span>
+
+          <div>
+            <h4>Tattoo</h4>
+            <p>Obra · 2021</p>
+          </div>
+
+        </div>
+
+      </div>
+
+      <div class="gallery-item"
+           data-cat="tattoo"
+           data-title="Tattoo"
+           data-year="2025">
+
+        <img src="Img/Tattoo//Madre e Hijo.png"
+             class="uploaded click-img"
+             alt="Tattoo 02">
+
+        <div class="gallery-overlay">
+
+          <span class="gallery-number">02</span>
+
+          <div>
+            <h4>Tattoo</h4>
+            <p>Obra · 2021</p>
+          </div>
+
+        </div>
+
+      </div>
+
+      <div class="gallery-item"
+           data-cat="tattoo"
+           data-title="Tattoo"
+           data-year="2025">
+
+        <img src="Img/Tattoo//Mariposa.jpg"
+             class="uploaded click-img"
+             alt="Tattoo 02">
+
+        <div class="gallery-overlay">
+
+          <span class="gallery-number">02</span>
+
+          <div>
+            <h4>Tattoo</h4>
+            <p>Obra · 2021</p>
           </div>
 
         </div>
@@ -1132,7 +1677,7 @@
            data-title="Tattoo"
            data-year="2025">
 
-        <img src="Img/concept3.jpg"
+        <img src="Img/Tattoo/Susana.jpg"
              class="uploaded click-img"
              alt="Tattoo 03">
 
@@ -1277,42 +1822,43 @@
             </div>
           </section>
 
-          <!-- BLOQUE DERECHO · RESULTADO FINAL -->
-          <section class="pv-final reveal" aria-label="Resultado final">
-            <header class="pv-bar">
-              <span class="pv-bar-kicker">Resultado final</span>
-              <span class="pv-bar-count" id="pvFinalCount" aria-hidden="true">Etapa 4</span>
-            </header>
+          <div class="pv-right">
+            <!-- BLOQUE DERECHO · RESULTADO FINAL -->
+            <section class="pv-final reveal" aria-label="Resultado final">
+              <header class="pv-bar">
+                <span class="pv-bar-kicker">Resultado final</span>
+                <span class="pv-bar-count" id="pvFinalCount" aria-hidden="true">Etapa 4</span>
+              </header>
 
-            <div class="pv-frame pv-frame--video is-paused" role="button" tabindex="0" aria-label="Resultado final: reproducir o pausar la animación">
-              <span class="pv-chip"><b>04</b> Resultado final</span>
-              <video id="processVideo3" src="Video/0001_1.mp4" muted loop playsinline preload="metadata"></video>
-              <img id="processFinalImg" class="pv-final-img" alt="" hidden decoding="async">
+              <div class="pv-frame pv-frame--video is-paused" role="button" tabindex="0" aria-label="Resultado final: reproducir o pausar la animación">
+                <span class="pv-chip"><b>04</b> Resultado final</span>
+                <video id="processVideo3" src="Video/0001_1.mp4" muted loop playsinline preload="metadata"></video>
+                <img id="processFinalImg" class="pv-final-img" alt="" hidden decoding="async">
+              </div>
+
+              <div class="pv-caption">
+                <p class="pv-stage-name"><b>04</b><span id="processStep3Title">Resultado final</span></p>
+                <p class="pv-stage-text" id="processStep3Text">Pieza final después del proceso de exploración y construcción.</p>
+              </div>
+            </section>
+
+          <div class="technique-extra reveal">
+
+            <div class="technique-extra-box">
+
+              <span class="technique-info-label">
+                HERRAMIENTAS / MATERIALES
+              </span>
+
+              <div class="tool-icons" id="techniqueTools"></div>
+
             </div>
 
-            <div class="pv-caption">
-              <p class="pv-stage-name"><b>04</b><span id="processStep3Title">Resultado final</span></p>
-              <p class="pv-stage-text" id="processStep3Text">Pieza final después del proceso de exploración y construcción.</p>
-            </div>
-          </section>
+          </div>
+          </div><!-- /pv-right -->
 
         </div>
       </div><!-- /pv -->
-
-
-      <div class="technique-extra reveal">
-
-        <div class="technique-extra-box">
-
-          <span class="technique-info-label">
-            HERRAMIENTAS / MATERIALES
-          </span>
-
-          <div class="tool-icons" id="techniqueTools"></div>
-
-        </div>
-
-      </div>
 
     </section>
 <!-- =========================================
@@ -1621,9 +2167,9 @@
 
         <!-- Pestañas. JS: switchLocalTab(id, boton, clasePanel, prefijo) -->
         <div class="aqua-tabs reveal">
-          <button class="aqua-tab active" onclick="switchLocalTab('peces',this,'aqua-panel','tab-')">Peces</button>
-          <button class="aqua-tab" onclick="switchLocalTab('plantas',this,'aqua-panel','tab-')">Plantas</button>
-          <button class="aqua-tab" onclick="switchLocalTab('curiosos',this,'aqua-panel','tab-')">Datos Curiosos</button>
+          <button type="button" class="aqua-tab active" onclick="switchLocalTab('peces',this,'aqua-panel','tab-')">Peces</button>
+          <button type="button" class="aqua-tab" onclick="switchLocalTab('plantas',this,'aqua-panel','tab-')">Plantas</button>
+          <button type="button" class="aqua-tab" onclick="switchLocalTab('curiosos',this,'aqua-panel','tab-')">Datos Curiosos</button>
         </div>
         <div class="aqua-panel active reveal" id="tab-peces">
           <!-- Cada ficha es editable: cambia nombre, especie, datos y descripción.
@@ -1632,7 +2178,7 @@
             <article class="fish-card">
               <div class="fish-slot">
                 <!-- CAMBIAR AQUÍ LA IMAGEN: reemplaza la ruta de src (ficha 01) -->
-                <img class="uploaded click-img" src="Img/peces/pez-01.jpg" alt="Pez 01" loading="lazy" onerror="this.style.display='none'; this.parentElement.classList.add('is-missing');">
+                <img class="uploaded click-img" src="Img/peces/1.png" alt="Pez 01" loading="lazy" onerror="this.style.display='none'; this.parentElement.classList.add('is-missing');">
               </div>
               <div class="fish-info">
                 <span class="fish-index">Ficha 01</span>
@@ -1649,7 +2195,7 @@
             <article class="fish-card">
               <div class="fish-slot">
                 <!-- CAMBIAR AQUÍ LA IMAGEN: reemplaza la ruta de src (ficha 02) -->
-                <img class="uploaded click-img" src="Img/peces/pez-02.jpg" alt="Pez 02" loading="lazy" onerror="this.style.display='none'; this.parentElement.classList.add('is-missing');">
+                <img class="uploaded click-img" src="Img/peces/2.png" alt="Pez 02" loading="lazy" onerror="this.style.display='none'; this.parentElement.classList.add('is-missing');">
               </div>
               <div class="fish-info">
                 <span class="fish-index">Ficha 02</span>
@@ -1666,7 +2212,7 @@
             <article class="fish-card">
               <div class="fish-slot">
                 <!-- CAMBIAR AQUÍ LA IMAGEN: reemplaza la ruta de src (ficha 03) -->
-                <img class="uploaded click-img" src="Img/peces/pez-03.jpg" alt="Pez 03" loading="lazy" onerror="this.style.display='none'; this.parentElement.classList.add('is-missing');">
+                <img class="uploaded click-img" src="Img/peces/3.png" alt="Pez 03" loading="lazy" onerror="this.style.display='none'; this.parentElement.classList.add('is-missing');">
               </div>
               <div class="fish-info">
                 <span class="fish-index">Ficha 03</span>
@@ -1683,7 +2229,7 @@
             <article class="fish-card">
               <div class="fish-slot">
                 <!-- CAMBIAR AQUÍ LA IMAGEN: reemplaza la ruta de src (ficha 04) -->
-                <img class="uploaded click-img" src="Img/peces/pez-04.jpg" alt="Pez 04" loading="lazy" onerror="this.style.display='none'; this.parentElement.classList.add('is-missing');">
+                <img class="uploaded click-img" src="Img/peces/4.png" alt="Pez 04" loading="lazy" onerror="this.style.display='none'; this.parentElement.classList.add('is-missing');">
               </div>
               <div class="fish-info">
                 <span class="fish-index">Ficha 04</span>
@@ -1700,7 +2246,7 @@
             <article class="fish-card">
               <div class="fish-slot">
                 <!-- CAMBIAR AQUÍ LA IMAGEN: reemplaza la ruta de src (ficha 05) -->
-                <img class="uploaded click-img" src="Img/peces/pez-05.jpg" alt="Pez 05" loading="lazy" onerror="this.style.display='none'; this.parentElement.classList.add('is-missing');">
+                <img class="uploaded click-img" src="Img/peces/5.png" alt="Pez 05" loading="lazy" onerror="this.style.display='none'; this.parentElement.classList.add('is-missing');">
               </div>
               <div class="fish-info">
                 <span class="fish-index">Ficha 05</span>
@@ -1717,7 +2263,7 @@
             <article class="fish-card">
               <div class="fish-slot">
                 <!-- CAMBIAR AQUÍ LA IMAGEN: reemplaza la ruta de src (ficha 06) -->
-                <img class="uploaded click-img" src="Img/peces/pez-06.jpg" alt="Pez 06" loading="lazy" onerror="this.style.display='none'; this.parentElement.classList.add('is-missing');">
+                <img class="uploaded click-img" src="Img/peces/6.png" alt="Pez 06" loading="lazy" onerror="this.style.display='none'; this.parentElement.classList.add('is-missing');">
               </div>
               <div class="fish-info">
                 <span class="fish-index">Ficha 06</span>
@@ -1794,49 +2340,7 @@
               </div>
               <div class="plant-info"><span class="plant-index">02</span><h4 class="plant-name">Nombre de la planta</h4><p class="plant-type">Especie · Tipo</p><p class="plant-desc">Descripción breve (opcional).</p></div>
             </article>
-            <article class="plant-card">
-              <div class="plant-img">
-                <!-- CAMBIAR AQUÍ LA IMAGEN: reemplaza la ruta de src (planta 03) -->
-                <img class="uploaded click-img" src="Img/plantas/planta-03.jpg" alt="Planta 03" loading="lazy" onerror="this.style.display='none'; this.parentElement.classList.add('is-missing');">
-              </div>
-              <div class="plant-info"><span class="plant-index">03</span><h4 class="plant-name">Nombre de la planta</h4><p class="plant-type">Especie · Tipo</p><p class="plant-desc">Descripción breve (opcional).</p></div>
-            </article>
-            <article class="plant-card">
-              <div class="plant-img">
-                <!-- CAMBIAR AQUÍ LA IMAGEN: reemplaza la ruta de src (planta 04) -->
-                <img class="uploaded click-img" src="Img/plantas/planta-04.jpg" alt="Planta 04" loading="lazy" onerror="this.style.display='none'; this.parentElement.classList.add('is-missing');">
-              </div>
-              <div class="plant-info"><span class="plant-index">04</span><h4 class="plant-name">Nombre de la planta</h4><p class="plant-type">Especie · Tipo</p><p class="plant-desc">Descripción breve (opcional).</p></div>
-            </article>
-            <article class="plant-card">
-              <div class="plant-img">
-                <!-- CAMBIAR AQUÍ LA IMAGEN: reemplaza la ruta de src (planta 05) -->
-                <img class="uploaded click-img" src="Img/plantas/planta-05.jpg" alt="Planta 05" loading="lazy" onerror="this.style.display='none'; this.parentElement.classList.add('is-missing');">
-              </div>
-              <div class="plant-info"><span class="plant-index">05</span><h4 class="plant-name">Nombre de la planta</h4><p class="plant-type">Especie · Tipo</p><p class="plant-desc">Descripción breve (opcional).</p></div>
-            </article>
-            <article class="plant-card">
-              <div class="plant-img">
-                <!-- CAMBIAR AQUÍ LA IMAGEN: reemplaza la ruta de src (planta 06) -->
-                <img class="uploaded click-img" src="Img/plantas/planta-06.jpg" alt="Planta 06" loading="lazy" onerror="this.style.display='none'; this.parentElement.classList.add('is-missing');">
-              </div>
-              <div class="plant-info"><span class="plant-index">06</span><h4 class="plant-name">Nombre de la planta</h4><p class="plant-type">Especie · Tipo</p><p class="plant-desc">Descripción breve (opcional).</p></div>
-            </article>
-            <article class="plant-card">
-              <div class="plant-img">
-                <!-- CAMBIAR AQUÍ LA IMAGEN: reemplaza la ruta de src (planta 07) -->
-                <img class="uploaded click-img" src="Img/plantas/planta-07.jpg" alt="Planta 07" loading="lazy" onerror="this.style.display='none'; this.parentElement.classList.add('is-missing');">
-              </div>
-              <div class="plant-info"><span class="plant-index">07</span><h4 class="plant-name">Nombre de la planta</h4><p class="plant-type">Especie · Tipo</p><p class="plant-desc">Descripción breve (opcional).</p></div>
-            </article>
-            <article class="plant-card">
-              <div class="plant-img">
-                <!-- CAMBIAR AQUÍ LA IMAGEN: reemplaza la ruta de src (planta 08) -->
-                <img class="uploaded click-img" src="Img/plantas/planta-08.jpg" alt="Planta 08" loading="lazy" onerror="this.style.display='none'; this.parentElement.classList.add('is-missing');">
-              </div>
-              <div class="plant-info"><span class="plant-index">08</span><h4 class="plant-name">Nombre de la planta</h4><p class="plant-type">Especie · Tipo</p><p class="plant-desc">Descripción breve (opcional).</p></div>
-            </article>
-            </div>
+          </div>
         </div>
         <div class="aqua-panel" id="tab-curiosos">
           <div class="curiosos-grid">
@@ -1906,7 +2410,7 @@
 <!-- =========================================
      11. JAVASCRIPT
 ========================================= -->
-<script src="script.js"></script>
+<script src="script.js?v=20261112a"></script>
 
 </body>
 </html>
