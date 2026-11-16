@@ -970,7 +970,7 @@ section:nth-child(even) {
 
 .hotspot-label {
     font-family: 'RM Albion', serif;
-    font-size: clamp(3.5rem, 6vw, 6rem);
+    font-size: clamp(2.38rem, 4.08vw, 4.08rem);
     font-weight: 400;
     line-height: 1.1;
     letter-spacing: .06em;
@@ -1004,7 +1004,7 @@ section:nth-child(even) {
     top: 100%;
     width: min(330px, 40vw);
     font-family: var(--font-texto);
-    font-size: 1.5rem !important;
+    font-size: 1.275rem !important;
     font-weight: 500;
     line-height: 1.5;
         color: rgba(255,255,255,.82);
@@ -1041,10 +1041,10 @@ section:nth-child(even) {
     .hotspot[data-side="right"] { flex-direction: row-reverse; transform: translate(calc(-100% + 6px), -50%); }
     .hotspot[data-side="left"] .hotspot-label  { transform-origin: left center; }
     .hotspot[data-side="right"] .hotspot-label { transform-origin: right center; }
-    .hotspot-label { font-size: 1.5rem; letter-spacing: .05em; }
+    .hotspot-label { font-size: 1.02rem; letter-spacing: .05em; }
     .hotspot[data-side="left"] .hotspot-desc  { left: 0; right: auto; text-align: left; }
     .hotspot[data-side="right"] .hotspot-desc { right: 0; left: auto; text-align: right; }
-    .hotspot-desc { width: 150px; font-size: .8rem; }
+    .hotspot-desc { width: 150px; font-size: .68rem; }
 }
 
 /* Franja de habilidades que se desliza. HTML relacionado: <div class="stage-skills marquee-wrap">
@@ -4520,17 +4520,17 @@ body.viewer-open { overflow: hidden; }
 #obs {
   --iris: #eb1d2b; --open: 1; --pup: 1; --brow: 0deg; --browy: 0px; --tw0: 5s; --tw: var(--tw0);
   position: fixed; right: clamp(.2rem, 1.5vw, 1.4rem); bottom: 0; z-index: 800;
-  width: clamp(150px, 16vw, 260px); pointer-events: none;
+  width: clamp(108px, 11.52vw, 187.2px); pointer-events: none;
   opacity: 0; transform: translateY(40px);
   transition: opacity .8s ease, transform 1s cubic-bezier(.2, .8, .2, 1), width .9s cubic-bezier(.2, .8, .2, 1);
 }
 #obs.is-on { opacity: 1; transform: none; }
 body:has(.img-modal.is-open) #obs { opacity: 0; }
-#obs[data-zone="TabCuart"]  { width: clamp(200px, 22vw, 380px); }
-#obs[data-zone="proyectos"] { width: clamp(170px, 19vw, 320px); }
-#obs[data-zone="sobre"]     { width: clamp(160px, 18vw, 300px); }
-#obs[data-zone="estudios"]  { width: clamp(160px, 17vw, 280px); }
-#obs[data-zone="contacto"]  { width: clamp(140px, 15vw, 240px); }
+#obs[data-zone="TabCuart"]  { width: clamp(144px, 15.84vw, 273.6px); }
+#obs[data-zone="proyectos"] { width: clamp(122.4px, 13.68vw, 230.4px); }
+#obs[data-zone="sobre"]     { width: clamp(115.2px, 12.96vw, 216px); }
+#obs[data-zone="estudios"]  { width: clamp(115.2px, 12.24vw, 201.6px); }
+#obs[data-zone="contacto"]  { width: clamp(100.8px, 10.8vw, 172.8px); }
 #obs[data-mood="dark"] { --iris: #ff6528; }
 #obs[data-mood="aqua"] { --iris: #4c9bff; }
 #obs[data-mood="lab"]  { --iris: #fac943; }
@@ -4607,7 +4607,7 @@ body:has(.img-modal.is-open) #obs { opacity: 0; }
    --t = posición de la cola a lo largo del borde; apunta hacia la cabeza. */
 .obs-say { --bg: rgba(10, 10, 11, .95); --t: 50%; position: absolute; left: 0; top: 0; width: max-content; max-width: 260px; padding: .6rem 1rem .65rem; background: var(--bg);
   border: 1px solid rgba(255, 255, 255, .2); border-radius: 14px 18px 12px 20px / 18px 12px 20px 14px; box-shadow: 0 10px 28px rgba(0, 0, 0, .55), 0 0 0 1px color-mix(in srgb, var(--iris) 35%, transparent);
-  font: italic 500 .9rem/1.45 var(--font-subtitulo, serif); letter-spacing: .02em; color: rgba(255, 255, 255, .92);
+  font: italic 500 .765rem/1.45 var(--font-subtitulo, serif); letter-spacing: .02em; color: rgba(255, 255, 255, .92);
   opacity: 0; scale: .86; transition: opacity .35s ease, scale .45s cubic-bezier(.3, 1.4, .5, 1), border-color .3s; pointer-events: none; z-index: 2; will-change: transform;
   animation: obs-bob 4.6s ease-in-out infinite; }
 /* cola = dos piezas: ::before es el contorno (un poco mayor) y ::after el relleno, para que se vea sobre fondos oscuros */
@@ -4650,7 +4650,7 @@ body:has(.img-modal.is-open) #obs { opacity: 0; }
 .obs-say.has-choices { animation: none; }
 .obs-choice { appearance: none; display: block; width: 100%; padding: .5rem .8rem; text-align: left; cursor: pointer; touch-action: manipulation;
   border: 1px solid color-mix(in srgb, var(--iris) 60%, rgba(255, 255, 255, .2)); border-radius: 10px 14px 9px 13px / 13px 9px 14px 10px;
-  background: rgba(255, 255, 255, .04); color: rgba(255, 255, 255, .95); font: 500 .82rem/1.3 var(--font-subtitulo, serif); letter-spacing: .02em;
+  background: rgba(255, 255, 255, .04); color: rgba(255, 255, 255, .95); font: 500 .697rem/1.3 var(--font-subtitulo, serif); letter-spacing: .02em;
   transition: background .2s, border-color .2s, transform .2s; }
 .obs-choice:hover { background: color-mix(in srgb, var(--iris) 32%, transparent); border-color: var(--iris); transform: translateX(3px); }
 .obs-choice:focus-visible { outline: 2px dashed #fff; outline-offset: 2px; background: color-mix(in srgb, var(--iris) 32%, transparent); }
@@ -5148,9 +5148,9 @@ body:has(.img-modal.is-open) #obs { opacity: 0; }
 
 /* ---------- 7. RESPONSIVE + MOVIMIENTO REDUCIDO ---------- */
 @media (max-width: 640px) {
-  #obs { width: 112px; }
-  #obs[data-zone="TabCuart"], #obs[data-zone="proyectos"], #obs[data-zone="sobre"] { width: 140px; }
-  .obs-say { font-size: .8rem; padding: .5rem .8rem; }
+  #obs { width: 89.6px; }
+  #obs[data-zone="TabCuart"], #obs[data-zone="proyectos"], #obs[data-zone="sobre"] { width: 112px; }
+  .obs-say { font-size: .68rem; padding: .5rem .8rem; }
   .gp { padding: 1.6rem .7rem 1.4rem; }
   .gp-stage { min-height: 23rem; }
   .gp-sigil { width: 60px; }
@@ -6982,3 +6982,175 @@ body.layer-open .btn-back { display: inline-flex; }
 @media (max-width: 1100px) { .works-wheel { height: 600px; min-height: 580px; } }
 @media (max-width: 900px)  { .works-wheel { height: 560px; min-height: 540px; } }
 @media (max-width: 600px)  { .works-wheel { height: 470px; min-height: 450px; } }
+
+
+/* =========================================================
+   CORAZÓN MÁS GRANDE (protagonista de la portada)
+   --heart-scale: tamaño del corazón respecto a su contenedor (1 = antes, 1.45 = más grande).
+   Solo crece el corazón; el contenedor .heart-wrap conserva su centro,
+   así que el latido, los clics y las líneas siguen funcionando igual.
+   Si lo quieres aún más grande, sube --heart-scale (p. ej. 1.7).
+========================================================= */
+:root { --heart-scale: 1.45; }
+
+.heart-anim {
+  width: calc(100% * var(--heart-scale));
+}
+
+/* Un poco más de espacio vertical para el corazón (antes se reservaban 23rem) */
+.heart-wrap {
+  width: min(860px, 88vw, calc(100vh - 20rem));
+  width: min(860px, 88vw, calc(100dvh - 20rem));
+  margin: clamp(1rem, 3vh, 2rem) auto clamp(.6rem, 2vh, 1.6rem);
+}
+
+/* Las etiquetas se abren hacia afuera para no quedar tapadas por el corazón más grande */
+.zone-TabCuart  { --x: 9%;  --y: 27%; }
+.zone-estudios  { --x: 91%; --y: 27%; }
+.zone-proyectos { --x: 9%;  --y: 72%; }
+.zone-contacto  { --x: 91%; --y: 72%; }
+
+/* Móvil: mantiene las etiquetas en las esquinas, con un corazón un poco menos exagerado */
+@media (max-width: 640px) {
+  :root { --heart-scale: 1.3; }
+  .heart-wrap { width: 88vw; }
+  .zone-TabCuart  { --x: 3%;  --y: 9%; }
+  .zone-estudios  { --x: 97%; --y: 9%; }
+  .zone-proyectos { --x: 3%;  --y: 88%; }
+  .zone-contacto  { --x: 97%; --y: 88%; }
+}
+
+
+/* =========================================================
+   CABECERA COMPACTA + FRANJA INFERIOR FINA
+   Ajustes rápidos:
+   --marquee-h  → altura de la franja inferior
+   margin-top de .heart-wrap → separación entre la cabecera y el corazón
+========================================================= */
+:root { --marquee-h: 2.1rem; }
+
+/* ---- 1. Cabecera: líneas más juntas y por encima del corazón ---- */
+.stage-header {
+  position: relative;
+  z-index: 5;                         /* siempre por delante del corazón (.heart-wrap = 2) */
+}
+.stage-eyebrow {
+  line-height: 1.2;
+  margin-bottom: clamp(.1rem, .4vh, .3rem);
+  text-shadow: 0 1px 3px rgba(0,0,0,.9), 0 0 14px rgba(0,0,0,.75);
+}
+.stage-name {
+  line-height: .95;
+  text-shadow:
+    0 2px 6px rgba(0,0,0,.65),
+    0 0 34px rgba(227,38,46,.38),
+    0 0 90px rgba(181,22,32,.24);
+}
+.stage-role {
+  line-height: 1.2;
+  margin-top: clamp(.15rem, .5vh, .4rem);
+  text-shadow: 0 1px 3px rgba(0,0,0,.9), 0 0 14px rgba(0,0,0,.75);
+}
+
+/* ---- Separación clara entre la cabecera y el corazón ----
+   El corazón sobresale un poco por arriba de su contenedor; este margen lo deja libre de "CREADOR VISUAL". */
+.heart-wrap {
+  margin-top: clamp(1.6rem, 6.5vh, 3.4rem);
+  margin-bottom: clamp(.4rem, 1.4vh, 1rem);
+}
+
+/* El inicio + la franja suman exactamente la altura de la ventana (sin franja blanca abajo) */
+#heartStage {
+  min-height: calc(100vh - var(--marquee-h));
+  min-height: calc(100dvh - var(--marquee-h));
+}
+
+/* ---- 2. Franja inferior: más fina, más legible, con bordes que se desvanecen ---- */
+.marquee-wrap {
+  height: var(--marquee-h);
+  padding: 0;
+  display: flex;
+  align-items: center;
+  -webkit-mask-image: linear-gradient(to right, transparent 0, #000 7%, #000 93%, transparent 100%);
+          mask-image: linear-gradient(to right, transparent 0, #000 7%, #000 93%, transparent 100%);
+}
+.marquee-track {
+  gap: 0;                              /* el espacio va dentro de cada ítem: el bucle no da saltos */
+  animation-duration: 70s;             /* 4 copias en el HTML → más largo para mantener la misma velocidad */
+}
+.marquee-item {
+  font-size: .66rem;
+  letter-spacing: .22em;
+  line-height: 1;
+  gap: 1rem;
+  padding-right: 1rem;
+  color: rgba(255,255,255,.74);        /* antes .38: más contraste aunque la letra sea más pequeña */
+}
+.marquee-item span {
+  color: var(--accent-2, #e3262e);
+  font-size: .6rem;
+}
+
+
+/* =========================================================
+   "¡SOBRE MÍ!" CON RESPLANDOR + CABECERA MÁS ARRIBA / CORAZÓN MÁS GRANDE
+========================================================= */
+
+/* ---- "¡Sobre mí!": mismo resplandor rojo que las demás etiquetas (con un borde oscuro fino para leerse sobre el corazón) ---- */
+.heart-center-label {
+  color: #fff;
+  text-shadow:
+    0 0 3px rgba(0,0,0,.85),
+    0 0 10px rgba(227,38,46,.6),
+    0 0 24px rgba(227,38,46,.45),
+    0 0 44px rgba(181,22,32,.35);
+}
+.heart-anim:hover .heart-center-label,
+.heart-anim:focus-visible .heart-center-label {
+  text-shadow:
+    0 0 3px rgba(0,0,0,.85),
+    0 0 14px rgba(227,38,46,.85),
+    0 0 36px rgba(227,38,46,.6),
+    0 0 60px rgba(181,22,32,.5);
+}
+
+/* ---- Cabecera pegada arriba y corazón más grande (escritorio y tablet) ----
+   --hw = lado del contenedor del corazón. Sube el 68 para un corazón mayor (72) o bájalo para uno menor (64). */
+@media (min-width: 641px) {
+  :root {
+    --hw: min(860px, 88vw, calc(68vh - 4rem));
+    --hw: min(860px, 88vw, calc(68dvh - 4rem));
+  }
+  #heartStage {
+    justify-content: flex-start;                 /* la cabecera sube; antes estaba centrada */
+    padding-top: clamp(.5rem, 1.8vh, 1.2rem);
+    padding-bottom: .4rem;
+  }
+  .heart-wrap {
+    width: var(--hw);
+    min-width: 260px;
+    margin-top: calc(var(--hw) * .09 + .7rem);   /* deja libre la punta del corazón bajo "CREADOR VISUAL" */
+    margin-bottom: .4rem;
+  }
+}
+
+
+/* =========================================================
+   CABECERA: "UNIVERSO CREATIVO DE" e "ILUSTRADOR Y CREADOR VISUAL" MÁS CERCA DE "TabCuar"
+   La tipografía del título tiene mucho aire interno arriba y abajo: se recorta con line-height
+   y márgenes negativos. Para acercar más, baja el .8 (p. ej. .7) o aumenta el -.1em (p. ej. -.15em).
+========================================================= */
+.stage-name {
+  line-height: .8;
+  margin-block: -.1em;
+}
+.stage-eyebrow { margin-bottom: 0; }
+.stage-role    { margin-top: 0; }
+
+/* La cabecera ahora ocupa menos alto: ese espacio pasa al corazón (68 → 71) */
+@media (min-width: 641px) {
+  :root {
+    --hw: min(860px, 88vw, calc(71vh - 4rem));
+    --hw: min(860px, 88vw, calc(71dvh - 4rem));
+  }
+}

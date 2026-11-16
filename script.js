@@ -145,6 +145,17 @@ const WORKS_DEFAULTS = {
 };
 
 const WORKS_INFO = {
+  'Susana.jpg': { title: 'Susana', technique: '', year: '2025', description: '', extra: [] },
+  'Mariposa.jpg': { title: 'Mariposa', technique: '', year: '2021', description: '', extra: [] },
+  'Madre e Hijo.png': { title: 'Arrullo', technique: '', year: '2021', description: '', extra: [] },
+  'Omega.jpg': { title: 'Omega', technique: '', year: '2021', description: '', extra: [] },
+  'Universo.png': { title: 'Vórtice', technique: '', year: '2021', description: '', extra: [] },
+  'Mujermar.jpg': { title: 'Crisálida', technique: '', year: '2023', description: '', extra: [] },
+  '0001_1.mp4': { title: 'Transformación', technique: '', year: '2026', description: '', extra: [] },
+  'Flor.mp4': { title: 'Llama Espectral', technique: '', year: '2025', description: '', extra: [] },
+  'AnmC.mp4': { title: 'Pupila', technique: '', year: '2026', description: '', extra: [] },
+  'roto.mp4': { title: 'Tin Tin', technique: '', year: '2026', description: '', extra: [] },
+  'animacion-tabcuart.mp4': { title: 'Max', technique: '', year: '2026', description: '', extra: [] },
 
   /* ----- Ilustración Digital ----- */
 
@@ -171,7 +182,7 @@ const WORKS_INFO = {
   title: 'Deus',
   technique: 'Ilustración digital',
   year: '2026',
-  description: '...',
+  description: 'Reinterpretación gráfica de uno de los personajes del cortometraje animado, creada para Reanimator, el semillero de la universidad.',
   extra: [
     ['Software', 'Photoshop']
   ]
@@ -179,43 +190,101 @@ const WORKS_INFO = {
   
  'Transformación.png': {
   title: 'Transformación',
+  technique: 'Ilustración digital',year: '2026', description: 'Cuatro momentos de una misma metamorfosis.', extra: [ ['Software', 'Photoshop'] ]},
+
+ 'Amor entre redes.jpg': {
+  title: 'Amor entre redes',
+  technique: 'Ilustración digital',
+  year: '2025',
+  description: 'Una ilustración que nace a partir de un debate sobre el amor en tiempos de redes sociales. Desde una postura a favor, explora cómo la tecnología puede convertirse en una herramienta para conectar personas, acercar distancias y construir vínculos afectivos..',
+  extra: [
+    ['Software', 'Photoshop']
+  ]
+},
+
+ 'Dios y patria.png': {
+  title: 'Dios y patria?',
   technique: 'Ilustración digital',
   year: '2026',
-  description: '...',
+  description: 'Una propuesta visual que invita a reflexionar sobre la distancia entre lo que se predica y lo que realmente se hace.',
+  extra: [
+    ['Software', 'Photoshop']
+  ]
+},
+
+ 'El fin.jpg': {
+  title: 'El fin',
+  technique: 'Ilustración digital',
+  year: '2024',
+  description: 'Mi primera ilustración digital terminada, una obra que marca el inicio de mi recorrido en el mundo de la ilustración digital. Una pieza especial por lo que significa: el comienzo de un camino.',
+  extra: [
+    ['Software', 'Photoshop']
+  ]
+},
+
+'Redención.png': {
+  title: 'Redención',
+  technique: 'Ilustración digital',
+  year: '2024',
+  description: 'Una ilustración introspectiva que explora quién soy como persona, qué define mi identidad y qué pensamientos me acompañan cuando llega la noche. Una representación visual de la búsqueda de mi propia esencia.',
+  extra: [
+    ['Software', 'Photoshop']
+  ]
+},
+
+'Fe.png': {
+  title: 'Fe',
+  technique: 'Ilustración digital',
+  year: '2026',
+  description: ' «Así que, por sus frutos los conoceréis.»— Mateo 7:20',
   extra: [
     ['Software', 'Photoshop']
   ]
 },
 
   /* ----- Ilustración Análoga ----- */
-  'Pt1.jpg':        { title: '', technique: '', year: '', description: '', extra: [] },
-  'Pt2.jpg':        { title: '', technique: '', year: '', description: '', extra: [] },
-  'Pt3.jpg':        { title: '', technique: '', year: '', description: '', extra: [] },
+
+  'Gato.jpg':        { title: 'Gato', technique: 'Puntillismo', year: '2021', description: 'Ilustración realizada a partir de la mascota de un familiar. ', extra: [] },
+  'Arbol.png':        { title: 'Arbol', technique: 'Líneas y tramas', year: '2026', description: 'Diseño de una splash page para un cómic.', extra: [] },
+  'Niño.jpg':        { title: 'Agapornis', technique: 'Puntillismo', year: '2024', description: '', extra: [] },
+  'Planta.jpg':        { title: 'Planta', technique: 'Puntillismo', year: '2024', description: '', extra: [] },
+  'Aura.jpg':        { title: 'Aura', technique: 'Puntillismo', year: '2024', description: '', extra: [] },
+  'Tb1.png':        { title: 'Tbc1', technique: 'Líneas', year: '2020', description: '', extra: [] },
+  'She.jpg':        { title: 'She', technique: 'Puntillismo', year: '2023', description: '', extra: [] },
+  'Autoconsumo.jpg':        { title: 'Autoconsumo', technique: 'Mixta', year: '2024', description: '', extra: [] },
+  'Tb2.png':        { title: 'Tbc2', technique: 'Líneas', year: '2020', description: '', extra: [] },
+  'Betta.jpg':        { title: 'Betta', technique: 'Líneas y tramas', year: '2024', description: '', extra: [] },
+  'Flor.jpg':        { title: 'Rosa', technique: 'Puntillismo', year: '2020', description: '', extra: [] },
+  'Libelula.jpg':        { title: 'libélula', technique: 'Puntillismo', year: '2020', description: '', extra: [] },
+  'Tortuga.jpg':        { title: 'Morrocoy', technique: 'Mixta', year: '2024', description: '', extra: [] },
+  'Escarabajo.jpg':        { title: 'Escarabajo', technique: 'Puntillismo', year: '2020', description: '', extra: [] },
+  
 
   /* ----- Grabado ----- */
-  'lino1.jpg':      { title: '', technique: '', year: '', description: '', extra: [] },
-  'lino2.jpg':      { title: '', technique: '', year: '', description: '', extra: [] },
+  'Corazon1.png':      { title: 'Corazon', technique: 'Linograbado', year: '2026', description: '', extra: [] },
+  'Mulher.png': { title: 'La Analista', technique: 'Linograbado', year: '2026', description: '', extra: [] },
   'lino3.jpg':      { title: '', technique: '', year: '', description: '', extra: [] },
 
   /* ----- Escultura ----- */
-  'escultura1.jpg': { title: '', technique: '', year: '', description: '', extra: [] },
+  'escultura1.jpg': { title: 'La Tentación', technique: '', year: '2025', description: '', extra: [] },
   'escultura2.jpg': { title: '', technique: '', year: '', description: '', extra: [] },
   'escultura3.jpg': { title: '', technique: '', year: '', description: '', extra: [] },
 
   /* ----- Animación ----- */
-  'animacion1.jpg': { title: '', technique: '', year: '', description: '', extra: [] },
-  'animacion2.jpg': { title: '', technique: '', year: '', description: '', extra: [] },
-  'animacion3.jpg': { title: '', technique: '', year: '', description: '', extra: [] },
+  'animacion-tabcuart.mp4': { title: 'Max', technique: '', year: '2026', description: '', extra: ['Software', 'Photoshop'] },
+  'roto.mp4': { title: 'Tin Tin', technique: '', year: '2026', description: '', extra: ['Software', 'Photoshop'] },
+  'Anmc.MP4': { title: 'Alma espectral', technique: '', year: '2025', description: '', extra: ['Software', 'After Effects'] },
+  'Flor.mp4': { title: 'Metamorfosis', technique: '', year: '2025', description: '', extra: ['Software', 'After Effects'] },
 
   /* ----- 3D ----- */
-  'blender1.jpg':   { title: '', technique: '', year: '', description: '', extra: [] },
-  'blender2.jpg':   { title: '', technique: '', year: '', description: '', extra: [] },
-  'blender3.jpg':   { title: '', technique: '', year: '', description: '', extra: [] },
+  'Video/0001_1.mp4':   { title: 'Acuario', technique: '', year: '2026', description: '', extra: [] },
+  'Angel.mp4': { title: 'Angel', technique: '', year: '2026', description: '', extra: [] },
+  'PEZ..mp4':   { title: 'Pez', technique: '', year: '2026', description: '', extra: [] },
 
   /* ----- Tattoo ----- */
-  'concept1.jpg':   { title: '', technique: '', year: '', description: '', extra: [] },
-  'concept2.jpg':   { title: '', technique: '', year: '', description: '', extra: [] },
-  'concept3.jpg':   { title: '', technique: '', year: '', description: '', extra: [] }
+  'concept1.jpg':   { title: 'Crisalida', technique: '', year: '', description: '', extra: [] },
+  'concept2.jpg':   { title: 'Vortice', technique: '', year: '', description: '', extra: [] },
+  'concept3.jpg':   { title: 'Omega', technique: '', year: '', description: '', extra: [] }
 
 };
 
@@ -2287,42 +2356,41 @@ function isImageViewerOpen() {
 const PROCESS_DATA = {
   /* Obra 1 actual: Video/0001_1.mp4 */
   '0001_1.mp4': [
-    {"src": "Img/Etp1.png", "title": "Boceto", "text": "Primeras ideas, pruebas de composición y exploración visual.", "alt": "Boceto: primeras ideas de la obra"},
+    {"src": "Img/Etp1.png", "title": "Boceto", "text": "Primeras ideas, pruebas de composición y exploración", "alt": "Boceto: primeras ideas de la obra"},
     {"src": "Img/Etp2.png", "title": "Desarrollo", "text": "Construcción de formas, texturas, color y detalles.", "alt": "Desarrollo: construcción de formas, texturas y color"},
-    {"src": "Img/Etp3.png", "title": "Proceso", "text": "Los detalles se acumulan hasta que la pieza se sostiene sola.", "alt": "Proceso: refinamiento de los detalles", "fallback": "Img/Etp2.png"}
   ],
 
   /* Ilustración digital 03: el PROCESO es un video (1 etapa) y el FINAL es la imagen Dj3.png */
   'Deus.png': [
-    { "type": "video", "src": "Video/0002_1.mp4", "title": "Proceso", "text": "Así se construye la ilustración, de principio a fin.", "alt": "Video del proceso de la ilustración" }
+    { "type": "video", "src": "Video/0002_1.mp4", "title": "Proceso", "text": "Proceso de la ilustración, aplicando colores.", "alt": "Video del proceso de la ilustración" }
   ],
 
   /* Escultura / Cuadro de botones */
   'escultura1.jpg': [
-    { "src": "Img/Esc1.jpg", "title": "Boceto y Soporte", "text": "Preparación de la superficie, trazado de líneas guía y estructura inicial.", "alt": "Preparación de la base de la escultura" },
-    { "src": "Img/Esc2.jpg", "title": "Ensamblaje", "text": "Fijación y distribución de botones creando volúmenes, texturas y capas de relieve.", "alt": "Proceso de ensamblaje con botones" },
-    { "src": "Img/Esc3.png", "title": "Detalles y Sellado", "text": "Ajuste fino de contrastes, fijación de piezas sueltas y acabado final.", "alt": "Detalles finales y acabado de la escultura" }
+    { "src": "Img/Esc1.jpg", "title": "Etapa 1", "text": "Preparación de la superficie, trazado de líneas y estructura inicial.", "alt": "Preparación de la base de la escultura" },
+    { "src": "Img/Esc2.jpg", "title": "Ensamblaje", "text": "Fijación y distribución de botones creando volúmenes, texturas y relieve.", "alt": "Proceso de ensamblaje con botones" },
+    { "src": "Img/Esc3.png", "title": "Detalles", "text": "Ajustes, montaje de piezas y continuación.", "alt": "Detalles finales y acabado de la escultura" }
   ], // <-- Aquí faltaba la coma
 
   /* Escultura / Cuadro de botones */
   'Escarabajo.jpg': [
-    { "src": "Img/Analogo/Escarabajo 1.jpg", "title": "Boceto y Soporte", "text": "Preparación de la superficie, trazado de líneas guía y estructura inicial.", "alt": "Preparación de la base de la escultura" }, // <-- Agrega la extensión real (.jpg / .png)
-    { "src": "Img/Analogo/Escarabajo 2.jpg", "title": "Ensamblaje", "text": "Fijación y distribución de botones creando volúmenes, texturas y capas de relieve.", "alt": "Proceso de ensamblaje con botones" },
+    { "src": "Img/Analogo/Escarabajo 1.jpg", "title": "Líneas", "text": "Trazado de líneas guía y estructura inicial.", "alt": "Preparación de la base de la escultura" }, // <-- Agrega la extensión real (.jpg / .png)
+    { "src": "Img/Analogo/Escarabajo 2.jpg", "title": "Puntos", "text": "Aplicación de puntos en la ilustración.", "alt": "Proceso de ensamblaje con botones" },
   ]
 };
 
 /* RESULTADO FINAL por trabajo (bloque derecho).
    type: 'image' o 'video'. Un trabajo sin entrada usa el video por defecto del HTML (Video/0001_1.mp4). */
 const FINAL_DATA = {
-  'Deus.png': { type: 'image', src: 'Img/Digital/Deus.png', title: 'Resultado final', text: 'La ilustración terminada.', alt: 'Ilustración digital terminada' },
+  'Deus.png': { type: 'image', src: 'Img/Digital/Deus.png', title: 'Resultado final', text: 'Ilustración terminada.', alt: 'Ilustración digital terminada' },
   
   'Dj3.png': { type: 'image', src: 'Img/Dj3.png', title: 'Resultado final', text: 'La ilustración terminada.', alt: 'Ilustración digital terminada' },
   
   /* Resultado final de la escultura */
-  'escultura1.jpg': { type: 'image', src: 'Img/escultura1.jpg', title: 'Resultado final', text: 'Escultura de pared terminada.', alt: 'Fotografía de la escultura de pared terminada' },
+  'escultura1.jpg': { type: 'image', src: 'Img/escultura1.jpg', title: 'Resultado final', text: 'Escultura de botones terminada.', alt: 'Fotografía de la escultura de botones terminada' },
 
 /* Resultado final de la escultura */
-  'Escarabajo.jpg': { type: 'image', src: 'Img/Analogo/Escarabajo.jpg', title: 'Resultado final', text: 'Escultura de pared terminada.', alt: 'Fotografía de la escultura de pared terminada' }
+  'Escarabajo.jpg': { type: 'image', src: 'Img/Analogo/Escarabajo.jpg', title: 'Resultado final', text: 'Escarabajo', alt: 'Fotografía del escarabajo terminado' }
 
 };
 /* =========================================================
@@ -3698,29 +3766,20 @@ const BOOK_LIBRARY = {
 
     {
       kicker: 'Libro 01',
-      title: 'Gehenna, La corte del Juicio',
-      desc: 'Escribe aquí una descripción breve: de qué trata, el año y la técnica con la que lo realizaste.',
+      title: 'El reloj que se quiebra al despertar.',
+      desc: 'Tharon transita una vida aparentemente común, marcada por la rutina de despertar, trabajar y dormir. Sin embargo, detrás de esa fachada esconde un profundo vacío interior y un desgaste silencioso, encontrando únicamente en los sueños el espacio donde vuelve a sentirse vivo.',
       meta: '',
-      cover: '',   /* CAMBIAR AQUÍ LA PORTADA  → 'Libros/portada-01.jpg' */
-      pdf:'Libros/Gehenna.pdf' 
+      cover: 'Libros/Portadas/El reloj.png',   /* CAMBIAR AQUÍ LA PORTADA  → 'Libros/portada-01.jpg' */
+      pdf: 'Libros/El reloj.pdf'
     },
 
     {
       kicker: 'Libro 02',
-      title: 'Segundo libro o cómic',
-      desc: 'Descripción breve del segundo título.',
+      title: 'Gehenna, La corte del Juicio',
+      desc: 'Cómic de ciencia ficción oscura ambientado diez años después de la extinción humana, donde las ideas residuales de la humanidad toman forma y crean un mundo regido por la competencia y la corrupción.',
       meta: '',
-      cover: '',   /* CAMBIAR AQUÍ LA PORTADA */
-      pdf: ''      /* CAMBIAR AQUÍ EL PDF */
-    },
-
-    {
-      kicker: 'Libro 03',
-      title: 'Tercer libro o cómic',
-      desc: 'Descripción breve del tercer título.',
-      meta: '',
-      cover: '',   /* CAMBIAR AQUÍ LA PORTADA */
-      pdf: ''      /* CAMBIAR AQUÍ EL PDF */
+      cover: 'Libros/Portadas/Gehenna.png',   /* CAMBIAR AQUÍ LA PORTADA */
+      pdf: 'Libros/Gehenna.pdf'
     }
 
     /* AGREGAR AQUÍ OTRO LIBRO: copia un bloque { ... } completo,
@@ -3736,17 +3795,8 @@ const BOOK_LIBRARY = {
       title: 'Mi Primer BETTA',
       desc: 'Guia de como cuidar a tu pez betta',
       meta: '',
-      cover: '',   /* CAMBIAR AQUÍ LA PORTADA  → 'Libros/acuario-portada-01.jpg' */
+      cover: 'Libros/Portadas/Betta.png',   /* CAMBIAR AQUÍ LA PORTADA  → 'Libros/acuario-portada-01.jpg' */
       pdf: 'Libros/Betta.pdf'
-    },
-
-    {
-      kicker: 'Libro 02',
-      title: 'Segundo libro',
-      desc: 'Descripción breve del segundo libro.',
-      meta: '',
-      cover: '',   /* CAMBIAR AQUÍ LA PORTADA */
-      pdf: ''      /* CAMBIAR AQUÍ EL PDF */
     }
 
     /* AGREGAR AQUÍ OTRO LIBRO */
@@ -5591,7 +5641,8 @@ document.querySelectorAll('.gallery-item video').forEach(video => {
 
   var say = root.querySelector('#obsSay'), sayT = root.querySelector('.obs-say-t'), pos = root.querySelector('.obs-pos'), grabEl = root.querySelector('.obs-grab'), lean = root.querySelector('.obs-lean'), iris = root.querySelector('.obs-iris-g'), pp = [].slice.call(root.querySelectorAll('.obs-pp')), choicesEl = root.querySelector('.obs-choices');
   var zone = 'home', base = 'idle', F = .8, PULL = .3, sv = 0, hasChar = true;
-  var PULLS = { home: .3, TabCuart: .42, proyectos: .25, estudios: .35, contacto: .15, sobre: .38 };   /* cuánto se aleja de su rincón para acompañar al cursor */
+  var READ_PULL = .06;   /* cuánto se acerca a lo que mira cuando hay una sección abierta (0 = nada) */
+  var PULLS = { home: .3, TabCuart: .05, proyectos: .04, estudios: .05, contacto: .04, sobre: .05 };   /* cuánto se aleja de su rincón para acompañar al cursor */
   var MSG = { home: 'Explora mi trabajo', TabCuart: 'Explora el proceso.', proyectos: 'Aquí comienza Gehenna.', estudios: 'Descubre mi formación.', contacto: 'Un ecosistema dedicado al mundo acuático.', sobre: '¿Quieres conocerme?' };
   var rect = { left: 0, top: 0, width: 0, height: 0 }, mx = innerWidth * .6, my = innerHeight * .5, wander = null, roam = null, tgtEl = null, last = 0;
   var g = { x: 0, y: 0, bx: 0, by: 0, r: 0, s: 1 }, queued = false;
@@ -5608,7 +5659,7 @@ document.querySelectorAll('.gallery-item video').forEach(video => {
     var kg = reduceMotion ? 1 : 1 - Math.exp(-dt * 24), kp = reduceMotion ? 1 : 1 - Math.exp(-dt * 6.5);
     var X = mx, Y = my, pull = conv ? 0 : PULL;                  /* en conversación no persigue el cursor: los botones del globo no se escapan */
     if (wander) { X = wander.x; Y = wander.y; }
-    if (tgtEl) { var t = tgtEl.getBoundingClientRect(); X = t.left + t.width / 2; Y = t.top + t.height / 2; pull = Math.max(pull, .5); }
+    if (tgtEl) { var t = tgtEl.getBoundingClientRect(); X = t.left + t.width / 2; Y = t.top + t.height / 2; pull = document.body.classList.contains('layer-open') ? Math.max(pull, READ_PULL) : Math.max(pull, .5); }   /* leyendo una sección: solo mira, no se acerca */
     var hx = rect.left + rect.width / 2, hy = rect.top + rect.height / 2, px, py;
     var minX = rect.width * .5, maxX = innerWidth - rect.width * .5, minY = rect.height * .5, maxY = innerHeight - rect.height * .42;
     if (dragging) {                                   /* sigue directamente al cursor (un poco de inercia) */
@@ -5661,6 +5712,15 @@ var ts = zoneScale * (
   var BUB = { side: 'l', w: 0, h: 0, mw: 0, T: -1, dirty: true };
   var GAPB = 16, EDGEB = 10, MINW = 150, MAXW = 260, SAFE = .06;
   function setBubbleText(t) { sayT.textContent = t; BUB.dirty = true; }
+  /* ---- ZONA DE LECTURA: la columna de contenido de la capa abierta (.layer-inner sin su relleno).
+     Mientras el personaje NO se arrastra, el globo no se coloca encima de esa columna (para no tapar el texto);
+     se queda en el margen del lado donde está el personaje. Al agarrarlo y arrastrarlo (dragging) no hay ninguna restricción. ---- */
+  function readZone() {
+    var li = document.querySelector('.layer.active .layer-inner'); if (!li) return null;
+    var r = li.getBoundingClientRect(), cs = getComputedStyle(li);
+    var l = r.left + (parseFloat(cs.paddingLeft) || 0), rt = r.right - (parseFloat(cs.paddingRight) || 0);
+    return rt - l > 240 ? { l: l, r: rt } : null;
+  }
   function placeBubble() {
     var rr = rect || (measure(), rect), W = rr.width, H = rr.height; if (!W || !H) return;
     var s = g.s, rad = g.r * Math.PI / 180, HF = hasChar ? .8 : .53;           /* HF: altura de la cabeza medida desde la base */
@@ -5670,6 +5730,11 @@ var ts = zoneScale * (
     var zl = pcx - hw + Math.min(0, shift), zr = pcx + hw + Math.max(0, shift), zt = pby - H * s, zb = pby;
     var hx = pcx + shift, hy = pby - H * HF * s * Math.cos(rad);                /* centro aproximado de la cabeza */
     var room = { l: zl - EDGEB - GAPB, r: innerWidth - zr - EDGEB - GAPB, t: zt - EDGEB - GAPB, b: innerHeight - zb - EDGEB - GAPB };
+    var rz = dragging ? null : readZone(), outL = false, outR = false;           /* arrastrando: sin restricciones */
+    if (rz) {
+      if (pcx <= rz.l) { outL = true; room.r = Math.min(room.r, rz.l - zr - GAPB); }       /* personaje en el margen izquierdo: el globo no entra a la columna de lectura */
+      else if (pcx >= rz.r) { outR = true; room.l = Math.min(room.l, zl - GAPB - rz.r); }  /* personaje en el margen derecho */
+    }
 
     if (BUB.dirty) {                                                            /* texto nuevo: medir su tamaño natural */
       BUB.mw = Math.min(MAXW, innerWidth - 2 * EDGEB); say.style.maxWidth = BUB.mw + 'px';
@@ -5694,6 +5759,8 @@ var ts = zoneScale * (
       T = clamp(hy - by, 20, Math.max(20, BUB.h - 20));                         /* la cola apunta a la altura de la cabeza */
     } else {
       bx = clamp(hx - BUB.w / 2, EDGEB, Math.max(EDGEB, innerWidth - BUB.w - EDGEB));
+      if (outL) bx = Math.max(EDGEB, Math.min(bx, rz.l - 6 - BUB.w));                  /* arriba/abajo también se queda fuera de la columna de lectura */
+      else if (outR) bx = Math.min(Math.max(EDGEB, innerWidth - BUB.w - EDGEB), Math.max(bx, rz.r + 6));
       by = side === 't' ? zt - GAPB - BUB.h : zb + GAPB;
       by = clamp(by, EDGEB, Math.max(EDGEB, innerHeight - BUB.h - EDGEB));  /* jamás fuera de pantalla */
       T = clamp(hx - bx, 22, Math.max(22, BUB.w - 22));
@@ -5744,6 +5811,7 @@ var ts = zoneScale * (
   function act(n) {
     if (reduceMotion) return;
     if (conv && (n === 'glance' || n === 'roam')) return;             /* hablando no se va de paseo */
+    if (n === 'roam' && document.body.classList.contains('layer-open')) return;   /* con una sección abierta se queda en su esquina: no tapa el texto */
     if (n === 'glance') {
       wander = { x: Math.random() * innerWidth, y: Math.random() * innerHeight * .8 }; schedule();
       setTimeout(function () { wander = null; schedule(); }, 900 + Math.random() * 900);
@@ -6078,9 +6146,27 @@ var ts = zoneScale * (
     if (n.r) convT = setTimeout(function () {                                                           /* elección al azar (Sorpréndeme) */
       var pick = rnd(n.r); if (pick.indexOf('go:') === 0) navTo(pick.slice(3)); else showNode(pick);
     }, 1200);
-    else if (hasC) convT = setTimeout(function () { convEnd(); }, 30000);                              /* sin respuesta: se retira sin insistir */
+    else if (hasC) {                                                                                    /* sin respuesta: el globo se oculta pronto (antes 30 s) */
+      idleOn = true;
+      convT = setTimeout(function () { convEnd(); }, idleFor(text));                                  /* tiempo de lectura justo; si no respondes, se oculta */
+    }
     else convT = setTimeout(function () { convEnd(); }, read + 1800);                                  /* cierre natural */
+    if (!hasC || n.r) idleOn = false;
   }
+  /* Tiempo de gracia (ms) tras terminar de leer, para responder antes de que el globo se oculte. Súbelo si quieres más margen. */
+  var IDLE_BASE = 2500, IDLE_PER_CHAR = 28, IDLE_MIN = 4000, IDLE_MAX = 7000, IDLE_RESUME = 2500, idleOn = false;   /* ms */
+  function idleFor(text) { return Math.min(IDLE_MAX, Math.max(IDLE_MIN, IDLE_BASE + String(text || '').length * IDLE_PER_CHAR)); }
+  /* Si tocas cualquier otra parte de la página (seguir leyendo, abrir una obra…), cuenta como "no respondo": el globo se oculta al instante. */
+  document.addEventListener('pointerdown', function (e) {
+    if (conv && idleOn && !root.contains(e.target)) convEnd();
+  }, true);
+  /* Mientras el mouse o el teclado están sobre las respuestas, el globo no se oculta; al soltarlas, se reanuda la cuenta. */
+  function holdIdle() { if (conv && idleOn) clearTimeout(convT); }
+  function resumeIdle() { if (conv && idleOn) { clearTimeout(convT); convT = setTimeout(function () { convEnd(); }, IDLE_RESUME); } }
+  say.addEventListener('pointerenter', holdIdle);
+  say.addEventListener('pointerleave', resumeIdle);
+  say.addEventListener('focusin', holdIdle);
+  say.addEventListener('focusout', resumeIdle);
   function convStart(id, focus) {
     if (!CONV[id]) return;
     if (conv) convEnd(true);
@@ -6091,7 +6177,7 @@ var ts = zoneScale * (
   function convEnd(silent) {
     clearTimeout(convT); clearTimeout(convS);
     if (!conv) return;
-    conv = null; choicesEl.textContent = ''; say.classList.remove('has-choices');
+    conv = null; idleOn = false; choicesEl.textContent = ''; say.classList.remove('has-choices');
     if (!silent) { root.classList.remove('is-talking'); root.dataset.state = 'idle'; look(null); }
     BUB.dirty = true; schedule();
   }
@@ -6099,7 +6185,7 @@ var ts = zoneScale * (
     var left = ['TabCuart', 'proyectos', 'estudios', 'contacto'].filter(function (z) { return !visited[z]; });
     if (!left.length || returns >= 2 || sel || dragging) return false;
     returns++; var u = rnd(left);
-    CONV.regreso = { t: 'Volviste. Aún queda una cámara sin abrir: ' + ZN[u] + '. ¿Te llevo?', x: 'curious', exit: false,
+    CONV.regreso = { t: 'Volviste. Aún quedan cámaras sin abrir: ' + ZN[u] + '. ¿Te llevo?', x: 'curious', exit: false,
       c: [{ l: 'Sí, llévame', go: u }, { l: 'Todavía no', n: 'despues' }] };
     convStart('regreso'); return true;
   }
