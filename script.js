@@ -2474,8 +2474,8 @@ const PROCESS_DATA = {
   
   'Libelula.jpg': [
     { "src": "Img/Analogo/Procesos/lil1.jpg", "title": "Etapa 1", "text": "....", "alt": "Preparación" },
-    { "src": "Img/Analogo/Procesos/Lil2.jpg", "title": "Etapa 2", "text": "...", "alt": "Proceso" },
-    { "type": "video", "src": "Img/Analogo/Procesos/Lil3.mp4", "title": "Etapa 3", "text": "...", "alt": "Detalles finales" }
+    { "src": "Img/Analogo/Procesos/lil2.jpg", "title": "Etapa 2", "text": "...", "alt": "Proceso" },
+    { "type": "video", "src": "Img/Analogo/Procesos/lil3.mp4", "title": "Etapa 3", "text": "...", "alt": "Detalles finales" }
   ], // <-- Aquí faltaba la coma
 
   'Amor entre redes.jpg': [
