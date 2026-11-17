@@ -282,7 +282,7 @@ const WORKS_INFO = {
   'roto.mp4': { title: 'Tin Tin', technique: '', year: '2026', description: '', extra: ['Software', 'Photoshop'] },
   'Anmc.MP4': { title: 'Alma espectral', technique: '', year: '2025', description: '', extra: ['Software', 'After Effects'] },
   'Flor.mp4': { title: 'Metamorfosis', technique: '', year: '2025', description: '', extra: ['Software', 'After Effects'] },
-
+  'Mundo.mp4':   { title: 'El Caminante', technique: '', year: '2026', description: '', extra: [] },
   /* ----- 3D ----- */
   'Video/0001_1.mp4':   { title: 'Acuario', technique: '', year: '2026', description: '', extra: [] },
   'Angel.mp4': { title: 'Angel', technique: '', year: '2026', description: '', extra: [] },
