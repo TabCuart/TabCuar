@@ -970,7 +970,7 @@ section:nth-child(even) {
 
 .hotspot-label {
     font-family: 'RM Albion', serif;
-    font-size: clamp(2.38rem, 4.08vw, 4.08rem);
+    font-size: clamp(2.74rem, 4.69vw, 4.69rem);   /* +15 % respecto a clamp(2.38rem, 4.08vw, 4.08rem) */
     font-weight: 400;
     line-height: 1.1;
     letter-spacing: .06em;
@@ -1041,7 +1041,7 @@ section:nth-child(even) {
     .hotspot[data-side="right"] { flex-direction: row-reverse; transform: translate(calc(-100% + 6px), -50%); }
     .hotspot[data-side="left"] .hotspot-label  { transform-origin: left center; }
     .hotspot[data-side="right"] .hotspot-label { transform-origin: right center; }
-    .hotspot-label { font-size: 1.02rem; letter-spacing: .05em; }
+    .hotspot-label { font-size: 1.17rem; letter-spacing: .05em; }   /* +15 % (antes 1.02rem) */
     .hotspot[data-side="left"] .hotspot-desc  { left: 0; right: auto; text-align: left; }
     .hotspot[data-side="right"] .hotspot-desc { right: 0; left: auto; text-align: right; }
     .hotspot-desc { width: 150px; font-size: .68rem; }
@@ -5416,6 +5416,7 @@ body:has(.img-modal.is-open) #obs { opacity: 0; }
 .img-modal-dialog[data-cat="animacion"]   { --neon: #b44dff; --neon-rgb: 180,77,255; }  /* violeta */
 .img-modal-dialog[data-cat="3d"]          { --neon: #2f7bff; --neon-rgb: 47,123,255; }  /* azul eléctrico */
 .img-modal-dialog[data-cat="tattoo"]      { --neon: #ff1744; --neon-rgb: 255,23,68; }   /* rojo */
+.img-modal-dialog[data-cat="mix"]         { --neon: #39ff88; --neon-rgb: 57,255,136; }  /* verde neón */
 
 .img-modal-dialog[data-cat] {
     border-color: rgba(var(--neon-rgb), .95);
@@ -7153,4 +7154,146 @@ body.layer-open .btn-back { display: inline-flex; }
     --hw: min(860px, 88vw, calc(71vh - 4rem));
     --hw: min(860px, 88vw, calc(71dvh - 4rem));
   }
+}
+
+/* =========================================================
+   "TODAS": las 7 técnicas a la vista (disposición plana tipo coverflow)
+   En el círculo 3D solo se veían la obra frontal y sus dos vecinas. Con .wheel-all las siete
+   (una por técnica) quedan en fila, la frontal más grande; al girar siguen rotando igual.
+   El JS (layoutWorksWheel) calcula posición/escala; aquí solo se suaviza el movimiento.
+========================================================= */
+.works-wheel.wheel-flat .gallery-item { transition: border-color .35s ease, box-shadow .35s ease; }
+.works-wheel.wheel-flat .gallery-item:not(.is-front) .gallery-overlay { opacity: 1; background: linear-gradient(to top, rgba(0,0,0,.9) 0%, rgba(0,0,0,.35) 40%, transparent 65%); }
+.works-wheel.wheel-flat .gallery-item:not(.is-front) .gallery-overlay .gallery-number { display: none; }
+
+/* =========================================================
+   TABCUARIO — fichas de peces: datos en filas (etiqueta | valor)
+   Con 3 columnas los textos largos (origen, rangos de agua) se montaban unos sobre otros.
+========================================================= */
+.fish-card .fish-data { grid-template-columns: 1fr; gap: .5rem; }
+.fish-card .fish-data > div { display: flex; align-items: baseline; justify-content: space-between; gap: 1rem; min-width: 0; }
+.fish-card .fish-data dd { margin: 0; text-align: right; overflow-wrap: anywhere; }
+
+/* =========================================================
+   TABCUARIO — PALETA AZUL
+   JS (openLayer/closeLayer) pone body.theme-aqua mientras la capa TabCuario (#layer-contacto) está abierta.
+   Pasa a azul lo que era rojo: botón Volver, línea y rombo del título, cursor y ojo de "hay más abajo".
+   CAMBIAR AQUÍ el azul: --aqua-light (#5aa9ff) y el RGB 90,169,255 de abajo.
+========================================================= */
+body.theme-aqua .cursor { background: var(--aqua-light); box-shadow: 0 0 10px rgba(90,169,255,.8); }
+body.theme-aqua .cursor-ring { border-color: rgba(90,169,255,.5); }
+
+/* título: línea de la izquierda y rombo de la derecha */
+#layer-contacto .accent-line::before { background: var(--aqua-light); box-shadow: 0 0 12px var(--aqua-light); }
+#layer-contacto .accent-line::after  { background: var(--aqua-light); box-shadow: 0 0 14px var(--aqua-light); }
+#layer-contacto .section-divider { background: var(--aqua-light); box-shadow: 0 0 10px rgba(90,169,255,.5); }
+
+/* botón Volver */
+body.theme-aqua .btn-back {
+    --bb: 90, 169, 255;
+    color: #dcebff;
+}
+body.theme-aqua .btn-back::before {
+    background: conic-gradient(from 0deg, transparent 0 62%, rgba(60,140,255,.9) 78%, rgba(170,215,255,.95) 84%, transparent 92%);
+}
+body.theme-aqua .btn-back::after {
+    background:
+        radial-gradient(120% 140% at 50% 130%, rgba(60,140,255,.0), transparent 60%),
+        linear-gradient(100deg, rgba(8,30,62,.96), rgba(4,10,20,.97) 60%);
+}
+body.theme-aqua .bb-arrow { text-shadow: 0 0 8px rgba(130,190,255,.9); }
+body.theme-aqua .bb-arrow::before { box-shadow: 0 0 14px rgba(var(--bb), .55), inset 0 0 8px rgba(90,160,255,.35); }
+body.theme-aqua .btn-back:hover {
+    border-color: #7dbbff;
+    box-shadow: 0 0 0 1px rgba(0,0,0,.6), 0 10px 28px rgba(0,0,0,.6), 0 0 34px rgba(70,150,255,.6);
+}
+body.theme-aqua .btn-back:hover::after {
+    background:
+        radial-gradient(120% 160% at 50% 135%, rgba(80,160,255,.55), rgba(36,87,166,.28) 45%, transparent 70%),
+        linear-gradient(100deg, rgba(12,40,84,.96), rgba(5,11,22,.97) 60%);
+}
+body.theme-aqua .btn-back:hover .bb-arrow::before { background: rgba(90,169,255,.55); box-shadow: 0 0 20px rgba(90,169,255,.9); }
+
+/* ojo de "hay más contenido abajo": mismo dibujo, girado de rojo a azul */
+body.theme-aqua .scroll-cue { filter: hue-rotate(200deg) saturate(1.15); }
+
+/* TabCuario: el fondo animado de fuego (llamas y brasas de cada tablero) pasa a azul, y el aro del cursor
+   también (el JS le pone un borde rojo en línea al pasar sobre botones, por eso !important). */
+#layer-contacto .tc-fire::before {
+    background: radial-gradient(ellipse 60% 70% at 50% 100%,
+        rgba(70, 150, 255, .26), rgba(var(--board), .16) 46%, transparent 74%);
+}
+#layer-contacto .tc-flame {
+    background: radial-gradient(ellipse 52% 62% at 50% 78%,
+        rgba(150, 210, 255, .85) 0, rgba(60, 140, 255, .55) 34%,
+        rgba(36, 87, 166, .32) 62%, rgba(36, 87, 166, 0) 84%);
+}
+#layer-contacto .tc-ember {
+    background: radial-gradient(circle, #d8eeff 0, #5aa9ff 42%, rgba(40, 110, 255, 0) 72%);
+    box-shadow: 0 0 calc(var(--s) * 2.6) rgba(90, 169, 255, .65);
+}
+body.theme-aqua .cursor-ring { border-color: rgba(90,169,255,.55) !important; }
+
+/* =========================================================
+   LOGO EN EL PIE DE CADA CATEGORÍA: primero el logo y debajo la palabra "TabCuar"
+   HTML: <div class="brand brand--logo"><img class="brand-logo"> <span class="brand-name">TabCuar</span></div> (5 pies de página)
+   El archivo del logo se define UNA sola vez en script.js (const LOGO_SRC). Si el archivo no existe, no se muestra
+   la imagen y queda solo la palabra, como antes.
+   CAMBIAR AQUÍ el tamaño del logo: --logo-h.
+========================================================= */
+.brand--logo {
+    --logo-h: 72px;
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    gap: .55rem;
+    text-align: center;
+}
+.brand--logo .brand-logo {
+    display: block;
+    height: var(--logo-h);
+    width: auto;
+    max-width: 180px;
+    object-fit: contain;
+}
+.brand--logo .brand-logo[hidden] { display: none; }
+.brand--logo .brand-name { font-family: var(--font-marca); font-size: 1.6rem; line-height: 1; color: #fff; letter-spacing: .01em; }
+@media (max-width: 640px) { .brand--logo { --logo-h: 60px; } }
+
+
+/* ==================================================
+   AJUSTE DE GROSOR DE TÍTULOS (RM Albion)
+   La fuente solo existe en peso 400. Los h3/h4/strong llevan negrita por
+   defecto, así que el navegador la "fabricaba" engrosando los trazos y se
+   perdía el calibre de la letra. Aquí se fuerza el peso normal, se evita la
+   negrita sintética y se aligera el brillo que engordaba el contorno.
+================================================== */
+.gallery-overlay h4,
+.img-modal-title,
+.wheel-title,
+.technique-intro-main h3,
+.process-heading h3,
+.books-section .books-heading h3,
+.book-empty strong,
+.pv-empty-title,
+.gp-info h4,
+.gd-over p,
+.sc-label,
+.section-title,
+.section-title em,
+.stage-name,
+.lab-big-title,
+.gehenna-title,
+.book-title,
+.hotspot-label {
+    font-weight: 400 !important;
+    font-synthesis: none;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: geometricPrecision;
+}
+
+/* Brillo más suave en el título de la carta abierta: sin halo que engrose la letra */
+.img-modal-dialog[data-cat] .img-modal-title {
+    text-shadow: 0 0 6px rgba(var(--neon-rgb), .30);
 }

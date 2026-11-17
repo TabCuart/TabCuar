@@ -140,6 +140,12 @@ const WORKS_DEFAULTS = {
     technique: 'Diseño para tattoo',
     description: 'Propuesta pensada para el cuerpo: composición, línea y equilibrio adaptados al espacio de la piel.',
     extra: []
+  },
+
+  mix: {
+    technique: 'Técnica mixta',
+    description: 'Obra que mezcla varias técnicas en una sola pieza: lo digital, lo análogo y la experimentación conviven en el mismo resultado.',
+    extra: []
   }
 
 };
@@ -156,6 +162,7 @@ const WORKS_INFO = {
   'AnmC.mp4': { title: 'Pupila', technique: '', year: '2026', description: '', extra: [] },
   'roto.mp4': { title: 'Tin Tin', technique: '', year: '2026', description: '', extra: [] },
   'animacion-tabcuart.mp4': { title: 'Max', technique: '', year: '2026', description: '', extra: [] },
+  'mix1.mp4': { title: 'Título del video', technique: '', year: '2026', description: '', extra: [] },
 
   /* ----- Ilustración Digital ----- */
 
@@ -280,12 +287,14 @@ const WORKS_INFO = {
   'Video/0001_1.mp4':   { title: 'Acuario', technique: '', year: '2026', description: '', extra: [] },
   'Angel.mp4': { title: 'Angel', technique: '', year: '2026', description: '', extra: [] },
   'PEZ..mp4':   { title: 'Pez', technique: '', year: '2026', description: '', extra: [] },
+  'La Grieta.mp4': { title: 'La Grieta', technique: 'Mixta', year: '2026', description: '...', extra: ['Software', 'After Effects'] },
 
   /* ----- Tattoo ----- */
   'concept1.jpg':   { title: 'Crisalida', technique: '', year: '', description: '', extra: [] },
   'concept2.jpg':   { title: 'Vortice', technique: '', year: '', description: '', extra: [] },
   'concept3.jpg':   { title: 'Omega', technique: '', year: '', description: '', extra: [] }
 
+  
 };
 
 
@@ -537,6 +546,12 @@ function openLayer(zone) {
     'layer-open'
   );
 
+  /* TabCuario (layer-contacto) usa la paleta azul */
+  document.body.classList.toggle(
+    'theme-aqua',
+    zone === 'contacto'
+  );
+
   currentZone = zone;
 
   layer.scrollTop = 0;
@@ -604,7 +619,8 @@ function closeLayer() {
   }
 
   document.body.classList.remove(
-    'layer-open'
+    'layer-open',
+    'theme-aqua'
   );
 
   currentZone = null;
@@ -686,6 +702,17 @@ function filterGallery(
       '.gallery-item'
     );
 
+  /* "Todas" usa una disposición plana (ver layoutWorksWheel) */
+  gallery.classList.toggle(
+    'wheel-all',
+    category === 'all'
+  );
+
+  items.forEach(item => {
+    item.style.visibility = '';
+    item.style.pointerEvents = '';
+  });
+
   document
     .querySelectorAll(
       '.gallery-filter .filter-btn'
@@ -704,40 +731,15 @@ function filterGallery(
 
   /* ========================================
      TODAS
-     Solo primera obra de cada categoría
+     Todas las obras de todas las técnicas (la rueda plana de layoutWorksWheel
+     solo dibuja las más cercanas a la frontal; al girar van apareciendo las demás)
   ======================================== */
 
   if (category === 'all') {
 
-    const shownCategories =
-      new Set();
-
     items.forEach(item => {
 
-      const itemCategory =
-        (
-          item.dataset.cat ||
-          ''
-        ).toLowerCase();
-
-      if (
-        !shownCategories.has(
-          itemCategory
-        )
-      ) {
-
-        item.style.display = '';
-
-        shownCategories.add(
-          itemCategory
-        );
-
-      } else {
-
-        item.style.display =
-          'none';
-
-      }
+      item.style.display = '';
 
     });
 
@@ -1574,6 +1576,60 @@ function layoutWorksWheel() {
   }
 
 
+  /* -------------------------------------------------------
+     MODO PLANO (todas las técnicas, incluida "Todas"): fila coverflow con las obras visibles.
+     d = distancia a la obra frontal en "obras" (0 = frontal, ±1 = vecinas…).
+     Solo se dibujan las más cercanas (Rv a cada lado); el resto se oculta
+     y aparece al girar. Con pocas obras caben todas.
+  ------------------------------------------------------- */
+  if (wheel.classList.contains('wheel-flat')) {
+
+    const W = wheel.clientWidth;
+    const cardW = items[0].offsetWidth || 320;
+    const clamp01 = v => Math.max(0, Math.min(1, v));
+    const R = W < 700 ? 2 : 4;
+    const Rv = Math.max(1, Math.min(R, Math.floor(count / 2)));
+    const edgeScale = .55;
+    const sp = Math.min(
+      cardW * .8,
+      (W / 2 - 10 - cardW * edgeScale / 2) / Rv
+    );
+
+    items.forEach((item, index) => {
+
+      const n = (((wheelRotation + index * step) % 360) + 540) % 360 - 180;   /* −180…180 */
+      const d = n / step;
+      const ad = Math.abs(d);
+      const t = Math.min(1, ad / Rv);
+      const fade = clamp01((Rv + .5 - ad) / .5);
+
+      if (fade <= 0) {
+        item.style.visibility = 'hidden';
+        item.style.pointerEvents = 'none';
+        item.classList.remove('is-front');
+        return;
+      }
+
+      item.style.visibility = '';
+      item.style.pointerEvents = '';
+
+      const x = -d * sp;
+      const scale = 1.15 - .62 * Math.pow(t, .8);
+      const opacity = (.6 + .4 * (1 - t)) * fade;
+      const bright = .62 + .38 * (1 - t);
+      const tilt = Math.max(-2, Math.min(2, d)) / 2 * 40;
+
+      item.style.setProperty('--item-opacity', opacity.toFixed(3));
+      item.style.zIndex = String(Math.round((1 - t) * 1000) + 100);
+      item.style.transform =
+        `translate3d(calc(-50% + ${x.toFixed(1)}px), -50%, 0) rotateY(${tilt.toFixed(1)}deg) scale(${scale.toFixed(3)})`;
+      item.style.filter = `brightness(${bright.toFixed(3)})`;
+      item.classList.toggle('is-front', ad < .35);
+
+    });
+
+  } else
+
   items.forEach(
     (item, index) => {
 
@@ -1721,6 +1777,39 @@ function layoutWorksWheel() {
 
 
 /* ---------------------------------------------------------
+   SENSIBILIDAD: en "Todas" hay muchas obras (paso angular pequeño);
+   se reduce el giro por píxel para que arrastrar siga siendo cómodo.
+--------------------------------------------------------- */
+function wheelGain() {
+
+  const wheel = document.getElementById('gallery');
+
+  if (!wheel || !wheel.classList.contains('wheel-flat')) return 1;
+
+  const n = getVisibleWheelItems().length;
+
+  if (n < 2) return 1;
+
+  return Math.min(1, (360 / n / 120) / .25);   /* ~120 px de arrastre por obra */
+
+}
+
+function wheelKeyStep() {
+
+  const wheel = document.getElementById('gallery');
+
+  if (wheel && wheel.classList.contains('wheel-flat')) {
+
+    return 360 / Math.max(1, getVisibleWheelItems().length);
+
+  }
+
+  return 30;
+
+}
+
+
+/* ---------------------------------------------------------
    ANIMACIÓN SUAVE
 --------------------------------------------------------- */
 
@@ -1850,7 +1939,7 @@ function handleWheel(
   );
 
   const amount =
-    e.deltaY * .25;
+    e.deltaY * .25 * wheelGain();
 
   rotateWheel(
     amount
@@ -1952,7 +2041,7 @@ function wheelPointerMove(
   if (!items.length) return;
 
   const degrees =
-  delta * -.25;
+  delta * -.25 * wheelGain();
 
   wheelRotation +=
     degrees;
@@ -2030,7 +2119,7 @@ function wheelKeyboard(
     e.preventDefault();
 
     rotateWheel(
-      30
+      wheelKeyStep()
     );
 
     snapWheel();
@@ -2045,7 +2134,7 @@ function wheelKeyboard(
     e.preventDefault();
 
     rotateWheel(
-      -30
+      -wheelKeyStep()
     );
 
     snapWheel();
@@ -2365,6 +2454,11 @@ const PROCESS_DATA = {
     { "type": "video", "src": "Video/0002_1.mp4", "title": "Proceso", "text": "Proceso de la ilustración, aplicando colores.", "alt": "Video del proceso de la ilustración" }
   ],
 
+  /* Ilustración digital 03: el PROCESO es un video (1 etapa) y el FINAL es la imagen Dj3.png */
+  'Niño.jpg': [
+    { "type": "video", "src": "Img/Analogo/Procesos/Agaporn.mp4", "title": "Proceso", "text": "Proceso.", "alt": "Video del proceso de la ilustración" }
+  ],
+
   /* Escultura / Cuadro de botones */
   'escultura1.jpg': [
     { "src": "Img/Esc1.jpg", "title": "Etapa 1", "text": "Preparación de la superficie, trazado de líneas y estructura inicial.", "alt": "Preparación de la base de la escultura" },
@@ -2372,9 +2466,26 @@ const PROCESS_DATA = {
     { "src": "Img/Esc3.png", "title": "Detalles", "text": "Ajustes, montaje de piezas y continuación.", "alt": "Detalles finales y acabado de la escultura" }
   ], // <-- Aquí faltaba la coma
 
+  'Gato.jpg': [
+    { "src": "Img/Analogo/Procesos/Cat 1.jpeg", "title": "Etapa 1", "text": "....", "alt": "Preparación" },
+    { "src": "Img/Analogo/Procesos/Cat 2.jpeg", "title": "Etapa 2", "text": "...", "alt": "Proceso" },
+    { "src": "Img/Analogo/Procesos/Cat 3.jpg", "title": "Etapa 3", "text": "...", "alt": "Detalles finales" }
+  ], // <-- Aquí faltaba la coma
+  
+  'Libelula.jpg': [
+    { "src": "Img/Analogo/Procesos/lil1.jpg", "title": "Etapa 1", "text": "....", "alt": "Preparación" },
+    { "src": "Img/Analogo/Procesos/Lil2.jpg", "title": "Etapa 2", "text": "...", "alt": "Proceso" },
+    { "type": "video", "src": "Img/Analogo/Procesos/Lil3.mp4", "title": "Etapa 3", "text": "...", "alt": "Detalles finales" }
+  ], // <-- Aquí faltaba la coma
+
+  'Amor entre redes.jpg': [
+    { "src": "Img/Digital/Procesos/V1.jpg", "title": "Version 1", "text": "....", "alt": "Preparación" },
+    { "src": "Img/Digital/Procesos/V2.png", "title": "Version 2", "text": "...", "alt": "Proceso" },
+  ], // <-- Aquí faltaba la coma
+
   /* Escultura / Cuadro de botones */
   'Escarabajo.jpg': [
-    { "src": "Img/Analogo/Escarabajo 1.jpg", "title": "Líneas", "text": "Trazado de líneas guía y estructura inicial.", "alt": "Preparación de la base de la escultura" }, // <-- Agrega la extensión real (.jpg / .png)
+    { "src": "Img/Analogo/Escarabajo 1.jpg", "title": "Inicios", "text": "Trazado de líneas guía y estructura inicial.", "alt": "Preparación de la base de la escultura" }, // <-- Agrega la extensión real (.jpg / .png)
     { "src": "Img/Analogo/Escarabajo 2.jpg", "title": "Puntos", "text": "Aplicación de puntos en la ilustración.", "alt": "Proceso de ensamblaje con botones" },
   ]
 };
@@ -2389,8 +2500,22 @@ const FINAL_DATA = {
   /* Resultado final de la escultura */
   'escultura1.jpg': { type: 'image', src: 'Img/escultura1.jpg', title: 'Resultado final', text: 'Escultura de botones terminada.', alt: 'Fotografía de la escultura de botones terminada' },
 
+  /* Resultado final de la escultura */
+  'Niño.jpg': { type: 'image', src: 'Img/Analogo/Niño.jpg', title: 'Resultado final', text: 'Terminada.', alt: '' },
+
+/* Resultado final de la escultura */
+  'Gato.jpg': { type: 'image', src: 'Img/Analogo/Gato.jpg', title: 'Resultado final', text: 'Terminada.', alt: '' },
+
+  /* Resultado final de la escultura */
+  'Libelula.jpg': { type: 'image', src: 'Img/Analogo/Libelula.jpg', title: 'Resultado final', text: 'Terminada.', alt: '' },
+
+  /* Resultado final de la escultura */
+  'Amor entre redes.jpg': { type: 'image', src: 'Img/Digital/Amor entre redes.jpg', title: 'Resultado final', text: 'Terminada.', alt: '' },
+
 /* Resultado final de la escultura */
   'Escarabajo.jpg': { type: 'image', src: 'Img/Analogo/Escarabajo.jpg', title: 'Resultado final', text: 'Escarabajo', alt: 'Fotografía del escarabajo terminado' }
+
+  
 
 };
 /* =========================================================
@@ -5583,7 +5708,8 @@ document.querySelectorAll('.gallery-item video').forEach(video => {
     escultura:  ['Forma y volumen, trabajados con las manos.'],
     animacion:  ['Una imagen empieza a moverse cuando le das tiempo.', 'Aquí las imágenes empiezan a moverse.'],
     '3d':       ['Aquí las ideas dejan de tener una sola cara.', 'Luz y volumen construidos en Blender.'],
-    tattoo:     ['Diseño pensado para vivir en la piel.']
+    tattoo:     ['Diseño pensado para vivir en la piel.'],
+    mix:        ['Aquí las técnicas se mezclan en una misma pieza.', 'Cuando una sola técnica no alcanza.']
   };
   /* Pistas según TIPO de interacción */
   var TYPES = {
@@ -6037,7 +6163,7 @@ var ts = zoneScale * (
           { l: 'Escultura', act: 'filter', arg: 'escultura', say: 'Escultura.' }, { l: 'Animación', act: 'filter', arg: 'animacion', say: 'Animación.' }, { l: 'Más técnicas', n: 'tc_tecnicas2' }] },
     tc_tecnicas2: { t: 'También hay estas:', x: 'curious',
       c: [{ l: 'Ilustración análoga', act: 'filter', arg: 'tradicional', say: 'Ilustración análoga.' }, { l: '3D', act: 'filter', arg: '3d', say: '3D.' },
-          { l: 'Tattoo', act: 'filter', arg: 'tattoo', say: 'Tattoo.' }, { l: 'Todas', act: 'filter', arg: 'all', say: 'Todas las técnicas.' }] },
+          { l: 'Tattoo', act: 'filter', arg: 'tattoo', say: 'Tattoo.' }, { l: 'Mix', act: 'filter', arg: 'mix', say: 'Mix.' }, { l: 'Todas', act: 'filter', arg: 'all', say: 'Todas las técnicas.' }] },
     tc_alt: { t: 'Entonces, otra cosa: puedes ver cómo evoluciona una obra, del boceto al resultado final. ¿Quieres ver el proceso creativo?', x: 'sly', exit: false,
       c: [{ l: YES, act: 'process', say: 'Aquí está el proceso.' }, { l: NO, n: 'tc_libros_q' }] },
     tc_libros_q: { t: 'Hay también Libros & Cómics para leer página a página, aquí mismo. ¿Te los muestro?', x: 'curious', exit: false,
@@ -6432,20 +6558,24 @@ if (charImg && charImg.complete && charImg.naturalWidth > 0) {
       if (totalEl) totalEl.textContent = N ? pad(N + 1) + ' ETAPAS' : 'SIN PROCESO';
       if (finalCount) finalCount.textContent = 'Etapa ' + (N + 1);
       var fn = duo && duo.querySelector('.pv-final .pv-stage-name b'); if (fn) fn.textContent = pad(N + 1);
-      setFinal(key);
+      setFinal(key); if (window.syncWorkTools) window.syncWorkTools(key);
       vp.classList.remove('is-drag'); vp.scrollLeft = 0; if (range) range.value = 0; paint(0);
       if (N) { setIndex(Math.min(at, N - 1)); if (at) vp.scrollLeft = at * vp.clientWidth; onScroll(); }
       else { nameEl.textContent = ''; textEl.textContent = ''; if (countEl) countEl.textContent = '—'; }
       renderWorks();
     }
     /* selector de trabajo: las obras de la MISMA técnica que el trabajo activo (las que muestra la galería) */
+    /* "Todas": la rueda solo muestra una obra por técnica, pero el proceso debe listar TODAS las obras que lo tienen */
+    function isAllMode() { var g = document.getElementById('gallery'); return !!g && g.classList.contains('wheel-all'); }
+    function allItems() { var g = document.getElementById('gallery'); return g ? [].slice.call(g.querySelectorAll('.gallery-item')).filter(function (it) { return !it.hidden; }) : []; }
     function renderWorks() {
       if (!worksEl) return;
       worksEl.textContent = '';
-      var cur = workKey ? findItem(workKey) : null, cat = cur ? cur.dataset.cat : null;
+      var all = isAllMode();
+      var cur = workKey ? findItem(workKey) : null, cat = (!all && cur) ? cur.dataset.cat : null;
       /* SOLO los trabajos que ya tienen proceso en PROCESS_DATA; al añadir uno nuevo (ProcessSystem.add o PROCESS_DATA) aparece su nombre solo */
       var list = [];
-      viewerCollect().forEach(function (it) {
+      (all ? allItems() : viewerCollect()).forEach(function (it) {
         if (cat && it.dataset.cat !== cat) return;
         var m = it.querySelector('.click-img, .click-video'); if (!m) return;
         var info = resolveWorkInfo(it, m);
@@ -6454,7 +6584,7 @@ if (charImg && charImg.complete && charImg.naturalWidth > 0) {
       worksEl.hidden = !list.length;
       if (list.length) {
         var fb = cat && document.querySelector('.filter-btn[onclick*="\'' + cat + '\'"]');
-        var lab = document.createElement('span'); lab.className = 'pv-works-label'; lab.textContent = (fb ? fb.textContent.trim() : 'Trabajo') + ' ·'; worksEl.appendChild(lab);
+        var lab = document.createElement('span'); lab.className = 'pv-works-label'; lab.textContent = (all ? 'Con proceso' : (fb ? fb.textContent.trim() : 'Trabajo')) + ' ·'; worksEl.appendChild(lab);
       }
       list.forEach(function (info, i) {
         var b = document.createElement('button');
@@ -6465,6 +6595,11 @@ if (charImg && charImg.complete && charImg.naturalWidth > 0) {
       });
     }
     function chooseWork() {          /* tras filtrar por técnica: conserva el trabajo si sigue visible; si no, el primero con proceso */
+      if (isAllMode()) {            /* Todas: se muestran los trabajos que SÍ tienen proceso, de cualquier técnica */
+        var withP = allItems().map(itemKey).filter(function (k) { return k && steps(k).length; });
+        if (workKey && steps(workKey).length) { renderWorks(); return; }
+        render(withP[0] || viewerCollect().map(itemKey).filter(Boolean)[0] || null); return;
+      }
       var keys = viewerCollect().map(itemKey).filter(Boolean);
       if (keys.indexOf(workKey) !== -1) { renderWorks(); return; }
       render(keys.filter(function (k) { return steps(k).length; })[0] || keys[0] || null);
@@ -6621,13 +6756,17 @@ if (charImg && charImg.complete && charImg.naturalWidth > 0) {
     ai: ['Ai', 'Illustrator',    'Vectores y formas limpias',         '#FF9A00', '#2b1500'],
     bl: ['Bl', 'Blender',        'Modelado 3D, luz y render',         '#F5792A', '#1B2A3C'],
     ae: ['Ae', 'After Effects',  'Animación y composición',           '#9999FF', '#00005B'],
-    ps: ['Ps', 'Photoshop',      'Retoque y color',                   '#31A8FF', '#001E36']
+    ps: ['Ps', 'Photoshop',      'Retoque y color',                   '#31A8FF', '#001E36'],
+    bt: ['Bt', 'Botones',        'Material de la escultura',          '#D9B36C', '#2a1f0e']
   };
+  /* HERRAMIENTAS POR OBRA (clave = archivo de la obra, igual que PROCESS_DATA).
+     Una obra con entrada aquí muestra SOLO esas herramientas; las demás usan la lista de su técnica (BY). */
+  var BY_WORK = { 'Deus.png': ['ps'], 'escultura1.jpg': ['bt'] };
   var BY = { all: ['kr', 'ai', 'bl', 'ae', 'ps'], digital: ['kr', 'ai', 'ps'], animacion: ['ae', 'kr'], '3d': ['bl'] };
   var box = document.getElementById('techniqueTools');
-  function renderTools(cat) {
+  function renderTools(cat, key) {
     if (!box) return;
-    var list = BY[cat] || [], wrap = box.closest('.technique-extra-box') || box;
+    var list = (key && BY_WORK[key]) || BY[cat] || [], wrap = box.closest('.technique-extra-box') || box;
     wrap.hidden = !list.length; box.innerHTML = '';
     list.forEach(function (k) {
       var o = TOOLS[k], s = document.createElement('span');
@@ -6637,8 +6776,15 @@ if (charImg && charImg.complete && charImg.naturalWidth > 0) {
     });
   }
   renderTools('all');
+  /* herramientas de la obra mostrada en "Avances & Proceso" (la llama ProcessSystem.render) */
+  window.syncWorkTools = function (key) {
+    var g = document.getElementById('gallery'), all = g && g.classList.contains('wheel-all');
+    var it = key && g ? [].slice.call(g.querySelectorAll('.gallery-item')).filter(function (x) { var m = x.querySelector('.click-img, .click-video'); return m && resolveWorkInfo(x, m).key === key; })[0] : null;
+    var cat = it ? it.dataset.cat : (all ? 'all' : '');
+    renderTools(String(cat).toLowerCase(), key);
+  };
   var _f = window.filterGallery;
-  if (typeof _f === 'function') window.filterGallery = function (c) { var r = _f.apply(this, arguments); renderTools(String(c || 'all').toLowerCase()); return r; };
+  if (typeof _f === 'function') window.filterGallery = function (c) { var r = _f.apply(this, arguments); window.syncWorkTools(window.ProcessSystem ? window.ProcessSystem.current() : null); return r; };
 })();
 
 
@@ -7082,4 +7228,28 @@ if (charImg && charImg.complete && charImg.naturalWidth > 0) {
 
   function init() { initFire(); initFit(); }
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init); else init();
+})();
+
+
+/* =========================================================
+   ESTADO INICIAL DE LA GALERÍA: "Todas" activa → una obra por técnica + procesos de todas las técnicas
+========================================================= */
+(function () {
+  var b = document.querySelector('.gallery-filter .filter-btn.active');
+  if (b && /'all'/.test(b.getAttribute('onclick') || '') && typeof window.filterGallery === 'function') window.filterGallery('all', b);
+})();
+
+
+/* =========================================================
+   LOGO DEL PIE DE PÁGINA (se repite en el footer de cada categoría)
+   CAMBIAR AQUÍ la ruta del logo: LOGO_SRC (PNG/SVG/WebP con fondo transparente, idealmente).
+   Si el archivo no existe la imagen se queda oculta y solo se ve la palabra "TabCuar".
+========================================================= */
+(function () {
+  var LOGO_SRC = 'Img/logo.png';
+  [].slice.call(document.querySelectorAll('.brand-logo')).forEach(function (img) {
+    img.addEventListener('load', function () { img.hidden = false; });
+    img.addEventListener('error', function () { img.hidden = true; });
+    img.src = LOGO_SRC;
+  });
 })();

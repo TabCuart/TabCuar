@@ -34,7 +34,7 @@
 
 <!-- Hoja de estilos principal -->
 <link rel="preload" as="image" href="./assets/heart/S1.png" fetchpriority="high">
-<link rel="stylesheet" href="styles.css?v=20261112a">
+<link rel="stylesheet" href="styles.css?v=20261116a">
 
 </head>
 
@@ -522,7 +522,10 @@
     </div>
 
     <footer class="layer-footer">
-      <span class="brand">TabCuar</span>
+      <div class="brand brand--logo">
+        <img class="brand-logo" alt="Logo de TabCuar" hidden decoding="async">
+        <span class="brand-name">TabCuar</span>
+      </div>
       <div class="footer-tagline">Arte · Juegos · Ecosistemas · Educación — Medellín, Colombia</div>
       <div class="footer-copy">© 2026 TabCuar<br>Todos los derechos reservados</div>
       <p class="footer-legal">No está permitido subir, comercializar, distribuir ni utilizar estas imágenes para entrenar o alimentar sistemas de IA sin autorización previa del autor.</p>
@@ -681,6 +684,11 @@
         Tattoo
       </button>
 
+      <button type="button" class="filter-btn"
+              onclick="filterGallery('mix', this)">
+        Mix
+      </button>
+
     </div>
 
 
@@ -688,7 +696,7 @@
          WORKS WHEEL
     ========================================== -->
 
-    <div class="gallery-grid works-wheel reveal"
+    <div class="gallery-grid works-wheel wheel-flat reveal"
          id="gallery"
          tabindex="0"
          aria-label="Galería circular de trabajos">
@@ -1521,6 +1529,41 @@
 
 
       <!-- =====================================
+           MIX (técnica mixta)
+           Para poner tu video: guárdalo en la carpeta Video/ y cambia
+           src="Video/mix1.mp4" por el nombre de tu archivo.
+           Cambia también el título en <h4>. Para más videos, copia
+           este bloque completo y cambia el número (02, 03...).
+      ====================================== -->
+
+      <div class="gallery-item"
+           data-cat="mix"
+           data-title="Mix"
+           data-year="2026">
+
+        <video class="uploaded click-video"
+               src="Video/La Grieta.mp4"
+               muted
+               loop
+               playsinline
+               preload="metadata">
+        </video>
+
+        <div class="gallery-overlay">
+
+          <span class="gallery-number">01</span>
+
+          <div>
+            <h4>La grieta</h4>
+            <p>Obra · 2026</p>
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <!-- =====================================
            TATTOO
       ====================================== -->
 
@@ -1885,9 +1928,10 @@
 
     <footer class="layer-footer">
 
-      <span class="brand">
-        TabCuar
-      </span>
+      <div class="brand brand--logo">
+        <img class="brand-logo" alt="Logo de TabCuar" hidden decoding="async">
+        <span class="brand-name">TabCuar</span>
+      </div>
 
       <div class="footer-tagline">
         Arte · Juegos · Ecosistemas · Educación — Medellín, Colombia
@@ -1943,7 +1987,10 @@
     </div>
 
     <footer class="layer-footer">
-      <span class="brand">TabCuar</span>
+      <div class="brand brand--logo">
+        <img class="brand-logo" alt="Logo de TabCuar" hidden decoding="async">
+        <span class="brand-name">TabCuar</span>
+      </div>
       <div class="footer-tagline">Arte · Juegos · Ecosistemas · Educación — Medellín, Colombia</div>
       <div class="footer-copy">© 2026 TabCuar<br>Todos los derechos reservados</div>
       <p class="footer-legal">No está permitido subir, comercializar, distribuir ni utilizar estas imágenes para entrenar o alimentar sistemas de IA sin autorización previa del autor.</p>
@@ -2102,7 +2149,10 @@
     </div>
 
     <footer class="layer-footer">
-      <span class="brand">TabCuar</span>
+      <div class="brand brand--logo">
+        <img class="brand-logo" alt="Logo de TabCuar" hidden decoding="async">
+        <span class="brand-name">TabCuar</span>
+      </div>
       <div class="footer-tagline">Arte · Juegos · Ecosistemas · Educación — Medellín, Colombia</div>
       <div class="footer-copy">© 2026 TabCuar<br>Todos los derechos reservados</div>
       <p class="footer-legal">No está permitido subir, comercializar, distribuir ni utilizar estas imágenes para entrenar o alimentar sistemas de IA sin autorización previa del autor.</p>
@@ -2142,103 +2192,103 @@
             <article class="fish-card">
               <div class="fish-slot">
                 <!-- CAMBIAR AQUÍ LA IMAGEN: reemplaza la ruta de src (ficha 01) -->
-                <img class="uploaded click-img" src="Img/peces/1.png" alt="Pez 01" loading="lazy" onerror="this.style.display='none'; this.parentElement.classList.add('is-missing');">
+                <img class="uploaded click-img" src="Img/peces/1.png" alt="Betta (Betta splendens)" loading="lazy" onerror="this.style.display='none'; this.parentElement.classList.add('is-missing');">
               </div>
               <div class="fish-info">
                 <span class="fish-index">Ficha 01</span>
-                <h4 class="fish-name">Nombre del pez</h4>
-                <p class="fish-species">Especie científica</p>
+                <h4 class="fish-name">Betta</h4>
+                <p class="fish-species">Betta splendens</p>
                 <dl class="fish-data">
-                  <div><dt>Origen</dt><dd>Región</dd></div>
-                  <div><dt>Tamaño</dt><dd>— cm</dd></div>
-                  <div><dt>Agua</dt><dd>pH · °C</dd></div>
+                  <div><dt>Origen</dt><dd>Sudeste asiático</dd></div>
+                  <div><dt>Tamaño</dt><dd>6–7 cm</dd></div>
+                  <div><dt>Agua</dt><dd>pH 6,5–7,5 · 24–28 °C</dd></div>
                 </dl>
-                <p class="fish-desc">Descripción breve: carácter, comportamiento y por qué forma parte del acuario.</p>
+                <p class="fish-desc">Variedad cola de media luna: el pez luchador, con aletas amplias que abren un semicírculo de 180° en la cola. Respira aire gracias a su órgano laberinto y es territorial, por lo que se mantiene un macho por acuario. Aporta el color y el carácter.</p>
               </div>
             </article>
             <article class="fish-card">
               <div class="fish-slot">
                 <!-- CAMBIAR AQUÍ LA IMAGEN: reemplaza la ruta de src (ficha 02) -->
-                <img class="uploaded click-img" src="Img/peces/2.png" alt="Pez 02" loading="lazy" onerror="this.style.display='none'; this.parentElement.classList.add('is-missing');">
+                <img class="uploaded click-img" src="Img/peces/2.png" alt="Guppy (Poecilia reticulata)" loading="lazy" onerror="this.style.display='none'; this.parentElement.classList.add('is-missing');">
               </div>
               <div class="fish-info">
                 <span class="fish-index">Ficha 02</span>
-                <h4 class="fish-name">Nombre del pez</h4>
-                <p class="fish-species">Especie científica</p>
+                <h4 class="fish-name">Guppy</h4>
+                <p class="fish-species">Poecilia reticulata</p>
                 <dl class="fish-data">
-                  <div><dt>Origen</dt><dd>Región</dd></div>
-                  <div><dt>Tamaño</dt><dd>— cm</dd></div>
-                  <div><dt>Agua</dt><dd>pH · °C</dd></div>
+                  <div><dt>Origen</dt><dd>Sudamérica y Caribe</dd></div>
+                  <div><dt>Tamaño</dt><dd>3–6 cm</dd></div>
+                  <div><dt>Agua</dt><dd>pH 7,0–8,0 · 22–28 °C</dd></div>
                 </dl>
-                <p class="fish-desc">Descripción breve: carácter, comportamiento y por qué forma parte del acuario.</p>
+                <p class="fish-desc">Pequeño, activo y sociable; esta variedad tiene cola en delta moteada en negro sobre naranja (3–4 cm el macho, 5–6 cm la hembra). Es vivíparo y se reproduce con facilidad. Ideal para acuarios comunitarios tranquilos.</p>
               </div>
             </article>
             <article class="fish-card">
               <div class="fish-slot">
                 <!-- CAMBIAR AQUÍ LA IMAGEN: reemplaza la ruta de src (ficha 03) -->
-                <img class="uploaded click-img" src="Img/peces/3.png" alt="Pez 03" loading="lazy" onerror="this.style.display='none'; this.parentElement.classList.add('is-missing');">
+                <img class="uploaded click-img" src="Img/peces/3.png" alt="Platy (Xiphophorus maculatus)" loading="lazy" onerror="this.style.display='none'; this.parentElement.classList.add('is-missing');">
               </div>
               <div class="fish-info">
                 <span class="fish-index">Ficha 03</span>
-                <h4 class="fish-name">Nombre del pez</h4>
-                <p class="fish-species">Especie científica</p>
+                <h4 class="fish-name">Platy</h4>
+                <p class="fish-species">Xiphophorus maculatus</p>
                 <dl class="fish-data">
-                  <div><dt>Origen</dt><dd>Región</dd></div>
-                  <div><dt>Tamaño</dt><dd>— cm</dd></div>
-                  <div><dt>Agua</dt><dd>pH · °C</dd></div>
+                  <div><dt>Origen</dt><dd>Centroamérica</dd></div>
+                  <div><dt>Tamaño</dt><dd>4–6 cm</dd></div>
+                  <div><dt>Agua</dt><dd>pH 7,0–8,2 · 20–26 °C</dd></div>
                 </dl>
-                <p class="fish-desc">Descripción breve: carácter, comportamiento y por qué forma parte del acuario.</p>
+                <p class="fish-desc">Variedad rojo y blanco: pez pacífico y resistente, de cuerpo blanco con aletas y cola rojas. Vivíparo y muy sociable, se lleva bien con otros peces pequeños. Aporta movimiento y color constante a la zona media.</p>
               </div>
             </article>
             <article class="fish-card">
               <div class="fish-slot">
                 <!-- CAMBIAR AQUÍ LA IMAGEN: reemplaza la ruta de src (ficha 04) -->
-                <img class="uploaded click-img" src="Img/peces/4.png" alt="Pez 04" loading="lazy" onerror="this.style.display='none'; this.parentElement.classList.add('is-missing');">
+                <img class="uploaded click-img" src="Img/peces/4.png" alt="Molly velero (Poecilia velifera)" loading="lazy" onerror="this.style.display='none'; this.parentElement.classList.add('is-missing');">
               </div>
               <div class="fish-info">
                 <span class="fish-index">Ficha 04</span>
-                <h4 class="fish-name">Nombre del pez</h4>
-                <p class="fish-species">Especie científica</p>
+                <h4 class="fish-name">Molly velero</h4>
+                <p class="fish-species">Poecilia velifera</p>
                 <dl class="fish-data">
-                  <div><dt>Origen</dt><dd>Región</dd></div>
-                  <div><dt>Tamaño</dt><dd>— cm</dd></div>
-                  <div><dt>Agua</dt><dd>pH · °C</dd></div>
+                  <div><dt>Origen</dt><dd>Yucatán, México</dd></div>
+                  <div><dt>Tamaño</dt><dd>10–15 cm</dd></div>
+                  <div><dt>Agua</dt><dd>pH 7,5–8,5 · 24–28 °C</dd></div>
                 </dl>
-                <p class="fish-desc">Descripción breve: carácter, comportamiento y por qué forma parte del acuario.</p>
+                <p class="fish-desc">Destaca por su gran aleta dorsal en forma de vela, que los machos despliegan para cortejar. Vivíparo, tolera agua dura e incluso ligeramente salobre. Necesita espacio para nadar y vegetación para alimentarse de algas.</p>
               </div>
             </article>
             <article class="fish-card">
               <div class="fish-slot">
                 <!-- CAMBIAR AQUÍ LA IMAGEN: reemplaza la ruta de src (ficha 05) -->
-                <img class="uploaded click-img" src="Img/peces/5.png" alt="Pez 05" loading="lazy" onerror="this.style.display='none'; this.parentElement.classList.add('is-missing');">
+                <img class="uploaded click-img" src="Img/peces/5.png" alt="Ramirezi (Mikrogeophagus ramirezi)" loading="lazy" onerror="this.style.display='none'; this.parentElement.classList.add('is-missing');">
               </div>
               <div class="fish-info">
                 <span class="fish-index">Ficha 05</span>
-                <h4 class="fish-name">Nombre del pez</h4>
-                <p class="fish-species">Especie científica</p>
+                <h4 class="fish-name">Ramirezi</h4>
+                <p class="fish-species">Mikrogeophagus ramirezi</p>
                 <dl class="fish-data">
-                  <div><dt>Origen</dt><dd>Región</dd></div>
-                  <div><dt>Tamaño</dt><dd>— cm</dd></div>
-                  <div><dt>Agua</dt><dd>pH · °C</dd></div>
+                  <div><dt>Origen</dt><dd>Orinoco (Ven. y Col.)</dd></div>
+                  <div><dt>Tamaño</dt><dd>5–7 cm</dd></div>
+                  <div><dt>Agua</dt><dd>pH 5,0–6,5 · 26–30 °C</dd></div>
                 </dl>
-                <p class="fish-desc">Descripción breve: carácter, comportamiento y por qué forma parte del acuario.</p>
+                <p class="fish-desc">Cíclido enano de colores eléctricos, con manchas azules y la primera espina dorsal alargada. Pacífico pero delicado: exige agua cálida, blanda y estable. Prefiere fondos de arena y plantas donde refugiarse.</p>
               </div>
             </article>
             <article class="fish-card">
               <div class="fish-slot">
                 <!-- CAMBIAR AQUÍ LA IMAGEN: reemplaza la ruta de src (ficha 06) -->
-                <img class="uploaded click-img" src="Img/peces/6.png" alt="Pez 06" loading="lazy" onerror="this.style.display='none'; this.parentElement.classList.add('is-missing');">
+                <img class="uploaded click-img" src="Img/peces/6.png" alt="Disco (Symphysodon aequifasciatus)" loading="lazy" onerror="this.style.display='none'; this.parentElement.classList.add('is-missing');">
               </div>
               <div class="fish-info">
                 <span class="fish-index">Ficha 06</span>
-                <h4 class="fish-name">Nombre del pez</h4>
-                <p class="fish-species">Especie científica</p>
+                <h4 class="fish-name">Disco</h4>
+                <p class="fish-species">Symphysodon aequifasciatus</p>
                 <dl class="fish-data">
-                  <div><dt>Origen</dt><dd>Región</dd></div>
-                  <div><dt>Tamaño</dt><dd>— cm</dd></div>
-                  <div><dt>Agua</dt><dd>pH · °C</dd></div>
+                  <div><dt>Origen</dt><dd>Amazonas</dd></div>
+                  <div><dt>Tamaño</dt><dd>15–20 cm</dd></div>
+                  <div><dt>Agua</dt><dd>pH 5,5–7,0 · 28–31 °C</dd></div>
                 </dl>
-                <p class="fish-desc">Descripción breve: carácter, comportamiento y por qué forma parte del acuario.</p>
+                <p class="fish-desc">El «rey del acuario»: cuerpo en forma de disco y patrones sinuosos rojo y turquesa (variedad doméstica). Es tranquilo y de grupo, pero muy exigente con la calidad del agua y la temperatura. Un pez de acuario avanzado.</p>
               </div>
             </article>
             </div>
@@ -2320,7 +2370,10 @@
     </div>
 
     <footer class="layer-footer">
-      <span class="brand">TabCuar</span>
+      <div class="brand brand--logo">
+        <img class="brand-logo" alt="Logo de TabCuar" hidden decoding="async">
+        <span class="brand-name">TabCuar</span>
+      </div>
       <div class="footer-tagline">Arte · Juegos · Ecosistemas · Educación — Medellín, Colombia</div>
       <div class="footer-copy">© 2026 TabCuar<br>Todos los derechos reservados</div>
       <p class="footer-legal">No está permitido subir, comercializar, distribuir ni utilizar estas imágenes para entrenar o alimentar sistemas de IA sin autorización previa del autor.</p>
@@ -2374,7 +2427,7 @@
 <!-- =========================================
      11. JAVASCRIPT
 ========================================= -->
-<script src="script.js?v=20261112a"></script>
+<script src="script.js?v=20261116a"></script>
 
 </body>
 </html>
